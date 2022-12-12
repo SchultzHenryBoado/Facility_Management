@@ -29,33 +29,33 @@
   </head>
 
   <body>
+    <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg bg-primary">
       <div class="container-fluid">
-        <!-- Title -->
-        <a href="#" class="navbar-brand fw-bold text-light"
-          >Facility Management</a
-        >
         <button
-          class="navbar-toggler btn btn-light"
+          class="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#nav"
         >
           <i class="fa-sharp fa-solid fa-bars-staggered __icon"></i>
         </button>
+        <a class="navbar-brand fw-bold text-white __navbar-brand" href="#"
+          >Facility Management System</a
+        >
 
         <div class="collapse navbar-collapse" id="nav">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-5">
-            <li class="nav-item ms-auto">
+            <li class="nav-item text-center">
               <a href="#" class="nav-link text-light">Reservation</a>
             </li>
-            <li class="nav-item ms-auto">
+            <li class="nav-item text-center">
               <a href="#" class="nav-link text-light">Cancellation</a>
             </li>
-            <li class="nav-item ms-auto">
+            <li class="nav-item text-center">
               <a href="#" class="nav-link text-light">Master File</a>
             </li>
-            <li class="nav-item ms-auto">
+            <li class="nav-item text-center">
               <a href="#" class="nav-link text-light">Logout</a>
             </li>
           </ul>
@@ -63,10 +63,10 @@
       </div>
     </nav>
 
-    <!-- Schedules -->
+    <!-- SCHEDULES -->
     <div class="container-fluid mt-5">
       <div class="container">
-        <!-- information -->
+        <!-- INFORMATION -->
         <div class="row gap-3 justify-content-center">
           <div class="col-12 col-md-3 bg-primary">
             <p class="h3 fw-bold text-light text-center mt-3">
@@ -86,12 +86,15 @@
           </div>
         </div>
       </div>
-
-      <div class="container bg-primary mt-5"></div>
     </div>
 
-    <div class="container-fluid">
-      <div class="container shadow p-3 mb-5 bg-body rounded">
+    <!-- TABLE -->
+    <div class="container-fluid mt-5">
+      <div class="container bg-primary shadow p-3 mb-5 bg-body rounded">
+        <a href="#" class="btn btn-primary float-end fw-bold" role="button"
+          >Inquire</a
+        >
+        <p class="h1 text-center mb-3">Schedules Today</p>
         <table class="table table-striped table-hover">
           <thead>
             <tr>
