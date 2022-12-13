@@ -1,68 +1,87 @@
 <?php 
- require_once $_SERVER['DOCUMENT_ROOT'] = '/facility_management/database/connection.php'; 
-// var_dump($_SERVER);
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php'; 
 
-  
+  if (isset($_POST['login'])) {
+    $username = mysqli_real_escape_string($con, $_POST['username']);
+    $password = mysqli_real_escape_string($con, $_POST['password']);
+
+    $queryLogin = "SELECT * FROM admin_accounts WHERE admin_username = '$username' AND admin_password = '$password' ";
+    $sqlLogin = mysqli_query($con, $queryLogin);
+    $results = mysqli_fetch_assoc($sqlLogin);
+
+    if (mysqli_num_rows($sqlLogin) > 0) {
+      $_SESSION['admin_status'] = 'valid';
+      $_SESSION['admin_username'] = $results['admin_username'];
+      header("Location: dashboard-admin.php");
+    } else {
+      echo '
+      <div class="container mt-5 d-flex justify-content-center">
+      <div class="alert alert-danger text-center w-25 mt-2">Wrong Username and Password</div>
+      </div>
+      ';
+    }
+  }
+ 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LOGIN</title>
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="./styles/index.css" />
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LOGIN</title>
+
+  <!-- CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+  <!-- <link rel="stylesheet" href="./styles/index.css" /> -->
+
+  <!-- JS -->
+  <script src="./js/validation.js" defer></script>
 </head>
 
 <body>
-    <div class="container">
-        <div class="row m-5 no-gutters shadow-lg">
-            <div class="col-md-6 d-none d-md-block">
-                <img src="./img/Facility hotel.jpg" class="img-fluid"
-                    style="max-height: 8.5em; margin: 20px 0px 0px 0px" ; alt="Responsive Image" />
-                <img src="./img/pool.jpg" class="img-fluid" style="max-height: 8.5em; margin: 20px 0px 0px 0px"
-                    alt="Responsive Image" />
-
-                <p>PREMUIMLANDS CORPORATION</p>
-                <h1>Facility Management System</h1>
-                <img src="./img/rooms.jpg" class="img-fluid" style="max-height: 8.5em; margin: 0px 0px -130px 0px"
-                    alt="Responsive Image" />
-                <img src="./img/bedroom.jpg" class="img-fluid" style="max-height: 8.5em; margin: 0px 0px -130px 0px"
-                    alt="Responsive Image" />
-            </div>
-            <div class="col-md-6 bg-white p-5">
-                <h1 class="pb-3">Admin Login</h1>
-                <div class="form-style">
-                    <form>
-                        <div class="form-group pb-3">
-                            <input type="username" placeholder="Username" class="form-control" id="exampleInputEmail1"
-                                aria-describedby="emailHelp" />
-                        </div>
-                        <div class="form-group pb-3">
-                            <input type="password" placeholder="Password" class="form-control"
-                                id="exampleInputPassword1" />
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div class="d-flex align-items-center">
-                                <input name="" type="checkbox" value="" />
-                                <span class="pl-2 font-weight-bold">Remember Me</span>
-                            </div>
-                            <div><a href="#">Forget Password?</a></div>
-                        </div>
-                        <div class="pb-2">
-                            <button type="submit" class="btn btn-info w-100 font-weight-bold mt-2">
-                                Login
-                            </button>
-                        </div>
-                    </form>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card border-0 shadow rounded-3 my-5">
+          <div class="card-body p-4 p-sm-5">
+            <h5 class="card-title text-center mb-5 fw-normal fs-2">Facility Management System</h5>
+            <form action="index.php" method="post" class="needs-validation" novalidate>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput" placeholder="Username" name="username"
+                  required>
+                <label for="floatingInput" class="form-label">Username</label>
+                <div class="invalid-feedback">
+                  Please fill-up the Username.
                 </div>
-            </div>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password"
+                  required>
+                <label for="floatingPassword" class="form-label">Password</label>
+                <div class="invalid-feedback">
+                  Please fill-up the Password.
+                </div>
+              </div>
+
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
+                <label class="form-check-label" for="rememberPasswordCheck">
+                  Remember password
+                </label>
+              </div>
+              <div class="d-grid">
+                <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit" name="login">Sign
+                  in</button>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </body>
 
 </html>

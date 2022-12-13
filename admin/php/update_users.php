@@ -2,9 +2,28 @@
     // DATABASE
     require_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php';
     
-    $queryUsers = "SELECT * FROM users_accounts";
-    $sqlUsers = mysqli_query($con, $queryUsers);
+    // EDIT USERS
+    if (isset($_POST['edit'])) {
+      $editId = mysqli_real_escape_string($con, $_POST['edit_id']);
+      $editLastname = mysqli_real_escape_string($con, $_POST['edit_last_name']);
+      $editFirstname = mysqli_real_escape_string($con, $_POST['edit_first_name']);
+      $editEmail = mysqli_real_escape_string($con, $_POST['edit_email']);
+      $editPassword = mysqli_real_escape_string($con, $_POST['edit_password']);
+    }
 
+    // UPDATE USERS
+    if (isset($_POST['update'])) {
+      $updateId = mysqli_real_escape_string($con, $_POST['update_id']);
+      $updateLastname = mysqli_real_escape_string($con, $_POST['update_last_name']);
+      $updateFirstname = mysqli_real_escape_string($con, $_POST['update_first_name']);
+      $updateEmail = mysqli_real_escape_string($con, $_POST['update_email']);
+      $updatePassword = mysqli_real_escape_string($con, $_POST['update_password']);
+
+      $queryUpdateUsers = "UPDATE users_accounts SET last_names = '$updateLastname', first_names = '$updateFirstname', emails = '$updateEmail', passwords = '$updatePassword' WHERE id = '$updateId' ";
+      $sqlUpdateUsers = mysqli_query($con, $queryUpdateUsers);
+
+      header("Location: ../register.php");
+    }
 ?>
 
 <!DOCTYPE html>
@@ -20,15 +39,13 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
 
-  <link rel="stylesheet" href="./styles/register.css" />
+  <link rel="stylesheet" href="../styles/register.css" />
 
   <!-- JS -->
-  <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
-    crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
   </script>
-  <script src="./js/validation.js" defer></script>
+  <script src="../js/validation.js" defer></script>
 
   <!-- FONT AWESOME -->
   <script src="https://kit.fontawesome.com/8cbc2e0f0e.js" crossorigin="anonymous"></script>
@@ -73,17 +90,20 @@
   <!-- Form for registering the users -->
   <div class="container-fluid mt-5">
     <div class="container w-50 shadow p-3 mb-5 bg-body rounded">
-      <form action="./php/create_users.php" method="post" class="needs-validation" novalidate>
-        <p class="h1 mb-3">Register a Users</p>
+      <form action="update_users.php" method="post" class="needs-validation" novalidate>
+        <p class="h1 mb-3">Update a Users</p>
 
         <div class="row">
           <!-- LAST NAME -->
           <div class="col-12 col-md-6 col-lg-6">
             <div class="mb-3">
+              <input type="hidden" name="update_id" value="<?php echo $editId ?>">
+
               <label for="lastName" class="form-label">Last name:</label>
-              <input type="text" name="last_name" id="lastName" class="form-control" required />
+              <input type="text" name="update_last_name" id="lastName" class="form-control"
+                value="<?php echo $editLastname ?>" required />
               <div class="invalid-feedback">
-                Please fill-up the Lastname
+                Please input an update Lastname
               </div>
             </div>
           </div>
@@ -91,84 +111,43 @@
           <div class="col-12 col-md-6 col-lg-6">
             <div class="mb-3">
               <label for="firstName" class="form-label">First name:</label>
-              <input type="text" name="first_name" id="firstName" class="form-control" required />
+              <input type="text" name="update_first_name" id="firstName" class="form-control"
+                value="<?php echo $editFirstname ?>" required />
               <div class="invalid-feedback">
-                Please fill-up the Firstname
+                Please input an update Firstname
               </div>
             </div>
           </div>
           <!-- EMAIL -->
-          <div class="col-12">
+          <div class="col">
             <div class="mb-3">
               <label for="email" class="form-label">Email:</label>
-              <input type="email" name="email" id="email" class="form-control" required />
+              <input type="email" name="update_email" id="email" class="form-control" value="<?php echo $editEmail ?>"
+                required />
               <div class="invalid-feedback">
-                Please fill-up the Email
+                Please input an update Email
               </div>
             </div>
           </div>
           <!-- PASSWORD -->
           <div class="col-12">
             <div class="mb-3">
-              <label for="password">Password:</label>
-              <input type="password" name="password" id="password" class="form-control" required />
+              <label for="password" class="form-label">Password:</label>
+              <input type="password" name="update_password" id="password" class="form-control"
+                value="<?php echo $editPassword ?>" required />
               <div class="invalid-feedback">
-                Please fill-up the Password
+                Please input an update Password
               </div>
             </div>
           </div>
           <div class="col-12">
             <div class="mb-3">
-              <input type="submit" name="register" value="REGISTER" class="btn btn-success fw-bold float-end" />
+              <input type="submit" name="update" value="UPDATE" class="btn btn-success fw-bold float-end" />
             </div>
           </div>
+
         </div>
       </form>
-    </div>
-  </div>
-
-  <!-- USERS LIST -->
-  <div class="container-fluid">
-    <div class="container shadow p-3 mb-5 bg-body-rounded">
-      <div class="table-responsive">
-        <table class="table table-hover table-striped">
-          <thead>
-            <tr>
-              <th scope="col">Lastname</th>
-              <th scope="col">Firstname</th>
-              <th scope="col">Email</th>
-              <th scope="col">Password</th>
-              <th col="2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php while($results = mysqli_fetch_assoc($sqlUsers)) { ?>
-            <tr>
-              <td><?php echo $results['last_names'] ?></td>
-              <td><?php echo $results['first_names'] ?></td>
-              <td><?php echo $results['emails'] ?></td>
-              <td><?php echo $results['passwords'] ?></td>
-              <td>
-                <form action="./php/update_users.php" method="post">
-                  <input type="submit" name="edit" value="EDIT" class="btn btn-success fw-bold">
-                  <input type="hidden" name="edit_id" value="<?php echo $results['id'] ?>">
-                  <input type="hidden" name="edit_last_name" value="<?php echo $results['last_names'] ?>">
-                  <input type="hidden" name="edit_first_name" value="<?php echo $results['first_names'] ?>">
-                  <input type="hidden" name="edit_email" value="<?php echo $results['emails'] ?>">
-                  <input type="hidden" name="edit_password" value="<?php echo $results['passwords'] ?>">
-                </form>
-              </td>
-              <td>
-                <form action="./php/delete_users.php" method="post">
-                  <input type="submit" name="delete" value="DELETE" class="btn btn-danger fw-bold">
-                  <input type="hidden" name="deleteId" value="<?php echo $results['id'] ?>">
-                </form>
-              </td>
-            </tr>
-            <?php } ?>
-          </tbody>
-        </table>
-      </div>
     </div>
   </div>
 </body>
