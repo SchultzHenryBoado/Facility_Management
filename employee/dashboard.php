@@ -38,7 +38,13 @@
       <div class="collapse navbar-collapse" id="nav">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-5">
           <li class="nav-item text-center">
-            <a href="#" class="nav-link text-light">Reservation</a>
+            <a href="dashboard.php" class="nav-link text-light">Dashboard</a>
+          </li>
+          <li class="nav-item text-center">
+            <a href="reservation.php" class="nav-link text-light">Reservation</a>
+          </li>
+          <li class="nav-item text-center">
+            <a href="#" class="nav-link text-light">Inquire</a>
           </li>
           <li class="nav-item text-center">
             <a href="#" class="nav-link text-light">Cancellation</a>
@@ -81,15 +87,15 @@
   <!-- TABLE -->
   <div class="container-fluid mt-5">
     <div class="container bg-primary shadow p-3 mb-5 bg-body rounded">
-      <a href="#" class="btn btn-success float-end fw-bold" role="button">Inquire</a>
       <p class="h1 text-center mb-3">Schedules Today</p>
       <table class="table table-striped table-hover">
         <thead>
           <tr>
             <th scope="col">Room No.</th>
-            <th scope="col">From</th>
-            <th scope="col">To</th>
+            <th scope="col">Time From</th>
+            <th scope="col">Time To</th>
             <th scope="col">Reserved By</th>
+            <th scope="col">Company</th>
           </tr>
         </thead>
         <tbody>
@@ -98,24 +104,7 @@
             <td>Sample From</td>
             <td>Sample To</td>
             <td>Sample Reserved By</td>
-          </tr>
-          <tr>
-            <td>Sample Room No.</td>
-            <td>Sample From</td>
-            <td>Sample To</td>
-            <td>Sample Reserved By</td>
-          </tr>
-          <tr>
-            <td>Sample Room No.</td>
-            <td>Sample From</td>
-            <td>Sample To</td>
-            <td>Sample Reserved By</td>
-          </tr>
-          <tr>
-            <td>Sample Room No.</td>
-            <td>Sample From</td>
-            <td>Sample To</td>
-            <td>Sample Reserved By</td>
+            <td>Sample Company</td>
           </tr>
         </tbody>
       </table>

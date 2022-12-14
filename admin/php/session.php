@@ -1,7 +1,7 @@
 <?php 
   session_start();
 
-  function path($destination) {
+  function pathTo($destination) {
     echo "<script>window.location.href = '/facility_management/admin/$destination.php'</script>";
   }
 
@@ -13,7 +13,7 @@
     unset($_SESSION['admin_username']);
 
     /* Redirect to login page */
-    path('index');
+    pathTo('index');
     
   }
 ?>

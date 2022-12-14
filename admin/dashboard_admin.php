@@ -41,7 +41,7 @@
       <div class="collapse navbar-collapse" id="nav">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-5">
           <li class="nav-item text-center">
-            <a href="dashboard-admin.php" class="nav-link text-light">Dashboard</a>
+            <a href="dashboard_admin.php" class="nav-link text-light">Dashboard</a>
           </li>
           <li class="nav-item text-center">
             <a href="#" class="nav-link text-light">Reservation</a>

@@ -3,15 +3,18 @@
 
   session_start();
 
-  echo $_SESSION['admin_status'];
+  // path
+  function pathTo($destination) {
+    echo "<script>window.location.href = '/facility_management/admin/$destination.php' </script>";
+  }
 
   if ($_SESSION['admin_status'] == 'invalid' || empty($_SESSION['admin_status'])) {
-    // set default invalid
+    // set default status
     $_SESSION['admin_status'] = 'invalid';
   }
 
   if ($_SESSION['admin_status'] == 'valid') {
-    header("Local: dashboard-admin.php");
+    pathTo('dashboard_admin');
   }
 
   if (isset($_POST['login'])) {
@@ -26,9 +29,8 @@
       $_SESSION['admin_status'] = 'valid';
       $_SESSION['admin_username'] = $results['admin_username'];
       
-      header("Location: dashboard-admin.php");
+      pathTo('dashboard_admin');
     } else {
-      $_SESSION['admin_status'] = 'invalid';
       echo '
       <div class="container mt-5 d-flex justify-content-center">
       <div class="alert alert-danger text-center w-25 mt-2">Invalid Credential</div>
@@ -80,13 +82,6 @@
                 <div class="invalid-feedback">
                   Please fill-up the Password.
                 </div>
-              </div>
-
-              <div class="form-check mb-3">
-                <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
-                <label class="form-check-label" for="rememberPasswordCheck">
-                  Remember password
-                </label>
               </div>
               <div class="d-grid">
                 <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit" name="login">Sign
