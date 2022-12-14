@@ -35,7 +35,7 @@
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
         <i class="fa-sharp fa-solid fa-bars-staggered __icon"></i>
       </button>
-      <a class="navbar-brand fw-bold text-white __navbar-brand" href="dashboard-admin.php">Facility Management
+      <a class="navbar-brand fw-bold text-white __navbar-brand" href="dashboard_admin.php">Facility Management
         System</a>
 
       <div class="collapse navbar-collapse" id="nav">
@@ -60,7 +60,7 @@
               <li><a class="dropdown-item" href="register.php">User</a></li>
               <li><a class="dropdown-item" href="company.php">Company</a></li>
               <li><a class="dropdown-item" href="floor_master.php">Floor Master</a></li>
-              <li><a class="dropdown-item" href="#">Facility Type</a></li>
+              <li><a class="dropdown-item" href="facility_type.php">Facility Type</a></li>
               <li><a class="dropdown-item" href="#">Facility Room</a></li>
             </ul>
           </li>

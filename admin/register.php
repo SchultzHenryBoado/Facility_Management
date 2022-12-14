@@ -68,8 +68,8 @@
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="register.php">User</a></li>
               <li><a class="dropdown-item" href="company.php">Company</a></li>
-              <li><a class="dropdown-item" href="#">Floor Master</a></li>
-              <li><a class="dropdown-item" href="#">Facility Type</a></li>
+              <li><a class="dropdown-item" href="floor_master.php">Floor Master</a></li>
+              <li><a class="dropdown-item" href="facility_type.php">Facility Type</a></li>
               <li><a class="dropdown-item" href="#">Facility Room</a></li>
             </ul>
           </li>

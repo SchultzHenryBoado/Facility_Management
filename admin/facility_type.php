@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FLOOR MASTER</title>
+  <title>FACILITY TYPE</title>
 
   <!-- CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -69,11 +69,11 @@
     </div>
   </nav>
 
-  <!-- FLOOR MASTER -->
+  <!-- COMPANY -->
   <div class="container-fluid mt-5">
     <div class="container w-50 shadow p-3 mb-5 bg-body rounded">
       <form action="./php/create_users.php" method="post" class="needs-validation">
-        <p class="h1 mb-3">Floor Master</p>
+        <p class="h1 mb-3">Facility Type </p>
 
         <div class="row">
 
@@ -81,13 +81,13 @@
           <div class="col-12 ">
             <div class="mb-3" class="form-group">
               <label for="code" class="form-label">Code:</label>
-              <input type="text" name="floor_master_code" id="code" class="form-control" />
+              <input type="text" name="facility_code" id="code" class="form-control" />
               <!-- <div class="invalid-feedback">
                 Please fill-up the Lastname
               </div> -->
             </div>
           </div>
-          <!-- DESCRIPTION -->
+          <!-- FACILITY NAME -->
           <div class="col-12 ">
             <div class="mb-3" class="form-group">
               <label for="description" class="form-label">Description:</label>
@@ -123,8 +123,8 @@
           </thead>
           <tbody>
             <tr>
-              <td>Sample Code</td>
-              <td>Sample Description</td>
+              <td>Sample Code:</td>
+              <td>Sample Description:</td>
               <td></td>
               <td></td>
             </tr>

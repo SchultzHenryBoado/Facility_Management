@@ -54,7 +54,7 @@
               <li><a class="dropdown-item" href="register.php">User</a></li>
               <li><a class="dropdown-item" href="company.php">Company</a></li>
               <li><a class="dropdown-item" href="floor_master.php">Floor Master</a></li>
-              <li><a class="dropdown-item" href="#">Facility Type</a></li>
+              <li><a class="dropdown-item" href="facility_type.php">Facility Type</a></li>
               <li><a class="dropdown-item" href="#">Facility Room</a></li>
             </ul>
           </li>
@@ -122,10 +122,8 @@
           </thead>
           <tbody>
             <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td>Sample Code:</td>
+              <td>Sample Company Name:</td>
               <td></td>
               <td></td>
             </tr>
