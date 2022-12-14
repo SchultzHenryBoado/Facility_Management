@@ -1,17 +1,10 @@
 <?php 
    require_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php';
 
-   $data = [];
-
-   if(!empty($errors)) {
-      $data['success'] = false;
-      $data['errors'] = $errors;
-    } else {
-      $data['success'] = true;
-      $data['message'] = 'Added successfully';
-    }
-
-    echo json_encode($data);
+   // path
+    function pathTo($destination) {
+    echo "<script>window.location.href = '/facility_management/admin/$destination.php'</script>";
+  }
 
    if (isset($_POST['register'])) {
       $lastName = mysqli_real_escape_string($con, $_POST['last_name']);
@@ -20,8 +13,19 @@
       $password = mysqli_real_escape_string($con, $_POST['password']);
       $encryptPassword = md5($password);
 
-      $queryUsers = "INSERT INTO users_accounts VALUES (null, '$lastName', '$firstName', '$email', '$encryptPassword')";
-      $sqlUsers = mysqli_query($con, $queryUsers);
-      
-      header("Location: ../register.php");
+      $queryValidate = "SELECT * FROM users_accounts WHERE emails = '$email' ";
+      $sqlValidate = mysqli_query($con, $queryValidate);
+         
+      if (mysqli_num_rows($sqlValidate) == 1 ) {
+         echo "
+            <script>window.alert('The email is existed')</script>
+         ";
+         pathTo('register');
+      } else {
+         $queryCreate = "INSERT INTO users_accounts VALUES(null ,'$lastName', '$firstName', '$email', '$encryptPassword')";
+         $sqlCreate = mysqli_query($con, $queryCreate);
+         pathTo('register');
+
+      }
+  
    }

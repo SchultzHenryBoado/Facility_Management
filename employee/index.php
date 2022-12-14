@@ -70,7 +70,7 @@
             <form action="index.php" method="post" class="needs-validation" novalidate>
               <div class="form-floating mb-3">
                 <input type="email" class="form-control" id="floatingInput" placeholder="Email" name="email" required>
-                <label for="floatingInput" class="form-label">Email</label>
+                <label for="floatingInput" class="form-label">Enter your Email</label>
                 <div class="invalid-feedback">
                   Please fill-up the Email.
                 </div>
@@ -78,14 +78,15 @@
               <div class="form-floating mb-3">
                 <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password"
                   required>
-                <label for="floatingPassword" class="form-label">Password</label>
+                <label for="floatingPassword" class="form-label">Enter your Password</label>
                 <div class="invalid-feedback">
                   Please fill-up the Password.
                 </div>
               </div>
 
               <div class="mb-3">
-                <a href="#" class="h6 text-dark text-decoration-none text-primary fst-italic float-end">Forgot
+                <a href="./forgot_password.php"
+                  class="h6 text-dark text-decoration-none text-primary fst-italic float-end">Forgot
                   Password</a>
               </div>
               <div class=" mt-5 d-grid">

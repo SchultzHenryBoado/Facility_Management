@@ -70,7 +70,7 @@
               <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="floatingInput" placeholder="Username" name="username"
                   required>
-                <label for="floatingInput" class="form-label">Username</label>
+                <label for="floatingInput" class="form-label">Enter your Username</label>
                 <div class="invalid-feedback">
                   Please fill-up the Username.
                 </div>
@@ -78,7 +78,7 @@
               <div class="form-floating mb-3">
                 <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password"
                   required>
-                <label for="floatingPassword" class="form-label">Password</label>
+                <label for="floatingPassword" class="form-label">Enter your Password</label>
                 <div class="invalid-feedback">
                   Please fill-up the Password.
                 </div>
