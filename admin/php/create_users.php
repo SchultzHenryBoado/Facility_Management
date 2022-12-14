@@ -1,6 +1,18 @@
 <?php 
    require_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php';
 
+   $data = [];
+
+   if(!empty($errors)) {
+      $data['success'] = false;
+      $data['errors'] = $errors;
+    } else {
+      $data['success'] = true;
+      $data['message'] = 'Added successfully';
+    }
+
+    echo json_encode($data);
+
    if (isset($_POST['register'])) {
       $lastName = mysqli_real_escape_string($con, $_POST['last_name']);
       $firstName = mysqli_real_escape_string($con, $_POST['first_name']);

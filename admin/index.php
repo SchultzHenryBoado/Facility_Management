@@ -3,6 +3,8 @@
 
   session_start();
 
+  echo $_SESSION['admin_status'];
+
   if ($_SESSION['admin_status'] == 'invalid' || empty($_SESSION['admin_status'])) {
     // set default invalid
     $_SESSION['admin_status'] = 'invalid';
