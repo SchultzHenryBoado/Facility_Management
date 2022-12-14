@@ -1,6 +1,7 @@
 <?php 
     // DATABASE
     require_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php';
+    require './php/session.php';
     
     $queryUsers = "SELECT * FROM users_accounts";
     $sqlUsers = mysqli_query($con, $queryUsers);

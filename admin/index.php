@@ -1,6 +1,17 @@
 <?php 
   require_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php'; 
 
+  session_start();
+
+  if ($_SESSION['admin_status'] == 'invalid' || empty($_SESSION['admin_status'])) {
+    // set default invalid
+    $_SESSION['admin_status'] = 'invalid';
+  }
+
+  if ($_SESSION['admin_status'] == 'valid') {
+    header("Local: dashboard-admin.php");
+  }
+
   if (isset($_POST['login'])) {
     $username = mysqli_real_escape_string($con, $_POST['username']);
     $password = mysqli_real_escape_string($con, $_POST['password']);
@@ -12,11 +23,13 @@
     if (mysqli_num_rows($sqlLogin) > 0) {
       $_SESSION['admin_status'] = 'valid';
       $_SESSION['admin_username'] = $results['admin_username'];
+      
       header("Location: dashboard-admin.php");
     } else {
+      $_SESSION['admin_status'] = 'invalid';
       echo '
       <div class="container mt-5 d-flex justify-content-center">
-      <div class="alert alert-danger text-center w-25 mt-2">Wrong Username and Password</div>
+      <div class="alert alert-danger text-center w-25 mt-2">Invalid Credential</div>
       </div>
       ';
     }

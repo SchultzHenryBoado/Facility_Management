@@ -1,4 +1,7 @@
 <?php 
+  require './php/session.php';
+
+  
 ?>
 
 <!DOCTYPE html>
