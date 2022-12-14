@@ -18,8 +18,9 @@
       $updateFirstname = mysqli_real_escape_string($con, $_POST['update_first_name']);
       $updateEmail = mysqli_real_escape_string($con, $_POST['update_email']);
       $updatePassword = mysqli_real_escape_string($con, $_POST['update_password']);
+      $encryptUpdatePassword = md5($updatePassword);
 
-      $queryUpdateUsers = "UPDATE users_accounts SET last_names = '$updateLastname', first_names = '$updateFirstname', emails = '$updateEmail', passwords = '$updatePassword' WHERE id = '$updateId' ";
+      $queryUpdateUsers = "UPDATE users_accounts SET last_names = '$updateLastname', first_names = '$updateFirstname', emails = '$updateEmail', passwords = '$encryptUpdatePassword' WHERE id = '$updateId' ";
       $sqlUpdateUsers = mysqli_query($con, $queryUpdateUsers);
 
       header("Location: ../register.php");
