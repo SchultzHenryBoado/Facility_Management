@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 15, 2022 at 07:29 AM
--- Server version: 10.4.25-MariaDB
--- PHP Version: 7.4.30
+-- Generation Time: Dec 15, 2022 at 09:56 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -31,7 +31,7 @@ CREATE TABLE `admin_accounts` (
   `id` int(11) NOT NULL,
   `admin_username` varchar(255) NOT NULL,
   `admin_password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin_accounts`
@@ -39,6 +39,87 @@ CREATE TABLE `admin_accounts` (
 
 INSERT INTO `admin_accounts` (`id`, `admin_username`, `admin_password`) VALUES
 (1, 'admin', 'admin123');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `companies`
+--
+
+CREATE TABLE `companies` (
+  `id` int(11) NOT NULL,
+  `company_code` varchar(255) NOT NULL,
+  `company_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `companies`
+--
+
+INSERT INTO `companies` (`id`, `company_code`, `company_name`) VALUES
+(1, 'OBN', 'Obanana Corp.'),
+(2, 'PMI', 'Premium Megastructures Inc.'),
+(3, 'PIVI', 'Premium Infinite Ventures Inc.');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `facilities`
+--
+
+CREATE TABLE `facilities` (
+  `id` int(11) NOT NULL,
+  `facility_code` varchar(255) NOT NULL,
+  `facility_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `facilities`
+--
+
+INSERT INTO `facilities` (`id`, `facility_code`, `facility_name`) VALUES
+(1, 'BSKTBLLRM', 'Basketball Room'),
+(4, 'MTNGRM', 'Meeting Room'),
+(5, 'BRDRM', 'Board Room'),
+(6, 'VLLYBLLRM', 'Volleyball Room');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `facility_room_masters`
+--
+
+CREATE TABLE `facility_room_masters` (
+  `id` int(11) NOT NULL,
+  `facility_type` varchar(255) NOT NULL,
+  `facility_number` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `facility_name` varchar(255) NOT NULL,
+  `floor_location` varchar(255) NOT NULL,
+  `max_capacity` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `floors`
+--
+
+CREATE TABLE `floors` (
+  `id` int(11) NOT NULL,
+  `floor_code` varchar(255) NOT NULL,
+  `floor_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `floors`
+--
+
+INSERT INTO `floors` (`id`, `floor_code`, `floor_name`) VALUES
+(1, '15F', '15th floor'),
+(3, '16F', '16th floor'),
+(4, '17F', '17th floor');
 
 -- --------------------------------------------------------
 
@@ -51,17 +132,21 @@ CREATE TABLE `users_accounts` (
   `last_names` varchar(255) NOT NULL,
   `first_names` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
+  `company` varchar(255) NOT NULL,
   `emails` varchar(255) NOT NULL,
   `passwords` varchar(255) NOT NULL,
-  `status` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `statuses` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users_accounts`
 --
 
-INSERT INTO `users_accounts` (`id`, `last_names`, `first_names`, `username`, `emails`, `passwords`, `status`) VALUES
-(4, 'Boado', 'Schultz Henry', 'henryboado', 'schultzhenry.boado@obanana.com', 'e99a18c428cb38d5f260853678922e03', 'ACTIVE');
+INSERT INTO `users_accounts` (`id`, `last_names`, `first_names`, `username`, `company`, `emails`, `passwords`, `statuses`) VALUES
+(1, 'Boado', 'Schultz Henry', 'henryboado', 'Obanana Corp.', 'schultzhenry.boado@obanana.com', '202cb962ac59075b964b07152d234b70', 'ACTIVE'),
+(2, 'Gloda', 'John Bryan', 'bryangloda', 'Premium Megastructures Inc.', 'bryan.gloda@obanana.com', 'e99a18c428cb38d5f260853678922e03', 'ACTIVE'),
+(3, 'Mangalo', 'Ryan Christian', 'ryanmangalo', 'Obanana Corp.', 'ryan.mangalo@obanana.com', 'e99a18c428cb38d5f260853678922e03', 'ACTIVE'),
+(8, 'Matias', 'Ryan', 'ryanmatias', 'Obanana Corp.', 'ryan.matias@obanana.com', '57f231b1ec41dc6641270cb09a56f897', 'INACTIVE');
 
 --
 -- Indexes for dumped tables
@@ -71,6 +156,30 @@ INSERT INTO `users_accounts` (`id`, `last_names`, `first_names`, `username`, `em
 -- Indexes for table `admin_accounts`
 --
 ALTER TABLE `admin_accounts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `companies`
+--
+ALTER TABLE `companies`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `facilities`
+--
+ALTER TABLE `facilities`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `facility_room_masters`
+--
+ALTER TABLE `facility_room_masters`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `floors`
+--
+ALTER TABLE `floors`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -90,10 +199,34 @@ ALTER TABLE `admin_accounts`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `companies`
+--
+ALTER TABLE `companies`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `facilities`
+--
+ALTER TABLE `facilities`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `facility_room_masters`
+--
+ALTER TABLE `facility_room_masters`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `floors`
+--
+ALTER TABLE `floors`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `users_accounts`
 --
 ALTER TABLE `users_accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
