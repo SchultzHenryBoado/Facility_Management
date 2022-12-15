@@ -1,30 +1,46 @@
 <?php 
-    // DATABASE
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php';
+  // DATABASE
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php';
+
+  // COMPANY
+  $queryCompanyName = "SELECT company_name FROM companies";
+  $sqlCompanyName = mysqli_query($con, $queryCompanyName);
+
+  // PATH
+  function pathTo($destination) {
+    echo "<script>window.location.href = '/facility_management/admin/$destination.php'</script>";
+  }
     
-    // EDIT USERS
-    if (isset($_POST['edit'])) {
-      $editId = mysqli_real_escape_string($con, $_POST['edit_id']);
-      $editLastname = mysqli_real_escape_string($con, $_POST['edit_last_name']);
-      $editFirstname = mysqli_real_escape_string($con, $_POST['edit_first_name']);
-      $editEmail = mysqli_real_escape_string($con, $_POST['edit_email']);
-      $editPassword = mysqli_real_escape_string($con, $_POST['edit_password']);
-    }
+  // EDIT USERS
+  if (isset($_POST['edit'])) {
+    $editId = mysqli_real_escape_string($con, $_POST['edit_id']);
+    $editLastname = mysqli_real_escape_string($con, $_POST['edit_last_name']);
+    $editFirstname = mysqli_real_escape_string($con, $_POST['edit_first_name']);
+    $editUsername = mysqli_real_escape_string($con, $_POST['edit_username']);
+    $editCompany = mysqli_real_escape_string($con, $_POST['edit_company']);
+    $editEmail = mysqli_real_escape_string($con, $_POST['edit_email']);
+    $editPassword = mysqli_real_escape_string($con, $_POST['edit_password']);
+    $editStatus = mysqli_real_escape_string($con, $_POST['edit_status']);
+  }
 
-    // UPDATE USERS
-    if (isset($_POST['update'])) {
-      $updateId = mysqli_real_escape_string($con, $_POST['update_id']);
-      $updateLastname = mysqli_real_escape_string($con, $_POST['update_last_name']);
-      $updateFirstname = mysqli_real_escape_string($con, $_POST['update_first_name']);
-      $updateEmail = mysqli_real_escape_string($con, $_POST['update_email']);
-      $updatePassword = mysqli_real_escape_string($con, $_POST['update_password']);
-      $encryptUpdatePassword = md5($updatePassword);
+  // UPDATE USERS
+  if (isset($_POST['update'])) {
+    $updateId = mysqli_real_escape_string($con, $_POST['update_id']);
+    $updateLastname = mysqli_real_escape_string($con, $_POST['update_last_name']);
+    $updateFirstname = mysqli_real_escape_string($con, $_POST['update_first_name']);
+    $updateUsername = mysqli_real_escape_string($con, $_POST['update_username']);
+    $updateCompany = mysqli_real_escape_string($con, $_POST['update_company']);
+    $updateEmail = mysqli_real_escape_string($con, $_POST['update_email']);
+    $updatePassword = mysqli_real_escape_string($con, $_POST['update_password']);
+    $encryptUpdatePassword = md5($updatePassword);
+    $updateStatus = mysqli_real_escape_string($con, $_POST['update_status']);
 
-      $queryUpdateUsers = "UPDATE users_accounts SET last_names = '$updateLastname', first_names = '$updateFirstname', emails = '$updateEmail', passwords = '$encryptUpdatePassword' WHERE id = '$updateId' ";
-      $sqlUpdateUsers = mysqli_query($con, $queryUpdateUsers);
+    $queryUpdateUsers = "UPDATE users_accounts SET last_names = '$updateLastname', first_names = '$updateFirstname', username = '$updateUsername', company = '$updateCompany', emails = '$updateEmail', passwords = '$encryptUpdatePassword', statuses = '$updateStatus' WHERE id = '$updateId' ";
+    $sqlUpdateUsers = mysqli_query($con, $queryUpdateUsers);
 
-      header("Location: ../register.php");
-    }
+    pathTo('register');
+
+  }
 ?>
 
 <!DOCTYPE html>
@@ -91,7 +107,7 @@
   <!-- Form for registering the users -->
   <div class="container-fluid mt-5">
     <div class="container w-50 shadow p-3 mb-5 bg-body rounded">
-      <form action="update_users.php" method="post" class="needs-validation" novalidate>
+      <form action="users_update.php" method="post" class="needs-validation" novalidate>
         <p class="h1 mb-3">Update a Users</p>
 
         <div class="row">
@@ -104,7 +120,7 @@
               <input type="text" name="update_last_name" id="lastName" class="form-control"
                 value="<?php echo $editLastname ?>" required />
               <div class="invalid-feedback">
-                Please input an update Lastname
+                Please input an update lastname.
               </div>
             </div>
           </div>
@@ -115,7 +131,33 @@
               <input type="text" name="update_first_name" id="firstName" class="form-control"
                 value="<?php echo $editFirstname ?>" required />
               <div class="invalid-feedback">
-                Please input an update Firstname
+                Please input an update firstname.
+              </div>
+            </div>
+          </div>
+          <!-- USERNAME -->
+          <div class="col-12 ">
+            <div class="mb-3">
+              <label for="username" class="form-label">Username:</label>
+              <input type="text" name="update_username" id="username" class="form-control"
+                value="<?php echo $editUsername ?>" required />
+              <div class="invalid-feedback">
+                Please input an update username.
+              </div>
+            </div>
+          </div>
+          <!-- COMPANY -->
+          <div class="col-12">
+            <div class="mb-3">
+              <label for="company" class="form-label">Company:</label>
+              <select name="update_company" id="company" class="form-select" required>
+                <option disabled selected value>-- Select Company --</option>
+                <?php while($row = mysqli_fetch_assoc($sqlCompanyName)) { ?>
+                <option value="<?php echo $row['company_name'] ?>"><?php echo $row['company_name'] ?></option>
+                <?php } ?>
+              </select>
+              <div class="invalid-feedback">
+                Please choose a company.
               </div>
             </div>
           </div>
@@ -126,7 +168,7 @@
               <input type="email" name="update_email" id="email" class="form-control" value="<?php echo $editEmail ?>"
                 required />
               <div class="invalid-feedback">
-                Please input an update Email
+                Please input an update email.
               </div>
             </div>
           </div>
@@ -137,7 +179,21 @@
               <input type="password" name="update_password" id="password" class="form-control"
                 value="<?php echo $editPassword ?>" required />
               <div class="invalid-feedback">
-                Please input an update Password
+                Please input an update password.
+              </div>
+            </div>
+          </div>
+          <!-- STATUS -->
+          <div class="col-12">
+            <div class="mb-3">
+              <label for="status" class="form-label">Status:</label>
+              <select name="update_status" id="status" class="form-select" required>
+                <option disabled selected value>-- Select Status --</option>
+                <option value="ACTIVE">ACTIVE</option>
+                <option value="INACTIVE">INACTIVE</option>
+              </select>
+              <div class="invalid-feedback">
+                Please choose a company.
               </div>
             </div>
           </div>
@@ -146,7 +202,6 @@
               <input type="submit" name="update" value="UPDATE" class="btn btn-success fw-bold float-end" />
             </div>
           </div>
-
         </div>
       </form>
     </div>

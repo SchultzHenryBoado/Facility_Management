@@ -1,9 +1,30 @@
 <?php 
   require_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php';
-  require './php/session.php';
 
-  $queryCompany = "SELECT * FROM companies";
-  $sqlCompany = mysqli_query($con, $queryCompany);
+  // path
+    function pathTo($destination) {
+    echo "<script>window.location.href = '/facility_management/admin/$destination.php'</script>";
+  }
+
+  if (isset($_POST['edit'])) {
+    $editId = mysqli_real_escape_string($con, $_POST['edit_id']);
+    $editCompanyCode = mysqli_real_escape_string($con, $_POST['edit_code']);
+    $editCompanyName = mysqli_real_escape_string($con, $_POST['edit_company_name']);
+  }
+
+  // UPDATE
+  if (isset($_POST['update_company'])) {
+    $updateId = mysqli_real_escape_string($con, $_POST['update_id']);
+    $updateCode = mysqli_real_escape_string($con, $_POST['update_company_code']);
+    $upperCaseCode = strtoupper($updateCode);
+    $updateCompany = mysqli_real_escape_string($con, $_POST['update_company_name']);
+
+    $queryUpdate = "UPDATE companies SET company_code = '$upperCaseCode', company_name = '$updateCompany' WHERE id = '$updateId' ";
+    $sqlUpdate = mysqli_query($con, $queryUpdate);
+
+    pathTo('company');
+  }
+
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +34,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>COMPANY</title>
+  <title>UPDATE COMPANY</title>
 
   <!-- CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -43,7 +64,7 @@
       <div class="collapse navbar-collapse" id="nav">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-5">
           <li class="nav-item text-center">
-            <a href="dashboard_admin.php" class="nav-link text-light">Dashboard</a>
+            <a href="../dashboard_admin.php" class="nav-link text-light">Dashboard</a>
           </li>
           <li class="nav-item text-center">
             <a href="#" class="nav-link text-light">Reservation</a>
@@ -59,16 +80,16 @@
               Masterfile
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="register.php">User</a></li>
-              <li><a class="dropdown-item" href="company.php">Company</a></li>
-              <li><a class="dropdown-item" href="floor_master.php">Floor Master</a></li>
-              <li><a class="dropdown-item" href="facility_type.php">Facility Type</a></li>
+              <li><a class="dropdown-item" href="../register.php">User</a></li>
+              <li><a class="dropdown-item" href="../company.php">Company</a></li>
+              <li><a class="dropdown-item" href="../floor_master.php">Floor Master</a></li>
+              <li><a class="dropdown-item" href="../facility_type.php">Facility Type</a></li>
               <li><a class="dropdown-item" href="#">Facility Room</a></li>
             </ul>
           </li>
 
           <li class="nav-item text-center">
-            <form action="./php/logout.php" method="post">
+            <form action="./logout.php" method="post">
               <input type="submit" value="Logout" class="btn btn-primary" />
             </form>
           </li>
@@ -80,16 +101,18 @@
   <!-- COMPANY -->
   <div class="container-fluid mt-5">
     <div class="container w-50 shadow p-3 mb-5 bg-body rounded">
-      <form action="./php/company_create.php" method="post" class="needs-validation" novalidate>
-        <p class="h1 mb-3">Company </p>
+      <form action="company_update.php" method="post" class="needs-validation" novalidate>
+        <p class="h1 mb-3">UPDATE COMPANY </p>
 
         <div class="row">
-
+          <!-- ID -->
+          <input type="hidden" name="update_id" value="<?php echo $editId ?>">
           <!-- CODE -->
           <div class="col-12 ">
             <div class="mb-3" class="form-group">
               <label for="code" class="form-label">Code:</label>
-              <input type="text" name="company_code" id="code" class="form-control" required />
+              <input type="text" name="update_company_code" id="code" class="form-control"
+                value="<?php echo $editCompanyCode ?>" required />
               <div class="invalid-feedback">
                 Please fill-up the company code.
               </div>
@@ -99,7 +122,8 @@
           <div class="col-12 ">
             <div class="mb-3" class="form-group">
               <label for="companyName" class="form-label">Company name:</label>
-              <input type="text" name="company_name" id="companyName" class="form-control" required />
+              <input type="text" name="update_company_name" id="companyName" class="form-control"
+                value="<?php echo $editCompanyName ?>" required />
               <div class="invalid-feedback">
                 Please fill-up the company name.
               </div>
@@ -108,50 +132,11 @@
           <!-- BUTTON -->
           <div class="col-12">
             <div class="mb-3">
-              <input type="submit" name="create_company" value="OK" class="btn btn-success fw-bold float-end" />
+              <input type="submit" name="update_company" value="UPDATE" class="btn btn-success fw-bold float-end" />
             </div>
           </div>
         </div>
       </form>
-    </div>
-  </div>
-
-  <!-- COMPANY LIST -->
-  <div class="container-fluid">
-    <div class="container shadow p-3 mb-5 bg-body-rounded">
-      <div class="table-responsive">
-        <table class="table table-hover table-striped">
-          <thead>
-            <tr>
-              <th scope="col">Code:</th>
-              <th scope="col">Company Name:</th>
-              <th col="2">Actions:</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php while($results = mysqli_fetch_assoc($sqlCompany)) { ?>
-            <tr>
-              <td><?php echo $results['company_code']?></td>
-              <td><?php echo $results['company_name']?></td>
-              <td>
-                <form action="./php/company_update.php" method="post">
-                  <input type="submit" name="edit" value="EDIT" class="btn btn-success fw-bold">
-                  <input type="hidden" name="edit_id" value="<?php echo $results['id'] ?>">
-                  <input type="hidden" name="edit_code" value="<?php echo $results['company_code'] ?>">
-                  <input type="hidden" name="edit_company_name" value="<?php echo $results['company_name'] ?>">
-                </form>
-              </td>
-              <td>
-                <form action="./php/company_delete.php" method="post">
-                  <input type="submit" name="delete" value="DELETE" class="btn btn-danger fw-bold">
-                  <input type="hidden" name="delete_id" value="<?php echo $results['id'] ?>">
-                </form>
-              </td>
-            </tr>
-            <?php } ?>
-          </tbody>
-        </table>
-      </div>
     </div>
   </div>
 </body>

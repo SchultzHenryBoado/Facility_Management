@@ -1,10 +1,15 @@
 <?php 
-    // DATABASE
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php';
-    require './php/session.php';
-    
-    $queryUsers = "SELECT * FROM users_accounts";
-    $sqlUsers = mysqli_query($con, $queryUsers);
+  // DATABASE
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php';
+  require './php/session.php';
+  
+  // USERS
+  $queryUsers = "SELECT * FROM users_accounts";
+  $sqlUsers = mysqli_query($con, $queryUsers);
+
+  // COMPANY
+  $queryCompany = "SELECT company_name FROM companies";
+  $sqlCompany = mysqli_query($con, $queryCompany);
 
 ?>
 
@@ -30,8 +35,8 @@
     integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
   </script>
   <!-- <script src="./js/forms.js" defer></script> -->
-  <!-- <script src="./js/validation.js" defer></script> -->
-  <script src="./js/modal.js" defer></script>
+  <script src="./js/validation.js" defer></script>
+
 
   <!-- FONT AWESOME -->
   <script src="https://kit.fontawesome.com/8cbc2e0f0e.js" crossorigin="anonymous"></script>
@@ -87,70 +92,89 @@
   <!-- Form for registering the users -->
   <div class="container-fluid mt-5">
     <div class="container w-50 shadow p-3 mb-5 bg-body rounded">
-      <form action="./php/create_users.php" method="post" class="needs-validation">
+      <form action="./php/users_create.php" method="post" class="needs-validation" novalidate>
         <p class="h1 mb-3">Register a Users</p>
 
         <div class="row">
 
           <!-- LAST NAME -->
           <div class="col-12 col-md-6 col-lg-6">
-            <div class="mb-3" id="lastNameGroup" class="form-group">
-              <label for="lastName" class="form-label">Last name:</label>
-              <input type="text" name="last_name" id="lastName" class="form-control" />
-              <!-- <div class="invalid-feedback">
-                Please fill-up the Lastname
-              </div> -->
+            <div class="mb-3" class="form-group">
+              <label for="lastName" class="form-label ">Last name:</label>
+              <input type="text" name="last_name" id="lastName" class="form-control" required />
+              <div class="invalid-feedback">
+                Please fill-up the lastname.
+              </div>
             </div>
           </div>
           <!-- FIRST NAME -->
           <div class="col-12 col-md-6 col-lg-6">
-            <div class="mb-3" id="firstNameGroup" class="form-group">
+            <div class="mb-3" class="form-group">
               <label for="firstName" class="form-label">First name:</label>
-              <input type="text" name="first_name" id="firstName" class="form-control" />
-              <!-- <div class="invalid-feedback">
-                Please fill-up the Firstname
-              </div> -->
+              <input type="text" name="first_name" id="firstName" class="form-control" required />
+              <div class="invalid-feedback">
+                Please fill-up the firstname.
+              </div>
             </div>
           </div>
           <!-- USERNAME -->
           <div class="col-12">
-            <div class="mb-3" id="lastNameGroup" class="form-group">
+            <div class="mb-3" class="form-group">
               <label for="userName" class="form-label">Username:</label>
-              <input type="text" name="username" id="userName" class="form-control" />
-              <!-- <div class="invalid-feedback">
-                Please fill-up the Lastname
-              </div> -->
+              <input type="text" name="username" id="userName" class="form-control" required />
+              <div class="invalid-feedback">
+                Please fill-up the username.
+              </div>
+            </div>
+          </div>
+          <!-- COMPANY -->
+          <div class="col-12">
+            <div class="mb-3" class="form-group">
+              <label for="company" class="form-label">Company:</label>
+              <select name="company" id="company" class="form-select" required>
+                <option disabled selected value>-- Select Company --</option>
+                <?php while($rowCompanyName = mysqli_fetch_assoc($sqlCompany)) { ?>
+                <option value="<?php echo $rowCompanyName['company_name'] ?>">
+                  <?php echo $rowCompanyName['company_name'] ?></option>
+                <?php } ?>
+              </select>
+              <div class="invalid-feedback">
+                Please choose a company.
+              </div>
             </div>
           </div>
           <!-- EMAIL -->
           <div class="col-12">
-            <div class="mb-3" id="emailGroup" class="form-group">
+            <div class="mb-3" class="form-group">
               <label for="email" class="form-label">Company Email:</label>
-              <input type="email" name="email" id="email" class="form-control" />
-              <!-- <div class="invalid-feedback">
-                Please fill-up the Email
-              </div> -->
+              <input type="email" name="email" id="email" class="form-control" required />
+              <div class="invalid-feedback">
+                Please fill-up the email.
+              </div>
             </div>
           </div>
           <!-- PASSWORD -->
           <div class="col-12">
             <div class="mb-3" id="passwordGroup" class="form-group">
               <label for="password" class="form-label">Password:</label>
-              <input type="password" name="password" id="password" class="form-control" />
-              <!-- <div class="invalid-feedback">
-                Please fill-up the Password
-              </div> -->
+              <input type="password" name="password" id="password" class="form-control" required />
+              <div class="invalid-feedback">
+                Please fill-up the password.
+              </div>
             </div>
           </div>
           <!-- STATUS -->
           <div class="col-12">
             <div class="mb-3">
               <label for="status" class="form-label">Status:</label>
-              <select name="status" id="status" class="form-select">
+              <select name="status" id="status" class="form-select" required>
                 <option disabled selected value>-- Select Status --</option>
                 <option value="ACTIVE">ACTIVE</option>
                 <option value="INACTIVE">INACTIVE</option>
               </select>
+              <div class="invalid-feedback">
+                Please choose a status.
+              </div>
             </div>
           </div>
           <div class="col-12">
@@ -173,6 +197,7 @@
               <th scope="col">Lastname:</th>
               <th scope="col">Firstname:</th>
               <th scope="col">Username:</th>
+              <th scope="col">Company:</th>
               <th scope="col">Company Email:</th>
               <th scope="col">Password:</th>
               <th scope="col">Status:</th>
@@ -185,23 +210,25 @@
               <td><?php echo $results['last_names'] ?></td>
               <td><?php echo $results['first_names'] ?></td>
               <td><?php echo $results['username'] ?></td>
+              <td><?php echo $results['company'] ?></td>
               <td><?php echo $results['emails'] ?></td>
               <td><?php echo $results['passwords'] ?></td>
-              <td><?php echo $results['status'] ?></td>
+              <td><?php echo $results['statuses'] ?></td>
               <td>
-                <form action="./php/update_users.php" method="post">
+                <form action="./php/users_update.php" method="post">
                   <input type="submit" name="edit" value="EDIT" class="btn btn-success fw-bold">
                   <input type="hidden" name="edit_id" value="<?php echo $results['id'] ?>">
                   <input type="hidden" name="edit_last_name" value="<?php echo $results['last_names'] ?>">
                   <input type="hidden" name="edit_first_name" value="<?php echo $results['first_names'] ?>">
                   <input type="hidden" name="edit_username" value="<?php echo $results['username'] ?>">
+                  <input type="hidden" name="edit_company" value="<?php echo $results['company'] ?>">
                   <input type="hidden" name="edit_email" value="<?php echo $results['emails'] ?>">
                   <input type="hidden" name="edit_password" value="<?php echo $results['passwords'] ?>">
-                  <input type="hidden" name="edit_status" value="<?php echo $results['status'] ?>">
+                  <input type="hidden" name="edit_status" value="<?php echo $results['statuses'] ?>">
                 </form>
               </td>
               <td>
-                <form action="./php/delete_users.php" method="post">
+                <form action="./php/users_delete.php" method="post">
                   <input type="submit" name="delete" value="DELETE" class="btn btn-danger fw-bold">
                   <input type="hidden" name="deleteId" value="<?php echo $results['id'] ?>">
                 </form>
