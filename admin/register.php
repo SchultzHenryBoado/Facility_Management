@@ -148,8 +148,8 @@
               <label for="status" class="form-label">Status:</label>
               <select name="status" id="status" class="form-select">
                 <option disabled selected value>-- Select Status --</option>
-                <option value="">ACTIVE</option>
-                <option value="">INACTIVE</option>
+                <option value="ACTIVE">ACTIVE</option>
+                <option value="INACTIVE">INACTIVE</option>
               </select>
             </div>
           </div>
@@ -184,16 +184,20 @@
             <tr>
               <td><?php echo $results['last_names'] ?></td>
               <td><?php echo $results['first_names'] ?></td>
+              <td><?php echo $results['username'] ?></td>
               <td><?php echo $results['emails'] ?></td>
               <td><?php echo $results['passwords'] ?></td>
+              <td><?php echo $results['status'] ?></td>
               <td>
                 <form action="./php/update_users.php" method="post">
                   <input type="submit" name="edit" value="EDIT" class="btn btn-success fw-bold">
                   <input type="hidden" name="edit_id" value="<?php echo $results['id'] ?>">
                   <input type="hidden" name="edit_last_name" value="<?php echo $results['last_names'] ?>">
                   <input type="hidden" name="edit_first_name" value="<?php echo $results['first_names'] ?>">
+                  <input type="hidden" name="edit_username" value="<?php echo $results['username'] ?>">
                   <input type="hidden" name="edit_email" value="<?php echo $results['emails'] ?>">
                   <input type="hidden" name="edit_password" value="<?php echo $results['passwords'] ?>">
+                  <input type="hidden" name="edit_status" value="<?php echo $results['status'] ?>">
                 </form>
               </td>
               <td>

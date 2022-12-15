@@ -57,6 +57,7 @@
 
   <!-- JS -->
   <script src="./js/validation.js" defer></script>
+  <script src="./js/show_password.js" defer></script>
 </head>
 
 <body>
@@ -82,6 +83,10 @@
                 <div class="invalid-feedback">
                   Please fill-up the Password.
                 </div>
+              </div>
+              <div class=" mb-3">
+                <input type="checkbox" name="check" id="checkbox" class="form-check-input" value="">
+                <label for="checkbox" class="form-check-label">Show Password</label>
               </div>
               <div class="d-grid">
                 <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit" name="login">Sign
