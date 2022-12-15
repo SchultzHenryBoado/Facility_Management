@@ -1,23 +1,29 @@
 <?php 
   require_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php';
 
-  if (isset($_POST['edit'])) {
-    $editId = mysqli_real_escape_string($con, $_POST['edit_id']);
-    $editCompanyCode = mysqli_real_escape_string($con, $_POST['edit_code']);
-    $editCompanyName = mysqli_real_escape_string($con, $_POST['edit_company_name']);
+  // path
+  function pathTo($destination) {
+    echo "<script>window.location.href = '/facility_management/admin/$destination.php'</script>";
   }
 
-  // UPDATE
-  if (isset($_POST['update_company'])) {
-    $updateId = mysqli_real_escape_string($con, $_POST['update_id']);
-    $updateCode = mysqli_real_escape_string($con, $_POST['update_company_code']);
-    $upperCaseCode = strtoupper($updateCode);
-    $updateCompany = mysqli_real_escape_string($con, $_POST['update_company_name']);
+  // EDIT FACILITIES
+  if (isset($_POST['edit'])) {
+    $editId = $_POST['edit_id'];
+    $editFacilityCode = mysqli_real_escape_string($con, $_POST['edit_facility_code']);
+    $editFacilityName = mysqli_real_escape_string($con, $_POST['edit_facility_name']);
+  }
 
-    $queryUpdate = "UPDATE companies SET company_code = '$upperCaseCode', company_name = '$updateCompany' WHERE id = '$updateId' ";
+  // UPDATE FACILITIES
+  if (isset($_POST['update_facility'])) {
+    $updateId = $_POST['update_id'];
+    $updateFacilityCode = mysqli_real_escape_string($con, $_POST['update_facility_code']);
+    $facilityCodeUpperCase = strtoupper($updateFacilityCode);
+    $updateFacilityName = mysqli_real_escape_string($con, $_POST['update_facility_name']);
+
+    $queryUpdate = "UPDATE facilities SET facility_code = '$facilityCodeUpperCase', facility_name = '$updateFacilityName' WHERE id = '$updateId' ";
     $sqlUpdate = mysqli_query($con, $queryUpdate);
 
-    pathTo('company');
+    pathTo('facility_type');  
   }
 
 ?>
@@ -29,18 +35,19 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UPDATE COMPANY</title>
+  <title>UPDATE FACILITY TYPE</title>
 
   <!-- CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
   <link rel="stylesheet" href="./styles/company.css" />
 
+
   <!-- JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
   </script>
-  <script src="./js/validation.js" defer></script>
+  <script src="../js/validation.js" defer></script>
   <!-- FONT AWESOME -->
   <script src="https://kit.fontawesome.com/8cbc2e0f0e.js" crossorigin="anonymous"></script>
 
@@ -96,38 +103,37 @@
   <!-- COMPANY -->
   <div class="container-fluid mt-5">
     <div class="container w-50 shadow p-3 mb-5 bg-body rounded">
-      <form action="company_update.php" method="post" class="needs-validation" novalidate>
-        <p class="h1 mb-3">Update Company </p>
+      <form action="./facility_update.php" method="post" class="needs-validation" novalidate>
+        <p class="h1 mb-3">Update Facility Type </p>
 
         <div class="row">
-          <!-- ID -->
           <input type="hidden" name="update_id" value="<?php echo $editId ?>">
           <!-- CODE -->
           <div class="col-12 ">
             <div class="mb-3" class="form-group">
               <label for="code" class="form-label">Code:</label>
-              <input type="text" name="update_company_code" id="code" class="form-control"
-                value="<?php echo $editCompanyCode ?>" required />
+              <input type="text" name="update_facility_code" id="code" class="form-control"
+                value="<?php echo $editFacilityCode ?>" required />
               <div class="invalid-feedback">
-                Please fill-up the company code.
+                Please fill-up the facility code.
               </div>
             </div>
           </div>
-          <!-- COMPANY NAME -->
+          <!-- FACILITY NAME -->
           <div class="col-12 ">
             <div class="mb-3" class="form-group">
-              <label for="companyName" class="form-label">Company name:</label>
-              <input type="text" name="update_company_name" id="companyName" class="form-control"
-                value="<?php echo $editCompanyName ?>" required />
+              <label for="facilityName" class="form-label">Facility Name:</label>
+              <input type="text" name="update_facility_name" id="facilityName" class="form-control"
+                value="<?php echo $editFacilityName ?>" required>
               <div class="invalid-feedback">
-                Please fill-up the company name.
+                Please fill-up the facility name.
               </div>
             </div>
           </div>
           <!-- BUTTON -->
           <div class="col-12">
             <div class="mb-3">
-              <input type="submit" name="update_company" value="UPDATE" class="btn btn-success fw-bold float-end" />
+              <input type="submit" name="update_facility" value="UPDATE" class="btn btn-success fw-bold float-end" />
             </div>
           </div>
         </div>

@@ -80,22 +80,31 @@
       <div class="collapse navbar-collapse" id="nav">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-5">
           <li class="nav-item text-center">
-            <a href="dashboard-admin.php" class="nav-link text-light">Dashboard</a>
+            <a href="../dashboard_admin.php" class="nav-link text-light">Dashboard</a>
           </li>
           <li class="nav-item text-center">
             <a href="#" class="nav-link text-light">Reservation</a>
           </li>
           <li class="nav-item text-center">
+            <a href="#" class="nav-link text-light">Inquire</a>
+          </li>
+          <li class="nav-item text-center">
             <a href="#" class="nav-link text-light">Cancellation</a>
           </li>
-          <li class="nav-item text-center">
-            <a href="#" class="nav-link text-light">Master File</a>
+          <li class="nav-item dropdown text-center">
+            <a class="nav-link dropdown-toggle text-center text-light" href="#" data-bs-toggle="dropdown">
+              Masterfile
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="../register.php">User</a></li>
+              <li><a class="dropdown-item" href="../company.php">Company</a></li>
+              <li><a class="dropdown-item" href="../floor_master.php">Floor Master</a></li>
+              <li><a class="dropdown-item" href="../facility_type.php">Facility Type</a></li>
+              <li><a class="dropdown-item" href="#">Facility Room Master</a></li>
+            </ul>
           </li>
           <li class="nav-item text-center">
-            <a href="register.php" class="nav-link text-light">Register a User</a>
-          </li>
-          <li class="nav-item text-center">
-            <form action="#" method="post">
+            <form action="./logout.php" method="post">
               <input type="submit" value="Logout" class="btn btn-primary" />
             </form>
           </li>

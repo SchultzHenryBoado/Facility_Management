@@ -75,7 +75,7 @@
               <li><a class="dropdown-item" href="company.php">Company</a></li>
               <li><a class="dropdown-item" href="floor_master.php">Floor Master</a></li>
               <li><a class="dropdown-item" href="facility_type.php">Facility Type</a></li>
-              <li><a class="dropdown-item" href="#">Facility Room</a></li>
+              <li><a class="dropdown-item" href="#">Facility Room Master</a></li>
             </ul>
           </li>
 
@@ -201,7 +201,7 @@
               <th scope="col">Company Email:</th>
               <th scope="col">Password:</th>
               <th scope="col">Status:</th>
-              <th col="2">Actions:</th>
+              <th scope="col">Actions:</th>
             </tr>
           </thead>
           <tbody>
@@ -225,12 +225,6 @@
                   <input type="hidden" name="edit_email" value="<?php echo $results['emails'] ?>">
                   <input type="hidden" name="edit_password" value="<?php echo $results['passwords'] ?>">
                   <input type="hidden" name="edit_status" value="<?php echo $results['statuses'] ?>">
-                </form>
-              </td>
-              <td>
-                <form action="./php/users_delete.php" method="post">
-                  <input type="submit" name="delete" value="DELETE" class="btn btn-danger fw-bold">
-                  <input type="hidden" name="deleteId" value="<?php echo $results['id'] ?>">
                 </form>
               </td>
             </tr>
