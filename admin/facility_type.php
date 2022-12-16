@@ -49,10 +49,7 @@
             <a href="dashboard_admin.php" class="nav-link text-light">Dashboard</a>
           </li>
           <li class="nav-item text-center">
-            <a href="#" class="nav-link text-light">Reservation</a>
-          </li>
-          <li class="nav-item text-center">
-            <a href="#" class="nav-link text-light">Inquire</a>
+            <a href="pending_reservation.php" class="nav-link text-light">Reservation</a>
           </li>
           <li class="nav-item text-center">
             <a href="#" class="nav-link text-light">Cancellation</a>

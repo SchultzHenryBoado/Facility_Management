@@ -8,7 +8,7 @@
 
   session_start();
 
-  if ($_SESSION['users_status'] == 'invalid' || empty($_SESSION['users_status'])) {
+  if (empty($_SESSION['users_status'])) {
     // default status
     $_SESSION['users_status'] = 'invalid';
   }

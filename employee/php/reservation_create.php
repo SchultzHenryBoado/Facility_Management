@@ -11,7 +11,6 @@
 
   if (isset($_POST['submit'])) {
     $users_id = $_SESSION['users_id'];
-    $createDate = mysqli_real_escape_string($con, $_POST['created_date']);
     $rsvnNo = mysqli_real_escape_string($con, $_POST['rsvn_no']);
     $createdBy = mysqli_real_escape_string($con, $_POST['created_by']);
     $roomType = mysqli_real_escape_string($con, $_POST['room_type']);
@@ -19,8 +18,9 @@
     $dateTo = mysqli_real_escape_string($con, $_POST['date_to']);
     $timeFrom = mysqli_real_escape_string($con, $_POST['time_from']);
     $timeTo = mysqli_real_escape_string($con, $_POST['time_to']);
+    $status = mysqli_real_escape_string($con, $_POST['status']);
 
-    $queryReservationCreate = "INSERT INTO reservations VALUES (null, '$users_id', curdate(), '$rsvnNo', '$createdBy', '$roomType', '$dateFrom', '$dateTo', '$timeFrom' , '$timeTo') ";
+    $queryReservationCreate = "INSERT INTO reservations VALUES (null, '$users_id', curdate(), '$rsvnNo', '$createdBy', '$roomType', '$dateFrom', '$dateTo', '$timeFrom' , '$timeTo', '$status') ";
     $sqlReservationCreate = mysqli_query($con, $queryReservationCreate);
 
     pathTo('reservation');

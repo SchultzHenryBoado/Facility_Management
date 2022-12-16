@@ -98,7 +98,7 @@
           <div class="col-12 col-md-6 col-lg-6">
             <div class="mb-3">
               <label for="rsvn-no" class="form-label">RSVN No.</label>
-              <input type="text" name="rsnv_no" id="rsvn-no" class="form-control" />
+              <input type="text" name="rsvn_no" id="rsvn-no" class="form-control" />
             </div>
           </div>
 
@@ -158,6 +158,16 @@
             </div>
           </div>
 
+          <!-- PENDING -->
+          <div class="col-12">
+            <div class="mb-3">
+              <label for="status" class="form-label">Status:</label>
+              <select name="status" id="status" class="form-select">
+                <option value="PENDING">PENDING</option>
+              </select>
+            </div>
+          </div>
+
           <!-- SUBMIT BUTTON -->
           <div class="col-12">
             <div class="mb-3">
@@ -184,6 +194,7 @@
               <th scope="col">Date To:</th>
               <th scope="col">Time From:</th>
               <th scope="col">Time To:</th>
+              <th scope="col">Status:</th>
               <th col="2">Actions:</th>
             </tr>
           </thead>
@@ -198,8 +209,18 @@
               <td><?php echo $rowReservations['date_to'] ?></td>
               <td><?php echo $rowReservations['time_from'] ?></td>
               <td><?php echo $rowReservations['time_to'] ?></td>
-              <td>sample edit</td>
-              <td>sample delete</td>
+              <td><?php echo $rowReservations['statuses'] ?></td>
+              <td>
+                <form action="#" method="post">
+                  <input type="submit" class="btn btn-success fw-bold" value="EDIT">
+                </form>
+              </td>
+              <td>
+                <form action="./php/reservation_delete.php" method="post">
+                  <input type="submit" name="delete" value="DELETE" class="btn btn-danger fw-bold">
+                  <input type="hidden" name="delete_id" value="<?php echo $rowReservations['id'] ?>">
+                </form>
+              </td>
             </tr>
             <?php } ?>
           </tbody>
