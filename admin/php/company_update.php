@@ -79,7 +79,7 @@
               <li><a class="dropdown-item" href="../company.php">Company</a></li>
               <li><a class="dropdown-item" href="../floor_master.php">Floor Master</a></li>
               <li><a class="dropdown-item" href="../facility_type.php">Facility Type</a></li>
-              <li><a class="dropdown-item" href="#">Facility Room Master</a></li>
+              <li><a class="dropdown-item" href="../facility_room_master.php">Facility Room Master</a></li>
             </ul>
           </li>
 
