@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 15, 2022 at 09:56 AM
+-- Generation Time: Dec 16, 2022 at 10:08 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -93,12 +93,18 @@ CREATE TABLE `facility_room_masters` (
   `id` int(11) NOT NULL,
   `facility_type` varchar(255) NOT NULL,
   `facility_number` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `facility_name` varchar(255) NOT NULL,
+  `descriptions` varchar(255) NOT NULL,
   `floor_location` varchar(255) NOT NULL,
   `max_capacity` varchar(255) NOT NULL,
-  `status` varchar(255) NOT NULL
+  `statuses` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `facility_room_masters`
+--
+
+INSERT INTO `facility_room_masters` (`id`, `facility_type`, `facility_number`, `descriptions`, `floor_location`, `max_capacity`, `statuses`) VALUES
+(1, 'Board Room', 'BR-1', 'Board Room No.1', '15th floor', '20', 'ACTIVE');
 
 -- --------------------------------------------------------
 
@@ -124,6 +130,34 @@ INSERT INTO `floors` (`id`, `floor_code`, `floor_name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `reservations`
+--
+
+CREATE TABLE `reservations` (
+  `id` int(11) NOT NULL,
+  `users_id` int(11) DEFAULT NULL,
+  `created_date` date DEFAULT current_timestamp(),
+  `rsvn_no` varchar(255) NOT NULL,
+  `created_by` varchar(255) NOT NULL,
+  `room_type` varchar(255) NOT NULL,
+  `date_from` date NOT NULL,
+  `date_to` date NOT NULL,
+  `time_from` time(6) NOT NULL,
+  `time_to` time(6) NOT NULL,
+  `statuses` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `reservations`
+--
+
+INSERT INTO `reservations` (`id`, `users_id`, `created_date`, `rsvn_no`, `created_by`, `room_type`, `date_from`, `date_to`, `time_from`, `time_to`, `statuses`) VALUES
+(18, 1, '2022-12-16', '12345', 'Boado, Schultz Henry', 'Meeting Room', '2022-12-16', '2022-12-16', '16:12:00.000000', '16:12:00.000000', 'APPROVED'),
+(19, 2, '2022-12-16', '12345', 'Gloda, John Bryan', 'Basketball Room', '2022-12-16', '2022-12-16', '17:04:00.000000', '17:04:00.000000', 'APPROVED');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users_accounts`
 --
 
@@ -144,7 +178,7 @@ CREATE TABLE `users_accounts` (
 
 INSERT INTO `users_accounts` (`id`, `last_names`, `first_names`, `username`, `company`, `emails`, `passwords`, `statuses`) VALUES
 (1, 'Boado', 'Schultz Henry', 'henryboado', 'Obanana Corp.', 'schultzhenry.boado@obanana.com', '202cb962ac59075b964b07152d234b70', 'ACTIVE'),
-(2, 'Gloda', 'John Bryan', 'bryangloda', 'Premium Megastructures Inc.', 'bryan.gloda@obanana.com', 'e99a18c428cb38d5f260853678922e03', 'ACTIVE'),
+(2, 'Gloda', 'John Bryan', 'bryangloda', 'Premium Megastructures Inc.', 'bryan.gloda@obanana.com', '202cb962ac59075b964b07152d234b70', 'ACTIVE'),
 (3, 'Mangalo', 'Ryan Christian', 'ryanmangalo', 'Obanana Corp.', 'ryan.mangalo@obanana.com', 'e99a18c428cb38d5f260853678922e03', 'ACTIVE'),
 (8, 'Matias', 'Ryan', 'ryanmatias', 'Obanana Corp.', 'ryan.matias@obanana.com', '57f231b1ec41dc6641270cb09a56f897', 'INACTIVE');
 
@@ -183,6 +217,13 @@ ALTER TABLE `floors`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `reservations`
+--
+ALTER TABLE `reservations`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_users` (`users_id`);
+
+--
 -- Indexes for table `users_accounts`
 --
 ALTER TABLE `users_accounts`
@@ -214,7 +255,7 @@ ALTER TABLE `facilities`
 -- AUTO_INCREMENT for table `facility_room_masters`
 --
 ALTER TABLE `facility_room_masters`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `floors`
@@ -223,10 +264,26 @@ ALTER TABLE `floors`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `reservations`
+--
+ALTER TABLE `reservations`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
 -- AUTO_INCREMENT for table `users_accounts`
 --
 ALTER TABLE `users_accounts`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `reservations`
+--
+ALTER TABLE `reservations`
+  ADD CONSTRAINT `fk_users` FOREIGN KEY (`users_id`) REFERENCES `users_accounts` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
