@@ -1,3 +1,28 @@
+<?php 
+  // DATABASE 
+  require_once $_SERVER['DOCUMENT_ROOT'] . './facility_management/database/connection.php';
+  // SESSION
+  require './php/session.php';
+  
+  // CURRENT DATE
+  $date = date('m/d/Y');
+
+  // USERS SESSION
+  $users_id = $_SESSION['users_id'];
+  $queryReadUsers = "SELECT * FROM users_accounts WHERE id = '$users_id' ";
+  $sqlReadUsers = mysqli_query($con, $queryReadUsers);
+  $rows = mysqli_fetch_assoc($sqlReadUsers);
+
+  // FACILITIES
+  $queryReadFacilities = "SELECT facility_name FROM facilities";
+  $sqlReadFacilities = mysqli_query($con, $queryReadFacilities);
+
+  // RESERVATIONS
+  $queryReadReservations = "SELECT * FROM reservations WHERE users_id = '$users_id'";
+  $sqlReadReservations = mysqli_query($con, $queryReadReservations);
+  
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +35,7 @@
   <!-- CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
-  <link rel="stylesheet" href="./styles/reservation.css" />
+  <!-- <link rel="stylesheet" href="./styles/reservation.css" /> -->
 
   <!-- JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
@@ -57,13 +82,14 @@
   <!-- RESERVATION FORM -->
   <div class="container-fluid mt-5">
     <div class="container mt-5 shadow-lg p-3 mb-5 bg-body rounded">
-      <form action="#" method="post">
+      <form action="./php/reservation_create.php" method="post">
         <div class="row justify-content-center">
+
           <!-- CREATED DATE -->
           <div class="col-12 col-md-6 col-lg-6">
             <div class="mb-3">
-              <label for="createdDate">Created Date:</label>
-              <input type="date" id="createdDate" name="created-date" class="form-control" value=""
+              <label for="createdDate" class="form-label">Created Date:</label>
+              <input type="text" id="createdDate" name="created_date" class="form-control" value="<?php echo $date ?>"
                 aria-label="Disabled input example" disabled readonly />
             </div>
           </div>
@@ -71,26 +97,31 @@
           <!-- RSVN NO -->
           <div class="col-12 col-md-6 col-lg-6">
             <div class="mb-3">
-              <label for="rsvn-no">RSVN No.</label>
-              <input type="text" name="rsvn-no" id="rsvn-no" class="form-control" />
+              <label for="rsvn-no" class="form-label">RSVN No.</label>
+              <input type="text" name="rsnv_no" id="rsvn-no" class="form-control" />
             </div>
           </div>
 
           <!-- CREATED BY -->
           <div class="col-12 col-md-6 col-lg-6">
             <div class="mb-3">
-              <label for="createdBy">Created By:</label>
-              <input type="text" id="createdBy" name="created-by" class="form-control" value="Rico P. Ybanez"
-                aria-label="Disabled input example" disabled readonly />
+              <label for="createdBy" class="form-label">Created By:</label>
+              <input type="text" id="createdBy" name="created_by" class="form-control"
+                value="<?php echo $rows['last_names'] . ', ' . $rows['first_names'] ?>"
+                aria-label="Disabled input example" />
             </div>
           </div>
 
           <!-- ROOM TYPE -->
           <div class="col-12 col-md-6 col-lg-6">
             <div class="mb-3">
-              <label for="roomType">Room Type:</label>
-              <select name="room-type" id="roomType" class="form-select">
+              <label for="roomType" class="form-label">Room Type:</label>
+              <select name="room_type" id="roomType" class="form-select">
                 <option disabled selected value>-- Room Type --</option>
+                <?php while($rowFacilities = mysqli_fetch_assoc($sqlReadFacilities)) { ?>
+                <option value="<?php echo $rowFacilities['facility_name'] ?>">
+                  <?php echo $rowFacilities['facility_name'] ?></option>
+                <?php } ?>
               </select>
             </div>
           </div>
@@ -98,44 +129,82 @@
           <!-- DATE FROM-->
           <div class="col-12 col-md-6 col-lg-6">
             <div class="mb-3">
-              <label for="dateFrom">Date From:</label>
-              <input type="date" name="date-from" id="dateFrom" class="form-control" />
+              <label for="dateFrom" class="form-label">Date From:</label>
+              <input type="date" name="date_from" id="dateFrom" class="form-control" />
             </div>
           </div>
 
           <!-- DATE TO -->
           <div class="col-12 col-md-6 col-lg-6">
             <div class="mb-3">
-              <label for="dateTo">Date To:</label>
-              <input type="date" name="date-to" id="dateTo" class="form-control" />
+              <label for="dateTo" class="form-label">Date To:</label>
+              <input type="date" name="date_to" id="dateTo" class="form-control" />
             </div>
           </div>
 
           <!-- TIME FROM -->
           <div class="col-12 col-md-6 col-lg-6">
             <div class="mb-3">
-              <label for="timeFrom">Time From:</label>
-              <input type="time" name="time-from" id="timeFrom" class="form-control" />
+              <label for="timeFrom" class="form-label">Time From:</label>
+              <input type="time" name="time_from" id="timeFrom" class="form-control" />
             </div>
           </div>
 
           <!-- TIME TO -->
           <div class="col-12 col-md-6 col-lg-6">
             <div class="mb-3">
-              <label for="timeTo">Time To:</label>
-              <input type="time" name="time-to" id="timeTo" class="form-control" />
+              <label for="timeTo" class="form-label">Time To:</label>
+              <input type="time" name="time_to" id="timeTo" class="form-control" />
             </div>
           </div>
 
           <!-- SUBMIT BUTTON -->
           <div class="col-12">
             <div class="mb-3">
-              <input type="submit" value="PROCEED" name="proceed"
-                class="form-control btn btn-success text-light fw-bold" />
+              <input type="submit" name="submit" id="submit" class="btn btn-success fw-bold float-end"
+                value="RESERVE" />
             </div>
           </div>
-        </div>
       </form>
+    </div>
+  </div>
+
+  <!-- RESERVATION LIST -->
+  <div class="container-fluid">
+    <div class="container shadow p-3 mb-5 bg-body-rounded">
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Created Date:</th>
+              <th scope="col">RSVN No.</th>
+              <th scope="col">Created By:</th>
+              <th scope="col">Room Type:</th>
+              <th scope="col">Date From:</th>
+              <th scope="col">Date To:</th>
+              <th scope="col">Time From:</th>
+              <th scope="col">Time To:</th>
+              <th col="2">Actions:</th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            <?php while($rowReservations = mysqli_fetch_assoc($sqlReadReservations) ) { ?>
+            <tr>
+              <td><?php echo $rowReservations['created_date'] ?></td>
+              <td><?php echo $rowReservations['rsvn_no'] ?></td>
+              <td><?php echo $rowReservations['created_by'] ?></td>
+              <td><?php echo $rowReservations['room_type'] ?></td>
+              <td><?php echo $rowReservations['date_from'] ?></td>
+              <td><?php echo $rowReservations['date_to'] ?></td>
+              <td><?php echo $rowReservations['time_from'] ?></td>
+              <td><?php echo $rowReservations['time_to'] ?></td>
+              <td>sample edit</td>
+              <td>sample delete</td>
+            </tr>
+            <?php } ?>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </body>
