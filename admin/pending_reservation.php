@@ -83,6 +83,7 @@
   <!-- PENDING RESERVATION LIST -->
   <div class="container-fluid mt-5">
     <div class="container shadow p-3 mb-5 bg-body-rounded">
+      <p class="h1 text-center mb-5">Pending Reservation</p>
       <div class="table-responsive">
         <table class="table table-striped table-hover">
           <thead>

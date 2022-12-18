@@ -4,6 +4,15 @@
   // SESSION
   require './php/session.php';
 
+  // USERS
+  $queryUsers = "SELECT * FROM users_accounts";
+  $sqlUsers = mysqli_query($con, $queryUsers);
+  $results = mysqli_fetch_assoc($sqlUsers);
+  $company = $_SESSION['company_name'] = $results['company'];
+
+  // RESERVATIONS
+  $queryReservations = "SELECT * FROM reservations WHERE statuses = 'APPROVED' AND date_from = CURRENT_DATE() ";
+  $sqlReservation = mysqli_query($con, $queryReservations);
   
 ?>
 
@@ -64,31 +73,6 @@
     </div>
   </nav>
 
-  <!-- SCHEDULES -->
-  <div class="container-fluid mt-5">
-    <div class="container">
-      <!-- INFORMATION -->
-      <div class="row gap-3 justify-content-center">
-        <div class="col-12 col-md-3 bg-primary">
-          <p class="h3 fw-bold text-light text-center mt-3">
-            Total Reservation
-          </p>
-          <p class="fs-1 text-warning fw-bold text-center">500</p>
-        </div>
-        <div class="col-12 col-md-3 bg-primary">
-          <p class="h3 fw-bold text-light text-center mt-3">
-            For Confirmation
-          </p>
-          <p class="fs-1 text-warning fw-bold text-center">500</p>
-        </div>
-        <div class="col-12 col-md-3 bg-primary">
-          <p class="h3 fw-bold text-light text-center mt-3">Cancelled</p>
-          <p class="fs-1 text-warning fw-bold text-center">500</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- TABLE -->
   <div class="container-fluid mt-5">
     <div class="container bg-primary shadow p-3 mb-5 bg-body rounded">
@@ -104,13 +88,15 @@
           </tr>
         </thead>
         <tbody>
+          <?php while($rowReservations = mysqli_fetch_assoc($sqlReservation)) { ?>
           <tr>
-            <td>Sample Room No.</td>
-            <td>Sample From</td>
-            <td>Sample To</td>
-            <td>Sample Reserved By</td>
-            <td>Sample Company</td>
+            <td><?php echo $rowReservations['rsvn_no'] ?></td>
+            <td><?php echo $rowReservations['time_from'] ?></td>
+            <td><?php echo $rowReservations['time_to'] ?></td>
+            <td><?php echo $rowReservations['created_by'] ?></td>
+            <td><?php echo $company ?></td>
           </tr>
+          <?php } ?>
         </tbody>
       </table>
     </div>

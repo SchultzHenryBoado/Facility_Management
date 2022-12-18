@@ -1,7 +1,34 @@
 <?php 
+  // DATABASE
+  require_once $_SERVER["DOCUMENT_ROOT"] . "/facility_management/database/connection.php";
+  // SESSION
   require ('./php/session.php');
 
-  
+  // USERS ACCOUNTS QUERY
+  $queryUsers = "SELECT * FROM users_accounts";
+  $sqlUsers = mysqli_query($con, $queryUsers);
+  $results = mysqli_fetch_assoc($sqlUsers);
+  $company = $_SESSION['company_name'] = $results['company'];
+
+  // RESERVATION QUERY
+  $queryReadReservations = "SELECT * FROM reservations WHERE statuses = 'APPROVED' AND date_from = CURRENT_DATE()";
+  $sqlReadReservations = mysqli_query($con, $queryReadReservations);
+
+  // TOTAL RESERVATION
+  $queryTotalReservations = "SELECT statuses FROM reservations ORDER BY statuses";
+  $sqlTotalReservations = mysqli_query($con, $queryTotalReservations);
+  $row = mysqli_num_rows($sqlTotalReservations);
+
+  // TOTAL CONFIRMATION
+  $queryTotalConfirm = "SELECT statuses FROM reservations WHERE statuses = 'APPROVED' ORDER BY statuses";
+  $sqlTotalConfirm = mysqli_query($con, $queryTotalConfirm);
+  $rowConfirm = mysqli_num_rows($sqlTotalConfirm);
+
+  // TOTAL CANCELLED
+  $queryTotalCancel = "SELECT statuses FROM reservations WHERE statuses = 'REJECT' ORDER BY statuses";
+  $sqlTotalCancel = mysqli_query($con, $queryTotalCancel);
+  $rowCancel = mysqli_num_rows($sqlTotalCancel);
+
 ?>
 
 <!DOCTYPE html>
@@ -80,17 +107,17 @@
           <p class="h3 fw-bold text-light text-center mt-3">
             Total Reservation
           </p>
-          <p class="fs-1 text-warning fw-bold text-center">500</p>
+          <p class="fs-1 text-warning fw-bold text-center"><?php echo $row ?></p>
         </div>
         <div class="col-12 col-md-3 bg-primary">
           <p class="h3 fw-bold text-light text-center mt-3">
             For Confirmation
           </p>
-          <p class="fs-1 text-warning fw-bold text-center">500</p>
+          <p class="fs-1 text-warning fw-bold text-center"><?php echo $rowConfirm ?></p>
         </div>
         <div class="col-12 col-md-3 bg-primary">
           <p class="h3 fw-bold text-light text-center mt-3">Cancelled</p>
-          <p class="fs-1 text-warning fw-bold text-center">500</p>
+          <p class="fs-1 text-warning fw-bold text-center"><?php echo $rowCancel ?></p>
         </div>
       </div>
     </div>
@@ -107,33 +134,19 @@
             <th scope="col">From:</th>
             <th scope="col">To:</th>
             <th scope="col">Reserved By:</th>
+            <th scope="col">Company:</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="table-group-divider">
+          <?php while($rowUsers = mysqli_fetch_assoc($sqlReadReservations)) { ?>
           <tr>
-            <td>Sample Room No.</td>
-            <td>Sample From</td>
-            <td>Sample To</td>
-            <td>Sample Reserved By</td>
+            <td><?php echo $rowUsers['rsvn_no'] ?></td>
+            <td><?php echo $rowUsers['time_from'] ?></td>
+            <td><?php echo $rowUsers['time_to'] ?></td>
+            <td><?php echo $rowUsers['created_by'] ?></td>
+            <td><?php echo $company ?></td>
           </tr>
-          <tr>
-            <td>Sample Room No.</td>
-            <td>Sample From</td>
-            <td>Sample To</td>
-            <td>Sample Reserved By</td>
-          </tr>
-          <tr>
-            <td>Sample Room No.</td>
-            <td>Sample From</td>
-            <td>Sample To</td>
-            <td>Sample Reserved By</td>
-          </tr>
-          <tr>
-            <td>Sample Room No.</td>
-            <td>Sample From</td>
-            <td>Sample To</td>
-            <td>Sample Reserved By</td>
-          </tr>
+          <?php } ?>
         </tbody>
       </table>
     </div>
