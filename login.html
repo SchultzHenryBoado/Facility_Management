@@ -10,6 +10,16 @@
         body {
           background: #c9ccd1;
         }
+        .container{
+          padding-top: 200px;
+        }
+        .box{
+          padding-top: 100px;
+        }
+        .responsive {
+            width: 100%;
+            height: auto;
+        }
         h1{
             text-align: center;
         }
@@ -57,33 +67,38 @@
     
 </head>
 <body>
+  <style>
+    img {
+      width: 49%;
+    }
+
+    @media all and (max-width: 480px){
+      img{
+        width: 100%;
+      }
+    }
+  </style>
     <div class="container">
         <div class="row m-5 no-gutters shadow-lg">
-          <div class="col-md-6 d-none d-md-block">
-            <img src="Facility hotel.jpg" class="img-fluid" style="max-height: 8.5em; margin:20px 0px 0px 0px; alt="Responsive image"/>
-            <img src="pool.jpg" class="img-fluid" style="max-height: 8.5em; margin:20px 0px 0px 0px; alt="Responsive image"/>
-            <p>PREMUIMLANDS CORPORATION</p>
+          <div class="col-md-6 bg-white d-none d-md-block">
+            <img src="Facility hotel.jpg" class="img-fluid" style="max-height: 8.5em; margin:20px 0px 0px 0px; class="responsive"/>
+            <img src="pool.jpg" class="img-fluid" style="max-height: 8.5em; margin:20px 0px 0px 0px; class="responsive"/>
+            <p>PREMIUMLANDS CORPORATION</p>
             <h1>Facility Management </h1>
-            <img src="rooms.jpg" class="img-fluid" style="max-height: 8.5em; margin:  0px 0px -130px 0px; alt="Responsive image"/>
-            <img src="bedroom.jpg" class="img-fluid" style="max-height: 8.5em; margin: 0px 0px -130px 0px; alt="Responsive image " />
+            <img src="rooms.jpg" class="img-fluid" style="max-height: 8.5em; margin:  0px 0px -120px 0px; class="responsive"/>
+            <img src="bedroom.jpg" class="img-fluid" style="max-height: 8.5em; margin: 0px 0px -120px 0px; class="responsive " />
           </div>
           <div class="col-md-6 bg-white p-5">
-            <h4 class="pb-3">Facility Management</h4>
+            <center><h4 class="pb-3">Facility Management </h4></center>
             <div class="form-style">
-              <form>
+              <form class="box">
                 <div class="form-group pb-3">
-                  <input type="username" placeholder="Username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  <button type="submit" class="btn btn-info w-100 font-weight-bold mt-2">Admin</button>
                 </div>
                 <div class="form-group pb-3">
-                  <input type="password" placeholder="Password" class="form-control" id="exampleInputPassword1">
+                  <button type="submit" class="btn btn-info w-100 font-weight-bold mt-2">Users</button>
                 </div>
-                <div class="d-flex align-items-center justify-content-between">
-                  <div class="d-flex align-items-center"><input name="" type="checkbox" value="" /> <span class="pl-2 font-weight-bold">Remember Me</span></div>
-                  <div><a href="#">Forget Password?</a></div>
-                </div>
-                <div class="pb-2">
-                  <button type="submit" class="btn btn-info w-100 font-weight-bold mt-2">Login</button>
-                </div>
+          
               </form>
         
               
