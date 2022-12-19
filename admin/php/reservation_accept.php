@@ -1,0 +1,19 @@
+<?php
+  // DATABASE
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php';
+
+  // PATH
+  function pathTo($destination) {
+    echo "<script>window.location.href = '/facility_management/admin/$destination.php'</script>";
+  }
+
+  if (isset($_POST['accept_reservation'])) {
+    $accept = $_POST['accept_id'];
+
+    $appQueryUpdate = "UPDATE reservations SET statuses = 'APPROVED' WHERE id = '$accept' ";
+    $appSqlUpdate = mysqli_query($con, $appQueryUpdate);
+    $appQueryInsert = "INSERT INTO reservations (id, statuses) VALUES ('$accept', 'APPROVED')";
+
+    pathTo('pending_reservation');
+  }
+  
