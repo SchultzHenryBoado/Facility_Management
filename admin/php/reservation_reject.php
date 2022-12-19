@@ -8,11 +8,11 @@
   }
 
   if (isset($_POST['reject_reservation'])) {
-    $accept = $_POST['reject_id'];
+    $reject = $_POST['reject_id'];
 
-    $appQueryUpdate = "UPDATE reservations SET statuses = 'REJECT' WHERE id = '$accept' ";
+    $appQueryUpdate = "UPDATE reservations SET statuses = 'REJECT' WHERE id = '$reject' ";
     $appSqlUpdate = mysqli_query($con, $appQueryUpdate);
-    $appQueryInsert = "INSERT INTO reservations (id, statuses) VALUES ('$accept', 'REJECT')";
+    $appQueryInsert = "INSERT INTO reservations (id, statuses) VALUES ('$reject', 'REJECT')";
 
     pathTo('pending_reservation');
   }

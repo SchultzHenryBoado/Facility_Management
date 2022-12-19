@@ -5,17 +5,18 @@
   function pathTo($destination) {
     echo "<script>window.location.href = '/facility_management/admin/$destination.php'</script>";
   }
+
+  // USERS
+  $queryUsers = "SELECT * FROM users_accounts";
+  $sqlUsers = mysqli_query($con, $queryUsers);  
+  $result = mysqli_fetch_assoc($sqlUsers);
   
-  if (isset($_POST['submit_reasons'])) {
-    $reserveId = $_POST['reasons_id'];
+  if (isset($_POST['reject'])) {
+    $reject = $_POST['reject_id'];
 
-    $reasons = mysqli_real_escape_string($con, $_POST['reasons']);
-
-
-
-    $queryUpdate = "UPDATE reservations SET cancel_reasons = '$reasons' WHERE id = '$reserveId'";
-    $sqlUpdate = mysqli_query($con, $queryUpdate);
-    $queryReasons = "INSERT INTO reservations (id, cancel_reasons) VALUES (null, '$reasons')";
+    $appQueryUpdate = "UPDATE reservations SET statuses = 'REJECT' WHERE id = '$accept' ";
+    $appSqlUpdate = mysqli_query($con, $appQueryUpdate);
+    $appQueryInsert = "INSERT INTO reservations (id, statuses) VALUES ('$accept', 'REJECT')";
 
     pathTo('cancellation');
   }

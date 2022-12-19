@@ -7,6 +7,7 @@
   // RESERVATIONS
   $queryReadReservations = "SELECT * FROM reservations WHERE statuses = 'REJECT'";
   $sqlReadReservations = mysqli_query($con, $queryReadReservations);
+  $sqlReserve = mysqli_query($con, $queryReadReservations);
 ?>
 
 <!DOCTYPE html>
@@ -85,28 +86,9 @@
     </div>
   </nav>
 
-  <!-- CANCELLATION -->
+  <!-- TABLE FOR CANCELLATION -->
   <div class="container-fluid mt-5">
-
-    <div class="modal" tabindex="-1">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Modal title</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <p>Modal body text goes here.</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="container shadow p-3 mb-5 bg-body-rounded">
-      <p class="h1 text-center mb-5">Cancel Reservation</p>
       <div class="table-responsive">
         <table class="table table-striped table-hover">
           <thead>
@@ -131,38 +113,7 @@
               <td><?php echo $rowReservations['time_to'] ?></td>
               <td><?php echo $rowReservations['created_by'] ?></td>
               <td><?php echo $rowReservations['statuses'] ?></td>
-              <td>
-                <button class="btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#modalReasons">Write a
-                  Reasons</button>
-                <!-- Modal -->
-                <div class="modal fade" id="modalReasons" tabindex="-1" aria-labelledby="exampleModalLabel"
-                  aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h1 class="modal-title fs-5"">Write a Reasons</h1>
-                        <button type=" button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <form action="./php/reasons_create.php" method="post">
-                        <div class="modal-body">
-                          <div class="row">
-                            <div class="col-12">
-                              <textarea name="reasons" placeholder="Write a Reasons..." class="w-100 p-3"
-                                style="height: 200px;"></textarea>
-                              <input type="text" name="reasons_id" value="<?php echo $rowReservations['id'] ?>">
-                              <input type="text" name="" id="" value="<?php echo $rowReservations['users_id'] ?>">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="modal-footer">
-                          <input type="submit" name="submit_reasons" value="SUBMIT" class="btn btn-success fw-bold">
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td></td>
+              <td><?php echo $rowReservations['cancel_reasons'] ?></td>
             </tr>
             <?php } ?>
           </tbody>

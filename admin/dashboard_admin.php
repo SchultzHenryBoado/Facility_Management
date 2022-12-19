@@ -19,6 +19,11 @@
   $sqlTotalReservations = mysqli_query($con, $queryTotalReservations);
   $row = mysqli_num_rows($sqlTotalReservations);
 
+  // FOR CONFIRMATION
+  $queryForConfirm = "SELECT statuses FROM reservations WHERE statuses = 'PENDING' ORDER BY statuses";
+  $sqlForConfirm = mysqli_query($con, $queryForConfirm);
+  $rowForConfirm = mysqli_num_rows($sqlForConfirm);
+
   // TOTAL CONFIRMATION
   $queryTotalConfirm = "SELECT statuses FROM reservations WHERE statuses = 'APPROVED' ORDER BY statuses";
   $sqlTotalConfirm = mysqli_query($con, $queryTotalConfirm);
@@ -112,20 +117,24 @@
     <div class="container">
       <!-- INFORMATION -->
       <div class="row gap-3 justify-content-center">
-        <div class="col-12 col-md-3 bg-primary">
+        <div class="col-12 col-md-2 bg-primary">
           <p class="h3 fw-bold text-light text-center mt-3">
             Total Reservation
           </p>
           <p class="fs-1 text-warning fw-bold text-center"><?php echo $row ?></p>
         </div>
-        <div class="col-12 col-md-3 bg-primary">
+        <div class="col-12 col-md-2 bg-primary">
           <p class="h3 fw-bold text-light text-center mt-3">
             For Confirmation
           </p>
-          <p class="fs-1 text-warning fw-bold text-center"><?php echo $rowConfirm ?></p>
+          <p class="fs-1 text-warning fw-bold text-center"><?php echo $rowForConfirm ?></p>
         </div>
-        <div class="col-12 col-md-3 bg-primary">
-          <p class="h3 fw-bold text-light text-center mt-3">Cancelled</p>
+        <div class="col-12 col-md-2 bg-primary">
+          <p class="h3 fw-bold text-light text-center mt-3">Total Confirmed</p>
+          <p class="fs-1 text-warning fw-bold text-center"><?php echo $rowConfirm  ?></p>
+        </div>
+        <div class="col-12 col-md-2 bg-primary">
+          <p class="h3 fw-bold text-light text-center mt-3">Total Cancelled</p>
           <p class="fs-1 text-warning fw-bold text-center"><?php echo $rowCancel ?></p>
         </div>
       </div>

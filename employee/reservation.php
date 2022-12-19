@@ -65,7 +65,7 @@
             <a href="reservation.php" class="nav-link text-light">Reservation</a>
           </li>
           <li class="nav-item text-center">
-            <a href="#" class="nav-link text-light">Inquire</a>
+            <a href="schedules.php" class="nav-link text-light">Schedules</a>
           </li>
           <li class="nav-item text-center">
             <a href="cancellation.php" class="nav-link text-light">Cancellation</a>
