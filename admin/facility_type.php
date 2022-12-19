@@ -52,7 +52,7 @@
             <a href="pending_reservation.php" class="nav-link text-light">Reservation</a>
           </li>
           <li class="nav-item text-center">
-            <a href="#" class="nav-link text-light">Cancellation</a>
+            <a href="cancellation.php" class="nav-link text-light">Cancellation</a>
           </li>
           <li class="nav-item dropdown text-center">
             <a class="nav-link dropdown-toggle text-center text-light" href="#" data-bs-toggle="dropdown">
@@ -67,11 +67,20 @@
             </ul>
           </li>
 
-          <li class="nav-item text-center">
-            <form action="./php/logout.php" method="post">
-              <input type="submit" value="Logout" class="btn btn-primary" />
-            </form>
-          </li>
+          <!-- USERS MENU -->
+          <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+              <i class="fa-sharp fa-solid fa-user"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-lg-end">
+              <li class="nav-item text-center">
+                <a class="dropdown-item" href="#">Change Password</a>
+              </li>
+              <li class="nav-item text-center">
+                <a class="dropdown-item" href="./php/logout.php">Logout</a>
+              </li>
+            </ul>
+          </div>
         </ul>
       </div>
     </div>

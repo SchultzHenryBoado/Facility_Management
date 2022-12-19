@@ -62,13 +62,10 @@
             <a href="../dashboard_admin.php" class="nav-link text-light">Dashboard</a>
           </li>
           <li class="nav-item text-center">
-            <a href="#" class="nav-link text-light">Reservation</a>
+            <a href="../pending_reservation.php" class="nav-link text-light">Reservation</a>
           </li>
           <li class="nav-item text-center">
-            <a href="#" class="nav-link text-light">Inquire</a>
-          </li>
-          <li class="nav-item text-center">
-            <a href="#" class="nav-link text-light">Cancellation</a>
+            <a href="../cancellation.php" class="nav-link text-light">Cancellation</a>
           </li>
           <li class="nav-item dropdown text-center">
             <a class="nav-link dropdown-toggle text-center text-light" href="#" data-bs-toggle="dropdown">

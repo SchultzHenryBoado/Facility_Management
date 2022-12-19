@@ -113,6 +113,7 @@
     <div class="container mt-5 shadow-lg p-3 mb-5 bg-body rounded">
       <form action="./reservation_update.php" method="post">
         <div class="row justify-content-center">
+          <p class="h1 mb-4 ">Update Reservation</p>
           <!-- ID -->
           <input type="hidden" name="update_id" value="<?php echo $editId ?>">
           <!-- CREATED DATE -->
