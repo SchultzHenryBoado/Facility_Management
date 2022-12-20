@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 16, 2022 at 10:08 AM
+-- Generation Time: Dec 20, 2022 at 07:03 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -144,16 +144,21 @@ CREATE TABLE `reservations` (
   `date_to` date NOT NULL,
   `time_from` time(6) NOT NULL,
   `time_to` time(6) NOT NULL,
-  `statuses` varchar(255) NOT NULL
+  `statuses` varchar(255) NOT NULL,
+  `cancel_reasons` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `reservations`
 --
 
-INSERT INTO `reservations` (`id`, `users_id`, `created_date`, `rsvn_no`, `created_by`, `room_type`, `date_from`, `date_to`, `time_from`, `time_to`, `statuses`) VALUES
-(18, 1, '2022-12-16', '12345', 'Boado, Schultz Henry', 'Meeting Room', '2022-12-16', '2022-12-16', '16:12:00.000000', '16:12:00.000000', 'APPROVED'),
-(19, 2, '2022-12-16', '12345', 'Gloda, John Bryan', 'Basketball Room', '2022-12-16', '2022-12-16', '17:04:00.000000', '17:04:00.000000', 'APPROVED');
+INSERT INTO `reservations` (`id`, `users_id`, `created_date`, `rsvn_no`, `created_by`, `room_type`, `date_from`, `date_to`, `time_from`, `time_to`, `statuses`, `cancel_reasons`) VALUES
+(5, 2, '2022-12-19', '3123', 'Gloda, John Bryan', ' Volleyball Room', '2022-12-20', '2022-12-20', '17:30:00.000000', '18:00:00.000000', 'APPROVED', 'NO INFO'),
+(6, 1, '2022-12-19', '12321', 'Boado, Schultz Henry', '', '2022-12-20', '2022-12-20', '00:00:00.000000', '00:00:00.000000', 'PENDING', 'asdasdasdad'),
+(7, 1, '2022-12-20', 'assadasd', 'Boado, Schultz Henry', ' Meeting Room', '2022-12-20', '2022-12-20', '15:14:00.000000', '13:30:00.000000', 'REJECT', 'Wrong time'),
+(14, 1, '2022-12-20', '', 'Boado, Schultz Henry', '', '0000-00-00', '0000-00-00', '00:00:00.000000', '00:00:00.000000', 'PENDING', ''),
+(15, 1, '2022-12-20', '', 'Boado, Schultz Henry', '', '0000-00-00', '0000-00-00', '00:00:00.000000', '00:00:00.000000', 'PENDING', ''),
+(16, 1, '2022-12-20', '', 'Boado, Schultz Henry', '', '0000-00-00', '0000-00-00', '00:00:00.000000', '00:00:00.000000', 'PENDING', '');
 
 -- --------------------------------------------------------
 
@@ -179,7 +184,7 @@ CREATE TABLE `users_accounts` (
 INSERT INTO `users_accounts` (`id`, `last_names`, `first_names`, `username`, `company`, `emails`, `passwords`, `statuses`) VALUES
 (1, 'Boado', 'Schultz Henry', 'henryboado', 'Obanana Corp.', 'schultzhenry.boado@obanana.com', '202cb962ac59075b964b07152d234b70', 'ACTIVE'),
 (2, 'Gloda', 'John Bryan', 'bryangloda', 'Premium Megastructures Inc.', 'bryan.gloda@obanana.com', '202cb962ac59075b964b07152d234b70', 'ACTIVE'),
-(3, 'Mangalo', 'Ryan Christian', 'ryanmangalo', 'Obanana Corp.', 'ryan.mangalo@obanana.com', 'e99a18c428cb38d5f260853678922e03', 'ACTIVE'),
+(3, 'Mangalo', 'Ryan Christian', 'ryanmangalo', 'Obanana Corp.', 'ryan.mangalo@obanana.com', '202cb962ac59075b964b07152d234b70', 'ACTIVE'),
 (8, 'Matias', 'Ryan', 'ryanmatias', 'Obanana Corp.', 'ryan.matias@obanana.com', '57f231b1ec41dc6641270cb09a56f897', 'INACTIVE');
 
 --
@@ -249,7 +254,7 @@ ALTER TABLE `companies`
 -- AUTO_INCREMENT for table `facilities`
 --
 ALTER TABLE `facilities`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `facility_room_masters`
@@ -267,7 +272,7 @@ ALTER TABLE `floors`
 -- AUTO_INCREMENT for table `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `users_accounts`
