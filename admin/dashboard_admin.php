@@ -100,7 +100,7 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-lg-end">
               <li class="nav-item text-center">
-                <a class="dropdown-item" href="s">Change Password</a>
+                <a class="dropdown-item" href="./change_password.php">Change Password</a>
               </li>
               <li class="nav-item text-center">
                 <a class="dropdown-item" href="./php/logout.php">Logout</a>
@@ -117,23 +117,23 @@
     <div class="container">
       <!-- INFORMATION -->
       <div class="row gap-3 justify-content-center">
-        <div class="col-12 col-md-2 bg-primary">
+        <div class="col-12 col-md-4 bg-primary">
           <p class="h3 fw-bold text-light text-center mt-3">
             Total Reservation
           </p>
           <p class="fs-1 text-warning fw-bold text-center"><?php echo $row ?></p>
         </div>
-        <div class="col-12 col-md-2 bg-primary">
+        <div class="col-12 col-md-4 bg-primary">
           <p class="h3 fw-bold text-light text-center mt-3">
             For Confirmation
           </p>
           <p class="fs-1 text-warning fw-bold text-center"><?php echo $rowForConfirm ?></p>
         </div>
-        <div class="col-12 col-md-2 bg-primary">
+        <div class="col-12 col-md-4 bg-primary">
           <p class="h3 fw-bold text-light text-center mt-3">Total Confirmed</p>
           <p class="fs-1 text-warning fw-bold text-center"><?php echo $rowConfirm  ?></p>
         </div>
-        <div class="col-12 col-md-2 bg-primary">
+        <div class="col-12 col-md-4 bg-primary">
           <p class="h3 fw-bold text-light text-center mt-3">Total Cancelled</p>
           <p class="fs-1 text-warning fw-bold text-center"><?php echo $rowCancel ?></p>
         </div>
@@ -159,8 +159,8 @@
           <?php while($rowUsers = mysqli_fetch_assoc($sqlReadReservations)) { ?>
           <tr>
             <td><?php echo $rowUsers['rsvn_no'] ?></td>
-            <td><?php echo $rowUsers['time_from'] ?></td>
-            <td><?php echo $rowUsers['time_to'] ?></td>
+            <td><?php echo date("h:i:A", strtotime($rowUsers['time_from'])) ?></td>
+            <td><?php echo date("h:i:A", strtotime($rowUsers['time_to'])) ?></td>
             <td><?php echo $rowUsers['created_by'] ?></td>
             <td><?php echo $company ?></td>
           </tr>

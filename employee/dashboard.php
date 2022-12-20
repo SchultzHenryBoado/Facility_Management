@@ -100,8 +100,8 @@
           <?php while($rowReservations = mysqli_fetch_assoc($sqlReservation)) { ?>
           <tr>
             <td><?php echo $rowReservations['rsvn_no'] ?></td>
-            <td><?php echo $rowReservations['time_from'] ?></td>
-            <td><?php echo $rowReservations['time_to'] ?></td>
+            <td><?php echo date("h:i:A", strtotime($rowReservations['time_from']))?></td>
+            <td><?php echo date("h:i:A", strtotime($rowReservations['time_to']))?></td>
             <td><?php echo $rowReservations['created_by'] ?></td>
             <td><?php echo $company ?></td>
           </tr>

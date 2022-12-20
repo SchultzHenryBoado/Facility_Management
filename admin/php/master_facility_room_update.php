@@ -101,12 +101,20 @@
               <li><a class="dropdown-item" href="../facility_room_master.php">Facility Room Master</a></li>
             </ul>
           </li>
-
-          <li class="nav-item text-center">
-            <form action="./logout.php" method="post">
-              <input type="submit" value="Logout" class="btn btn-primary" />
-            </form>
-          </li>
+          <!-- USERS MENU -->
+          <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+              <i class="fa-sharp fa-solid fa-user"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-lg-end">
+              <li class="nav-item text-center">
+                <a class="dropdown-item" href="../change_password.php">Change Password</a>
+              </li>
+              <li class="nav-item text-center">
+                <a class="dropdown-item" href="../php/logout.php">Logout</a>
+              </li>
+            </ul>
+          </div>
         </ul>
       </div>
     </div>

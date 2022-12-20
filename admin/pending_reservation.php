@@ -79,7 +79,7 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-lg-end">
               <li class="nav-item text-center">
-                <a class="dropdown-item" href="s">Change Password</a>
+                <a class="dropdown-item" href="./change_password.php">Change Password</a>
               </li>
               <li class="nav-item text-center">
                 <a class="dropdown-item" href="./php/logout.php">Logout</a>
@@ -120,8 +120,8 @@
               <td><?php echo $rowReservations['room_type'] ?></td>
               <td><?php echo $rowReservations['date_from'] ?></td>
               <td><?php echo $rowReservations['date_to'] ?></td>
-              <td><?php echo $rowReservations['time_from'] ?></td>
-              <td><?php echo $rowReservations['time_to'] ?></td>
+              <td><?php echo date("h:i:A", strtotime($rowReservations['time_from'])) ?></td>
+              <td><?php echo date("h:i:A", strtotime($rowReservations['time_to'])) ?></td>
               <td><?php echo $rowReservations['statuses'] ?></td>
               <td>
                 <form action="./php/reservation_accept.php" method="post">

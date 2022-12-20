@@ -97,8 +97,8 @@
           <tr>
             <td><?php echo $rowReserve['room_type'] ?></td>
             <td><?php echo $rowReserve['date_from'] ?></td>
-            <td><?php echo $rowReserve['time_from'] ?></td>
-            <td><?php echo $rowReserve['time_to'] ?></td>
+            <td><?php echo date("h:i:A" , strtotime($rowReserve['time_from']))?></td>
+            <td><?php echo date("h:i:A", strtotime($rowReserve['time_to'])) ?></td>
             <td><?php echo $rowReserve['statuses'] ?></td>
             <td><?php echo $rowReserve['cancel_reasons'] ?></td>
           </tr>

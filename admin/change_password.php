@@ -1,27 +1,27 @@
-<?php 
+<?php
   require_once $_SERVER["DOCUMENT_ROOT"] . "/facility_management/database/connection.php";
   require './php/session.php';
-
-  $users_id = $_SESSION['users_id'];
+  // path
+  function path($destination) {
+    echo "<script>window.location.href = '/facility_management/admin/$destination.php'</script>";
+  }
 
   if (isset($_POST['change_password'])) {
     $oldPassword = mysqli_real_escape_string($con, $_POST['old_password']);
-    $encryptPassword = md5($oldPassword);
 
-    $queryPassword = "SELECT * FROM users_accounts WHERE id = '$users_id' ";
+    $queryPassword = "SELECT * FROM admin_accounts";
     $sqlPassword = mysqli_query($con, $queryPassword);
     $row = mysqli_fetch_assoc($sqlPassword);
 
-    if ($encryptPassword == $row['passwords']) {
+    if ($oldPassword == $row['admin_password']) {
       $newPassword = mysqli_real_escape_string($con, $_POST['new_password']);
       $confirmPassword = mysqli_real_escape_string($con, $_POST['confirm_password']);
-      $password = md5($confirmPassword);
 
       if ($newPassword == $confirmPassword) {
-        $queryUpdatePassword = "UPDATE users_accounts SET passwords = '$password' WHERE id = '$users_id' ";
+        $queryUpdatePassword = "UPDATE admin_accounts SET admin_password = '$confirmPassword'";
         $sqlUpdatePassword = mysqli_query($con, $queryUpdatePassword);
-
-        $_SESSION['users_status'] = 'invalid';
+        
+        $_SESSION['admin_status'] = 'invalid';
         path('index');
       } else {
         echo '
@@ -30,7 +30,6 @@
         </div
         ';
       }
-
     } else {
       echo '
        <div class="container mt-5 d-flex justify-content-center">
@@ -39,7 +38,6 @@
       ';
     }
   }
-
 ?>
 
 <!DOCTYPE html>
@@ -73,7 +71,7 @@
           <div class="card-body p-4 p-sm-5">
             <h5 class="card-title text-center mb-5 fw-normal fs-2">Facility Management System</h5>
 
-            <form action="change_pass.php" method="post" class="needs-validation" novalidate>
+            <form action="change_password.php" method="post" class="needs-validation" novalidate>
               <div class="form-floating mb-3">
                 <input type="password" class="form-control" id="floatingInput" placeholder="Old Password"
                   name="old_password" required>

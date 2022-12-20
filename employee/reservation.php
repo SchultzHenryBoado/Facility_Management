@@ -216,19 +216,20 @@
               <td><?php echo $rowReservations['room_type'] ?></td>
               <td><?php echo $rowReservations['date_from'] ?></td>
               <td><?php echo $rowReservations['date_to'] ?></td>
-              <td><?php echo $rowReservations['time_from'] ?></td>
-              <td><?php echo $rowReservations['time_to'] ?></td>
+              <td><?php echo date("h:i:A", strtotime($rowReservations['time_from'])) ?></td>
+              <td><?php echo date("h:i:A", strtotime($rowReservations['time_to']))  ?></td>
               <td><?php echo $rowReservations['statuses'] ?></td>
               <td>
                 <form action="./php/reservation_update.php" method="post">
                   <input type="submit" name="edit" class="btn btn-success fw-bold" value="EDIT">
-                  <input type="hidden" name="edit_id" value="<?php echo$rowReservations['id'] ?>">
-                  <input type="hidden" name="edit_rsvn" value="<?php echo$rowReservations['rsvn_no'] ?>">
-                  <input type="hidden" name="edit_room_type" value="<?php echo$rowReservations['room_type'] ?>">
-                  <input type="hidden" name="edit_date_from" value="<?php echo$rowReservations['date_to'] ?>">
-                  <input type="hidden" name="edit_date_to" value="<?php echo$rowReservations['date_to'] ?>">
-                  <input type="hidden" name="edit_time_from" value="<?php echo$rowReservations['time_from'] ?>">
-                  <input type="hidden" name="edit_time_to" value="<?php echo$rowReservations['time_to'] ?>">
+                  <input type="hidden" name="edit_id" value="<?php echo $rowReservations['id'] ?>">
+                  <input type="hidden" name="edit_rsvn" value="<?php echo $rowReservations['rsvn_no'] ?>">
+                  <input type="hidden" name="edit_room_type" value="<?php echo $rowReservations['room_type'] ?>">
+                  <input type="hidden" name="edit_date_from" value="<?php echo $rowReservations['date_to'] ?>">
+                  <input type="hidden" name="edit_date_to" value="<?php echo $rowReservations['date_to'] ?>">
+                  <input type="hidden" name="edit_time_from" value="<?php echo $rowReservations['time_from'] ?>">
+                  <input type="hidden" name="edit_time_to" value="<?php echo $rowReservations['time_to'] ?>">
+                  <input type="hidden" name="edit_pending_status" value="<?php echo $rowReservations['statuses'] ?>">
                 </form>
               </td>
               <td>

@@ -31,7 +31,7 @@
     $editDateTo = mysqli_real_escape_string($con, $_POST['edit_date_to']);
     $editTimeFrom = mysqli_real_escape_string($con, $_POST['edit_time_from']);
     $editTimeTo = mysqli_real_escape_string($con, $_POST['edit_time_to']);
-    $editPendingStatus = mysqli_real_escape_string($con, $_POST['pending_status']);
+    $editPendingStatus = mysqli_real_escape_string($con, $_POST['edit_pending_status']);
   }
 
   // UPDATE RESERVATIONS
