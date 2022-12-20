@@ -11,7 +11,7 @@
   $company = $_SESSION['company_name'] = $results['company'];
 
   // RESERVATION QUERY
-  $queryReadReservations = "SELECT * FROM reservations WHERE statuses = 'APPROVED' AND date_from = CURRENT_DATE()";
+  $queryReadReservations = "SELECT * FROM reservations WHERE statuses = 'APPROVED' AND date_from = CURRENT_DATE() ORDER BY time_from ASC ";
   $sqlReadReservations = mysqli_query($con, $queryReadReservations);
 
   // TOTAL RESERVATION

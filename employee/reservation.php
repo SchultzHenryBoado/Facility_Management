@@ -42,6 +42,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
   </script>
+  <script src="./js/validation.js" defer></script>
 
   <!-- FONT AWESOME -->
   <script src="https://kit.fontawesome.com/8cbc2e0f0e.js" crossorigin="anonymous"></script>
@@ -89,7 +90,7 @@
   <!-- RESERVATION FORM -->
   <div class="container-fluid mt-5">
     <div class="container mt-5 shadow-lg p-3 mb-5 bg-body rounded">
-      <form action="./php/reservation_create.php" method="post">
+      <form action="./php/reservation_create.php" method="post" class="needs-validation" novalidate>
         <div class="row justify-content-center">
 
           <!-- CREATED DATE -->
@@ -97,7 +98,7 @@
             <div class="mb-3">
               <label for="createdDate" class="form-label">Created Date:</label>
               <input type="text" id="createdDate" name="created_date" class="form-control" value="<?php echo $date ?>"
-                aria-label="Disabled input example" disabled readonly />
+                aria-label="Disabled input example" disabled readonly required />
             </div>
           </div>
 
@@ -105,7 +106,10 @@
           <div class="col-12 col-md-6 col-lg-6">
             <div class="mb-3">
               <label for="rsvn-no" class="form-label">RSVN No.</label>
-              <input type="text" name="rsvn_no" id="rsvn-no" class="form-control" />
+              <input type="text" name="rsvn_no" id="rsvn-no" class="form-control" required />
+              <div class="invalid-feedback">
+                Please fill-up the rsvn no.
+              </div>
             </div>
           </div>
 
@@ -114,7 +118,7 @@
             <div class="mb-3">
               <label for="createdBy" class="form-label">Created By:</label>
               <input type="text" id="createdBy" name="created_by" class="form-control"
-                value="<?php echo $rows['last_names'] . ', ' . $rows['first_names'] ?>" readonly />
+                value="<?php echo $rows['last_names'] . ', ' . $rows['first_names'] ?>" readonly required />
             </div>
           </div>
 
@@ -122,13 +126,16 @@
           <div class="col-12 col-md-6 col-lg-6">
             <div class="mb-3">
               <label for="roomType" class="form-label">Room Type:</label>
-              <select name="room_type" id="roomType" class="form-select">
+              <select name="room_type" id="roomType" class="form-select" required>
                 <option disabled selected value>-- Room Type --</option>
                 <?php while($rowFacilities = mysqli_fetch_assoc($sqlReadFacilities)) { ?>
                 <option value="<?php echo $rowFacilities['facility_name'] ?>">
                   <?php echo $rowFacilities['facility_name'] ?></option>
                 <?php } ?>
               </select>
+              <div class="invalid-feedback">
+                Please choose in the room type.
+              </div>
             </div>
           </div>
 
@@ -136,7 +143,10 @@
           <div class="col-12 col-md-6 col-lg-6">
             <div class="mb-3">
               <label for="dateFrom" class="form-label">Date From:</label>
-              <input type="date" name="date_from" id="dateFrom" class="form-control" />
+              <input type="date" name="date_from" id="dateFrom" class="form-control" required />
+              <div class="invalid-feedback">
+                Please choose the date from.
+              </div>
             </div>
           </div>
 
@@ -144,15 +154,22 @@
           <div class="col-12 col-md-6 col-lg-6">
             <div class="mb-3">
               <label for="dateTo" class="form-label">Date To:</label>
-              <input type="date" name="date_to" id="dateTo" class="form-control" />
+              <input type="date" name="date_to" id="dateTo" class="form-control" required />
+              <div class="invalid-feedback">
+                Please choose the date to.
+              </div>
             </div>
+
           </div>
 
           <!-- TIME FROM -->
           <div class="col-12 col-md-6 col-lg-6">
             <div class="mb-3">
               <label for="timeFrom" class="form-label">Time From:</label>
-              <input type="time" name="time_from" id="timeFrom" class="form-control" />
+              <input type="time" name="time_from" id="timeFrom" class="form-control" required />
+              <div class="invalid-feedback">
+                Please choose the time from.
+              </div>
             </div>
           </div>
 
@@ -160,7 +177,10 @@
           <div class="col-12 col-md-6 col-lg-6">
             <div class="mb-3">
               <label for="timeTo" class="form-label">Time To:</label>
-              <input type="time" name="time_to" id="timeTo" class="form-control" />
+              <input type="time" name="time_to" id="timeTo" class="form-control" required />
+              <div class="invalid-feedback">
+                Please choose the time to.
+              </div>
             </div>
           </div>
 
@@ -168,7 +188,7 @@
           <div class="col-12">
             <div class="mb-3">
               <label for="status" class="form-label">Status:</label>
-              <select name="pending_status" id="status" class="form-select">
+              <select name="pending_status" id="status" class="form-select" required>
                 <option value="PENDING">PENDING</option>
               </select>
             </div>
