@@ -78,6 +78,12 @@
                 <a class="dropdown-item" href="./change_pass.php">Change Password</a>
               </li>
               <li class="nav-item text-center">
+                <a class="dropdown-item" href="./history.php">History</a>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li class="nav-item text-center">
                 <a class="dropdown-item" href="./php/logout.php">Logout</a>
               </li>
             </ul>
@@ -166,7 +172,7 @@
           <div class="col-12 col-md-6 col-lg-6">
             <div class="mb-3">
               <label for="timeFrom" class="form-label">Time From:</label>
-              <input type="time" name="time_from" id="timeFrom" class="form-control" required />
+              <input type="time" name="time_from" id="timeFrom" class="form-control" min="9" max="10" required />
               <div class="invalid-feedback">
                 Please choose the time from.
               </div>
