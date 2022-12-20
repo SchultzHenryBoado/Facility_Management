@@ -120,8 +120,8 @@
               <td><?php echo $rowReservations['room_type'] ?></td>
               <td><?php echo $rowReservations['date_from'] ?></td>
               <td><?php echo $rowReservations['date_to'] ?></td>
-              <td><?php echo date("h:i:A", strtotime($rowReservations['time_from'])) ?></td>
-              <td><?php echo date("h:i:A", strtotime($rowReservations['time_to'])) ?></td>
+              <td><?php echo date("h:i A", strtotime($rowReservations['time_from'])) ?></td>
+              <td><?php echo date("h:i A", strtotime($rowReservations['time_to'])) ?></td>
               <td><?php echo $rowReservations['statuses'] ?></td>
               <td>
                 <form action="./php/reservation_accept.php" method="post">

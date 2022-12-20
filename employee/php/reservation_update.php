@@ -89,16 +89,13 @@
       <div class="collapse navbar-collapse" id="nav">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-5">
           <li class="nav-item text-center">
-            <a href="../dashboard.php" class="nav-link text-light">Dashboard</a>
+            <a href="../schedules.php" class="nav-link text-light">Schedules</a>
           </li>
           <li class="nav-item text-center">
             <a href="../reservation.php" class="nav-link text-light">Reservation</a>
           </li>
           <li class="nav-item text-center">
-            <a href="#" class="nav-link text-light">Inquire</a>
-          </li>
-          <li class="nav-item text-center">
-            <a href="#" class="nav-link text-light">Cancellation</a>
+            <a href="../cancellation.php" class="nav-link text-light">Cancellation</a>
           </li>
           <li class="nav-item text-center">
             <form action="./logout.php" method="post">

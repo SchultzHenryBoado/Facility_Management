@@ -47,13 +47,10 @@
       <div class="collapse navbar-collapse" id="nav">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-5">
           <li class="nav-item text-center">
-            <a href="dashboard.php" class="nav-link text-light">Dashboard</a>
+            <a href="schedules.php" class="nav-link text-light">Schedules</a>
           </li>
           <li class="nav-item text-center">
             <a href="reservation.php" class="nav-link text-light">Reservation</a>
-          </li>
-          <li class="nav-item text-center">
-            <a href="schedules.php" class="nav-link text-light">Schedules</a>
           </li>
           <li class="nav-item text-center">
             <a href="cancellation.php" class="nav-link text-light">Cancellation</a>
@@ -97,8 +94,8 @@
           <tr>
             <td><?php echo $rowReserve['room_type'] ?></td>
             <td><?php echo $rowReserve['date_from'] ?></td>
-            <td><?php echo date("h:i:A" , strtotime($rowReserve['time_from']))?></td>
-            <td><?php echo date("h:i:A", strtotime($rowReserve['time_to'])) ?></td>
+            <td><?php echo date("h:i A" , strtotime($rowReserve['time_from']))?></td>
+            <td><?php echo date("h:i A", strtotime($rowReserve['time_to'])) ?></td>
             <td><?php echo $rowReserve['statuses'] ?></td>
             <td><?php echo $rowReserve['cancel_reasons'] ?></td>
           </tr>

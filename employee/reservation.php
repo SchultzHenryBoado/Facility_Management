@@ -59,13 +59,10 @@
       <div class="collapse navbar-collapse" id="nav">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-5">
           <li class="nav-item text-center">
-            <a href="dashboard.php" class="nav-link text-light">Dashboard</a>
+            <a href="schedules.php" class="nav-link text-light">Schedules</a>
           </li>
           <li class="nav-item text-center">
             <a href="reservation.php" class="nav-link text-light">Reservation</a>
-          </li>
-          <li class="nav-item text-center">
-            <a href="schedules.php" class="nav-link text-light">Schedules</a>
           </li>
           <li class="nav-item text-center">
             <a href="cancellation.php" class="nav-link text-light">Cancellation</a>
@@ -216,8 +213,8 @@
               <td><?php echo $rowReservations['room_type'] ?></td>
               <td><?php echo $rowReservations['date_from'] ?></td>
               <td><?php echo $rowReservations['date_to'] ?></td>
-              <td><?php echo date("h:i:A", strtotime($rowReservations['time_from'])) ?></td>
-              <td><?php echo date("h:i:A", strtotime($rowReservations['time_to']))  ?></td>
+              <td><?php echo date("h:i A", strtotime($rowReservations['time_from'])) ?></td>
+              <td><?php echo date("h:i A", strtotime($rowReservations['time_to']))  ?></td>
               <td><?php echo $rowReservations['statuses'] ?></td>
               <td>
                 <form action="./php/reservation_update.php" method="post">

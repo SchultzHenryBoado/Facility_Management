@@ -109,8 +109,8 @@
               <td><?php echo $rowReservations['rsvn_no'] ?></td>
               <td><?php echo $rowReservations['room_type'] ?></td>
               <td><?php echo $rowReservations['date_from'] ?></td>
-              <td><?php echo date("h:i:A", strtotime($rowReservations['time_from'])) ?></td>
-              <td><?php echo date("h:i:A", strtotime($rowReservations['time_to'])) ?></td>
+              <td><?php echo date("h:i A", strtotime($rowReservations['time_from'])) ?></td>
+              <td><?php echo date("h:i A", strtotime($rowReservations['time_to'])) ?></td>
               <td><?php echo $rowReservations['created_by'] ?></td>
               <td><?php echo $rowReservations['statuses'] ?></td>
               <td><?php echo $rowReservations['cancel_reasons'] ?></td>

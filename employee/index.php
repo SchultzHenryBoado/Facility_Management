@@ -31,7 +31,7 @@
       }
       
       $_SESSION['users_status'] = 'valid';
-      path('dashboard');
+      path('schedules');
     } else {
       echo '
         <div class="container mt-5 d-flex justify-content-center">

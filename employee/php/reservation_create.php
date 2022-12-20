@@ -18,7 +18,7 @@
     $dateTo = mysqli_real_escape_string($con, $_POST['date_to']);
     $timeFrom = mysqli_real_escape_string($con, $_POST['time_from']);
     $timeTo = mysqli_real_escape_string($con, $_POST['time_to']);
-    $status = mysqli_real_escape_string($con, $_POST['status']);
+    $status = mysqli_real_escape_string($con, $_POST['pending_status']);
 
     $queryReservationCreate = "INSERT INTO reservations (id, users_id, created_date, rsvn_no, created_by, room_type, date_from, date_to, time_from, time_to, statuses) 
     VALUES (null, '$users_id', curdate(), '$rsvnNo', '$createdBy', '$roomType', '$dateFrom', '$dateTo', '$timeFrom' , '$timeTo', '$status') ";

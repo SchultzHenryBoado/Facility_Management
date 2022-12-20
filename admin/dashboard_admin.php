@@ -159,8 +159,8 @@
           <?php while($rowUsers = mysqli_fetch_assoc($sqlReadReservations)) { ?>
           <tr>
             <td><?php echo $rowUsers['rsvn_no'] ?></td>
-            <td><?php echo date("h:i:A", strtotime($rowUsers['time_from'])) ?></td>
-            <td><?php echo date("h:i:A", strtotime($rowUsers['time_to'])) ?></td>
+            <td><?php echo date("h:i A", strtotime($rowUsers['time_from'])) ?></td>
+            <td><?php echo date("h:i A", strtotime($rowUsers['time_to'])) ?></td>
             <td><?php echo $rowUsers['created_by'] ?></td>
             <td><?php echo $company ?></td>
           </tr>
