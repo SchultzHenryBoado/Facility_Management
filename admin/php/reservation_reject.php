@@ -9,11 +9,11 @@
 
   if (isset($_POST['reject_reservation'])) {
     $reject = $_POST['reject_id'];
+    $rejectReasons = mysqli_real_escape_string($con, $_POST['reject_reasons']);
 
-    $appQueryUpdate = "UPDATE reservations SET statuses = 'REJECT' WHERE id = '$reject' ";
+    $appQueryUpdate = "UPDATE reservations SET statuses = 'REJECT', cancel_reasons = '$rejectReasons' WHERE id = '$reject'";
     $appSqlUpdate = mysqli_query($con, $appQueryUpdate);
-    $appQueryInsert = "INSERT INTO reservations (id, statuses) VALUES ('$reject', 'REJECT')";
 
-    pathTo('pending_reservation');
+    pathTo('cancellation');
   }
   

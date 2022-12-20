@@ -31,6 +31,7 @@
     $editDateTo = mysqli_real_escape_string($con, $_POST['edit_date_to']);
     $editTimeFrom = mysqli_real_escape_string($con, $_POST['edit_time_from']);
     $editTimeTo = mysqli_real_escape_string($con, $_POST['edit_time_to']);
+    $editPendingStatus = mysqli_real_escape_string($con, $_POST['pending_status']);
   }
 
   // UPDATE RESERVATIONS
@@ -42,8 +43,9 @@
     $updateDateTo = mysqli_real_escape_string($con, $_POST['update_date_to']);
     $updateTimeFrom = mysqli_real_escape_string($con, $_POST['update_time_from']);
     $updateTimeTo = mysqli_real_escape_string($con, $_POST['update_time_to']);
+    $updateStatus = mysqli_real_escape_string($con, $_POST['update_status']);
 
-    $queryUpdate = "UPDATE reservations SET rsvn_no = '$updateRsvnNo', room_type = '$updateRoomType', date_from = '$updateDateFrom', date_to = '$updateDateTo', time_from = '$updateTimeFrom', time_to = '$updateTimeTo' WHERE id = '$updateId'";
+    $queryUpdate = "UPDATE reservations SET rsvn_no = '$updateRsvnNo', room_type = '$updateRoomType', date_from = '$updateDateFrom', date_to = '$updateDateTo', time_from = '$updateTimeFrom', time_to = '$updateTimeTo', statuses = '$updateStatus' WHERE id = '$updateId'";
     $sqlUpdate = mysqli_query($con, $queryUpdate);
 
     pathTo('reservation');
@@ -197,7 +199,7 @@
           <div class="col-12">
             <div class="mb-3">
               <label for="status" class="form-label">Status:</label>
-              <select name="update_status" id="status" class="form-select">
+              <select name="update_status" id="status" class="form-select" value="<?php echo $editPendingStatus  ?>">
                 <option value="PENDING">PENDING</option>
               </select>
             </div>

@@ -171,7 +171,7 @@
           <div class="col-12">
             <div class="mb-3">
               <label for="status" class="form-label">Status:</label>
-              <select name="status" id="status" class="form-select">
+              <select name="pending_status" id="status" class="form-select">
                 <option value="PENDING">PENDING</option>
               </select>
             </div>
