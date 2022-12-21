@@ -134,7 +134,7 @@
               <!-- ACCEPT -->
               <td>
                 <form action="./php/reservation_accept.php" method="post">
-                  <input type="button" name="accept_reservation" value="ACCEPT" class="btn btn-success fw-bold"
+                  <input type="submit" name="accept_reservation" value="ACCEPT" class="btn btn-success fw-bold"
                     id="acceptBtn" value="<?php echo $rowReservations['id']?>">
                   <input type="hidden" name="accept_id" value="<?php echo $rowReservations['id']?>">
                 </form>
