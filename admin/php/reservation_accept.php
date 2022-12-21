@@ -12,8 +12,8 @@
 
     $appQueryUpdate = "UPDATE reservations SET statuses = 'APPROVED' WHERE id = '$accept' ";
     $appSqlUpdate = mysqli_query($con, $appQueryUpdate);
-    $appQueryInsert = "INSERT INTO reservations (id, statuses) VALUES ('$accept', 'APPROVED')";
 
     pathTo('pending_reservation');
+    
   }
   

@@ -8,6 +8,8 @@
   $queryReadReservations = "SELECT * FROM reservations WHERE statuses = 'REJECT'";
   $sqlReadReservations = mysqli_query($con, $queryReadReservations);
   $sqlReserve = mysqli_query($con, $queryReadReservations);
+
+
 ?>
 
 <!DOCTYPE html>
