@@ -5,7 +5,7 @@
   require './php/session.php';
 
   // RESERVATIONS
-  $queryReadReservations = "SELECT * FROM reservations";
+  $queryReadReservations = "SELECT * FROM reservations ORDER BY created_date DESC";
   $sqlReadReservations = mysqli_query($con, $queryReadReservations);
   
 

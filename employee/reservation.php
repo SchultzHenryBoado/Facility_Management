@@ -18,10 +18,9 @@
   $sqlReadFacilities = mysqli_query($con, $queryReadFacilities);
 
   // RESERVATIONS
-  $queryReadReservations = "SELECT * FROM reservations WHERE users_id = '$users_id'";
+  $queryReadReservations = "SELECT * FROM reservations WHERE users_id = '$users_id' AND date_from = curdate() ";
   $sqlReadReservations = mysqli_query($con, $queryReadReservations);
 
-  
 ?>
 
 <!DOCTYPE html>
@@ -172,7 +171,7 @@
           <div class="col-12 col-md-6 col-lg-6">
             <div class="mb-3">
               <label for="timeFrom" class="form-label">Time From:</label>
-              <input type="time" name="time_from" id="timeFrom" class="form-control" min="9" max="10" required />
+              <input type="time" name="time_from" id="timeFrom" class="form-control" required />
               <div class="invalid-feedback">
                 Please choose the time from.
               </div>

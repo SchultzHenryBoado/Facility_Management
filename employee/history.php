@@ -11,7 +11,8 @@
   $company = $_SESSION['company_name'] = $results['company'];
 
   // RESERVATIONS
-  $queryReservations = "SELECT * FROM reservations";
+  $usersId = $_SESSION['users_id'];
+  $queryReservations = "SELECT * FROM reservations WHERE users_id = '$usersId' ORDER BY created_date DESC ";
   $sqlReservation = mysqli_query($con, $queryReservations);
   
 ?>
@@ -23,7 +24,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HISTORY</title>
+  <title>HISTORY LOGS</title>
 
   <!-- CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -88,25 +89,29 @@
   <!-- TABLE -->
   <div class="container-fluid mt-5">
     <div class="container bg-primary shadow p-3 mb-5 bg-body rounded">
-      <p class="h1 text-center mb-3">Histories</p>
+      <p class="h1 text-center mb-3">History Logs</p>
       <table class="table table-striped table-hover">
         <thead>
           <tr>
-            <th scope="col">Room No.</th>
-            <th scope="col">Time From</th>
-            <th scope="col">Time To</th>
-            <th scope="col">Reserved By</th>
-            <th scope="col">Company</th>
+            <th scope="col">Created Date:</th>
+            <th scope="col">Created By:</th>
+            <th scope="col">Room Type:</th>
+            <th scope="col">Date From:</th>
+            <th scope="col">Date To:</th>
+            <th scope="col">Time From:</th>
+            <th scope="col">Time To:</th>
           </tr>
         </thead>
         <tbody class="table-group-divider ">
           <?php while($rowReservations = mysqli_fetch_assoc($sqlReservation)) { ?>
           <tr>
-            <td><?php echo $rowReservations['rsvn_no'] ?></td>
+            <td><?php echo date("F d, Y", strtotime($rowReservations['created_date']))?></td>
+            <td><?php echo $rowReservations['created_by'] ?></td>
+            <td><?php echo $rowReservations['room_type'] ?></td>
+            <td><?php echo date("F d, Y", strtotime($rowReservations['date_from']))  ?></td>
+            <td><?php echo date("F d, Y", strtotime($rowReservations['date_to'])) ?></td>
             <td><?php echo date("h:i A", strtotime($rowReservations['time_from']))?></td>
             <td><?php echo date("h:i A", strtotime($rowReservations['time_to']))?></td>
-            <td><?php echo $rowReservations['created_by'] ?></td>
-            <td><?php echo $company ?></td>
           </tr>
           <?php } ?>
         </tbody>

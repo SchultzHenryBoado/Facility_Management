@@ -83,7 +83,7 @@
   <!-- TABLE -->
   <div class="container-fluid mt-5">
     <div class="container bg-primary shadow p-3 mb-5 bg-body rounded">
-      <p class="h1 text-center mb-3">Cancellation</p>
+      <p class="h1 text-center mb-3">Reservation Cancelled</p>
       <table class="table table-striped table-hover">
         <thead>
           <tr>

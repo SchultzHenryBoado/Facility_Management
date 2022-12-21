@@ -23,7 +23,7 @@
     $queryReservationCreate = "INSERT INTO reservations (id, users_id, created_date, rsvn_no, created_by, room_type, date_from, date_to, time_from, time_to, statuses) 
     VALUES (null, '$users_id', curdate(), '$rsvnNo', '$createdBy', '$roomType', '$dateFrom', '$dateTo', '$timeFrom' , '$timeTo', '$status') ";
     $sqlReservationCreate = mysqli_query($con, $queryReservationCreate);
-
     pathTo('reservation');
+
     
   }
