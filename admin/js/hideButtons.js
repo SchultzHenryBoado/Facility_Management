@@ -1,5 +1,9 @@
 $(document).ready(function () {
-  $("#btnAccept").on("click", function () {
-    $("#action").remove();
+  $("#acceptForm").on("submit", function (e) {
+    $("#btnAccept").on("click", function () {
+      $(this).remove();
+    });
+
+    // e.preventDefault();
   });
 });

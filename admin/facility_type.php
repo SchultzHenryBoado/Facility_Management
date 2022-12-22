@@ -76,6 +76,9 @@
               <li class="nav-item text-center">
                 <a class="dropdown-item" href="./change_password.php">Change Password</a>
               </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
               <li class="nav-item text-center">
                 <a class="dropdown-item" href="./php/logout.php">Logout</a>
               </li>

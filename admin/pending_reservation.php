@@ -89,6 +89,9 @@
               <li class="nav-item text-center">
                 <a class="dropdown-item" href="./change_password.php">Change Password</a>
               </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
               <li class="nav-item text-center">
                 <a class="dropdown-item" href="./php/logout.php">Logout</a>
               </li>
@@ -135,8 +138,9 @@
               <!-- ACCEPT -->
               <td>
                 <form action="./php/reservation_accept.php" method="post" id="acceptForm">
-                  <input type="submit" name="accept_reservation" value="ACCEPT" class="btn btn-success fw-bold"
-                    id="btnAccept">
+                  <!-- <input type="button" name="accept_reservation" value="ACCEPT" class="btn btn-success fw-bold"
+                    id="btnAccept"> -->
+                  <button name="accept_reservation" class="btn btn-success fw-bold" id="btnAccept">ACCEPT</button>
 
                   <input type="hidden" name="accept_id" value="<?php echo $rowReservations['id']?>">
                 </form>
