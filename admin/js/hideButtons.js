@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  $("#acceptBtn").submit(function () {
-    $("td").fadeOut();
+  $("#btnAccept").on("click", function () {
+    $("#action").remove();
   });
 });

@@ -18,8 +18,25 @@
   $sqlReadFacilities = mysqli_query($con, $queryReadFacilities);
 
   // RESERVATIONS
-  $queryReadReservations = "SELECT * FROM reservations WHERE users_id = '$users_id' AND date_from = curdate() ";
+  $queryReadReservations = "SELECT * FROM reservations WHERE users_id = '$users_id'";
   $sqlReadReservations = mysqli_query($con, $queryReadReservations);
+
+  if (isset($_POST['update_reservation'])) {
+    $updateId = $_POST['update_id'];
+    $updateRsvnNo = mysqli_real_escape_string($con, $_POST['update_rsvn_no']);
+    $updateRoomType = mysqli_real_escape_string($con, $_POST['update_room_type']);
+    $updateDateFrom = mysqli_real_escape_string($con, $_POST['update_date_from']);
+    $updateDateTo = mysqli_real_escape_string($con, $_POST['update_date_to']);
+    $updateTimeFrom = mysqli_real_escape_string($con, $_POST['update_time_from']);
+    $updateTimeTo = mysqli_real_escape_string($con, $_POST['update_time_to']);
+    $updateStatus = mysqli_real_escape_string($con, $_POST['update_status']);
+
+    $queryUpdate = "UPDATE reservations SET rsvn_no = '$updateRsvnNo', room_type = '$updateRoomType', date_from = '$updateDateFrom', date_to = '$updateDateTo', time_from = '$updateTimeFrom', time_to = '$updateTimeTo', statuses = '$updateStatus' WHERE id = '$updateId'";
+    $sqlUpdate = mysqli_query($con, $queryUpdate);
+
+    path('reservation');
+  }
+
 
 ?>
 
@@ -242,22 +259,112 @@
               <td><?php echo date("h:i A", strtotime($rowReservations['time_to']))  ?></td>
               <td><?php echo $rowReservations['statuses'] ?></td>
               <td>
-                <form action="./php/reservation_update.php" method="post">
-                  <input type="submit" name="edit" class="btn btn-success fw-bold" value="EDIT">
-                  <input type="hidden" name="edit_id" value="<?php echo $rowReservations['id'] ?>">
-                  <input type="hidden" name="edit_rsvn" value="<?php echo $rowReservations['rsvn_no'] ?>">
-                  <input type="hidden" name="edit_room_type" value="<?php echo $rowReservations['room_type'] ?>">
-                  <input type="hidden" name="edit_date_from" value="<?php echo $rowReservations['date_to'] ?>">
-                  <input type="hidden" name="edit_date_to" value="<?php echo $rowReservations['date_to'] ?>">
-                  <input type="hidden" name="edit_time_from" value="<?php echo $rowReservations['time_from'] ?>">
-                  <input type="hidden" name="edit_time_to" value="<?php echo $rowReservations['time_to'] ?>">
-                  <input type="hidden" name="edit_pending_status" value="<?php echo $rowReservations['statuses'] ?>">
+                <button class="btn btn-success fw-bold" data-bs-toggle="modal"
+                  data-bs-target="#modalEdit-<?php echo $rowReservations['id'] ?>">EDIT</button>
+                <form action="reservation.php" method="post">
+
+                  <?php 
+                    $query = "SELECT * FROM facilities";
+                    $sql = mysqli_query($con, $query);
+                  ?>
+
+                  <div class="modal fade" id="modalEdit-<?php echo $rowReservations['id'] ?>" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-title">
+                          <p class="fs-3 my-3 text-center">Edit Reservations</p>
+                        </div>
+                        <div class="modal-body">
+                          <input class="form-control" type="hidden" name="update_id"
+                            value="<?php echo $rowReservations['id'] ?>">
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="mb-3">
+                                <label for="updateRsvn" class="form-label">Update RSVN No.</label>
+                                <input class="form-control" type="text" name="update_rsvn_no" id="updateRsvn"
+                                  value="<?php echo $rowReservations['rsvn_no'] ?>">
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <div class="mb-3">
+                                <label for="updateRoomType" class="form-label">Update Room Type:</label>
+                                <select name="update_room_type" id="updateRoomType" class="form-select">
+                                  <option disabled selected value>-- Room Type --</option>
+                                  <?php while($row = mysqli_fetch_assoc($sql)) { ?>
+                                  <option value="<?php echo $row['facility_name'] ?>">
+                                    <?php echo $row['facility_name'] ?></option>
+                                  <?php } ?>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <div class="mb-3">
+                                <label for="updateDateFrom" class="form-label">Update Date From:</label>
+                                <input class="form-control" type="date" name="update_date_from" id="updateDateFrom"
+                                  value="<?php echo $rowReservations['date_from'] ?>">
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <div class="mb-3">
+                                <label for="updateDateTo" class="form-label">Update Date To:</label>
+                                <input class="form-control" type="date" name="update_date_to" id="updateDateTo"
+                                  value="<?php echo $rowReservations['date_to'] ?>">
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <div class="mb-3">
+                                <label for="updateTimeFrom" class="form-label">Update Time From:</label>
+                                <input class="form-control" type="time" name="update_time_from" id="updateTimeFrom"
+                                  value="<?php echo $rowReservations['time_from'] ?>">
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <div class="mb-3">
+                                <label for="updateTimeTo" class="form-label">Update Time To:</label>
+                                <input class="form-control" type="time" name="update_time_to" id="updateTimeTo"
+                                  value="<?php echo $rowReservations['time_to'] ?>">
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <div class="mb-3">
+                                <label for="updateStatus" class="form-label">Status:</label>
+                                <select class="form-control" type="text" name="update_status" id="updateStatus"
+                                  value="<?php echo $rowReservations['statuses'] ?>">
+                                  <option value="PENDING">PENDING</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="submit" class="btn btn-success fw-bold" name="update_reservation">SUBMIT
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </form>
               </td>
+
               <td>
-                <form action="./php/reservation_delete.php" method="post">
-                  <input type="submit" name="delete" value="DELETE" class="btn btn-danger fw-bold">
+                <button class="btn btn-danger fw-bold" data-bs-toggle="modal"
+                  data-bs-target="#modalDelete-<?php echo $rowReservations['id'] ?>">DELETE</button>
+
+                <form action="./php/reservation_delete.php" method="post" id="deleteForm">
                   <input type="hidden" name="delete_id" value="<?php echo $rowReservations['id'] ?>">
+                  <div class="modal fade" tabindex="-1" id="modalDelete-<?php echo $rowReservations['id'] ?>">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-title text-center my-5">
+                          <p class="fs-3">Are you sure you want to delete?</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                          <button type="submit" class="btn btn-primary" name="delete" id="deleteBtn">OK</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </form>
               </td>
             </tr>
