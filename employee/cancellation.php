@@ -107,8 +107,8 @@
             <td><?php echo date("h:i A", strtotime($rowReserve['time_to'])) ?></td>
             <td><?php echo $rowReserve['statuses'] ?></td>
             <td><?php echo $rowReserve['cancel_reasons'] ?></td>
-          </tr>
-          <?php } ?>
+
+            <?php } ?>
         </tbody>
       </table>
     </div>

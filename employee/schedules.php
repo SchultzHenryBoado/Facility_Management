@@ -96,6 +96,7 @@
         <thead>
           <tr>
             <th scope="col">Room No.</th>
+            <th scope="col">Room Type</th>
             <th scope="col">Time From</th>
             <th scope="col">Time To</th>
             <th scope="col">Reserved By</th>
@@ -106,6 +107,7 @@
           <?php while($rowReservations = mysqli_fetch_assoc($sqlReservation)) { ?>
           <tr>
             <td><?php echo $rowReservations['rsvn_no'] ?></td>
+            <td><?php echo $rowReservations['room_type'] ?></td>
             <td><?php echo date("h:i A", strtotime($rowReservations['time_from']))?></td>
             <td><?php echo date("h:i A", strtotime($rowReservations['time_to']))?></td>
             <td><?php echo $rowReservations['created_by'] ?></td>

@@ -18,7 +18,7 @@
   $sqlReadFacilities = mysqli_query($con, $queryReadFacilities);
 
   // RESERVATIONS
-  $queryReadReservations = "SELECT * FROM reservations WHERE users_id = '$users_id' AND statuses = 'PENDING'";
+  $queryReadReservations = "SELECT * FROM reservations WHERE users_id = '$users_id' ";
   $sqlReadReservations = mysqli_query($con, $queryReadReservations);
 
   if (isset($_POST['update_reservation'])) {
@@ -121,8 +121,7 @@
   <!-- RESERVATION FORM -->
   <div class="container-fluid mt-5">
     <div class="container mt-5 shadow-lg p-3 mb-5 bg-body rounded">
-      <!-- class="needs-validation" -->
-      <form action="./php/reservation_create.php" method="post" novalidate>
+      <form action="./php/reservation_create.php" method="post" class="needs-validation" novalidate>
         <div class="row justify-content-center">
 
           <!-- CREATED DATE -->

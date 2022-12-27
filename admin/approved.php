@@ -108,6 +108,7 @@
               <th scope="col">Time To:</th>
               <th scope="col">Reserved By:</th>
               <th scope="col">Status:</th>
+              <th scope="col">Action:</th>
             </tr>
           </thead>
           <tbody class="table-group-divider">
@@ -120,6 +121,34 @@
               <td><?php echo date("h:i A", strtotime($rowReservations['time_to'])) ?></td>
               <td><?php echo $rowReservations['created_by'] ?></td>
               <td><?php echo $rowReservations['statuses'] ?></td>
+
+              <!-- REJECT -->
+              <td>
+                <form action="./php/reservation_reject.php" method="post">
+                  <input type="hidden" name="reject_id" id="" value="<?php echo $rowReservations['id'] ?>">
+                  <button type="button" class="btn btn-danger fw-bold" data-bs-toggle="modal"
+                    data-bs-target="#rejectModal-<?php echo $rowReservations['id'] ?>"
+                    value="<?php echo $rowReservations['id'] ?>">
+                    REJECT
+                  </button>
+                  <div class="modal fade" id="rejectModal-<?php echo $rowReservations['id'] ?>" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="fs-5">Reason for rejection</h1>
+                        </div>
+                        <div class="modal-body">
+                          <textarea name="reject_reasons" class="form-control w-100" placeholder="Write a reasons..."
+                            style="height: 300px" required></textarea>
+                        </div>
+                        <div class="modal-footer">
+                          <input type="submit" name="reject_reservation" value="SUBMIT" class="btn btn-success">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </td>
             </tr>
             <?php } ?>
           </tbody>
