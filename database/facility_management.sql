@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 20, 2022 at 07:03 AM
+-- Generation Time: Dec 27, 2022 at 09:44 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -38,7 +38,7 @@ CREATE TABLE `admin_accounts` (
 --
 
 INSERT INTO `admin_accounts` (`id`, `admin_username`, `admin_password`) VALUES
-(1, 'admin', 'admin123');
+(1, 'admin', '123');
 
 -- --------------------------------------------------------
 
@@ -153,12 +153,12 @@ CREATE TABLE `reservations` (
 --
 
 INSERT INTO `reservations` (`id`, `users_id`, `created_date`, `rsvn_no`, `created_by`, `room_type`, `date_from`, `date_to`, `time_from`, `time_to`, `statuses`, `cancel_reasons`) VALUES
-(5, 2, '2022-12-19', '3123', 'Gloda, John Bryan', ' Volleyball Room', '2022-12-20', '2022-12-20', '17:30:00.000000', '18:00:00.000000', 'APPROVED', 'NO INFO'),
-(6, 1, '2022-12-19', '12321', 'Boado, Schultz Henry', '', '2022-12-20', '2022-12-20', '00:00:00.000000', '00:00:00.000000', 'PENDING', 'asdasdasdad'),
-(7, 1, '2022-12-20', 'assadasd', 'Boado, Schultz Henry', ' Meeting Room', '2022-12-20', '2022-12-20', '15:14:00.000000', '13:30:00.000000', 'REJECT', 'Wrong time'),
-(14, 1, '2022-12-20', '', 'Boado, Schultz Henry', '', '0000-00-00', '0000-00-00', '00:00:00.000000', '00:00:00.000000', 'PENDING', ''),
-(15, 1, '2022-12-20', '', 'Boado, Schultz Henry', '', '0000-00-00', '0000-00-00', '00:00:00.000000', '00:00:00.000000', 'PENDING', ''),
-(16, 1, '2022-12-20', '', 'Boado, Schultz Henry', '', '0000-00-00', '0000-00-00', '00:00:00.000000', '00:00:00.000000', 'PENDING', '');
+(5, 2, '2022-12-19', '3123', 'Gloda, John Bryan', 'Basketball Room', '2022-12-27', '2022-12-27', '15:17:00.000000', '16:17:00.000000', 'APPROVED', 'asdasdasd'),
+(55, 1, '2022-12-27', '123123', 'Boado, Schultz Henry', 'Basketball Room', '2022-12-27', '2022-12-28', '13:00:00.000000', '14:00:00.000000', 'APPROVED', 'asasdasdasda'),
+(56, 1, '2022-12-27', 'a123123', 'Boado, Schultz Henry', 'Board Room', '2022-12-27', '2022-12-27', '10:06:00.000000', '11:06:00.000000', 'REJECT', 'asdasd'),
+(57, 1, '2022-12-27', '1231233', 'Boado, Schultz Henry', 'Meeting Room', '2022-12-27', '2022-12-27', '00:07:00.000000', '01:07:00.000000', 'REJECT', 'asasdasdasd'),
+(60, 3, '2022-12-27', '4354', 'Mangalo, Ryan Christian', 'Basketball Room', '2022-12-27', '2022-12-27', '15:00:00.000000', '16:00:00.000000', 'REJECT', 'asdasdasd'),
+(61, 1, '2022-12-27', '12345', 'Boado, Schultz Henry', 'Board Room', '2022-12-27', '2022-12-27', '11:50:00.000000', '11:50:00.000000', 'PENDING', '');
 
 -- --------------------------------------------------------
 
@@ -272,7 +272,7 @@ ALTER TABLE `floors`
 -- AUTO_INCREMENT for table `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `users_accounts`
