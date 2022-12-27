@@ -8,13 +8,6 @@
   $queryReadReservations = "SELECT * FROM reservations ORDER BY created_date DESC";
   $sqlReadReservations = mysqli_query($con, $queryReadReservations);
 
-  // $query = "SELECT statuses FROM reservations WHERE statuses = 'APPROVED'";
-  // $sql = mysqli_query($con, $query);
-  // $results = mysqli_fetch_assoc($sql);
-
-  // if () {
-
-  // }
 ?>
 
 <!DOCTYPE html>
@@ -63,6 +56,9 @@
           </li>
           <li class="nav-item text-center">
             <a href="pending_reservation.php" class="nav-link text-light">Reservation</a>
+          </li>
+          <li class="nav-item text-center">
+            <a href="approved.php" class="nav-link text-light">Approved</a>
           </li>
           <li class="nav-item text-center">
             <a href="cancellation.php" class="nav-link text-light">Cancellation</a>
@@ -124,7 +120,7 @@
           </thead>
           <tbody class="table-group-divider">
             <?php while($rowReservations = mysqli_fetch_assoc($sqlReadReservations)) { ?>
-            <tr>
+            <tr id="myTableRow">
               <td><?php echo $rowReservations['created_date'] ?></td>
               <td><?php echo $rowReservations['rsvn_no'] ?></td>
               <td><?php echo $rowReservations['created_by'] ?></td>
@@ -137,15 +133,27 @@
 
               <!-- ACCEPT -->
               <td>
-                <form action="./php/reservation_accept.php" method="post" id="acceptForm">
-                  <!-- <input type="button" name="accept_reservation" value="ACCEPT" class="btn btn-success fw-bold"
-                    id="btnAccept"> -->
-                  <button name="accept_reservation" class="btn btn-success fw-bold" id="btnAccept">ACCEPT</button>
-
+                <form action="./php/reservation_accept.php" method="post">
                   <input type="hidden" name="accept_id" value="<?php echo $rowReservations['id']?>">
+                  <button type="button" class="btn btn-success fw-bold" data-bs-toggle="modal"
+                    data-bs-target="#acceptModal-<?php echo $rowReservations['id'] ?>"
+                    value="<?php echo $rowReservations['id'] ?>">ACCEPT</button>
+                  <div class="modal fade" id="acceptModal-<?php echo $rowReservations['id'] ?>" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="text-center">Are you sure?</h1>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
+                          <input type="submit" class="btn btn-success" name="accept_reservation" value="Yes"
+                            id="acceptBtn">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </form>
               </td>
-
               <!-- REJECT -->
               <td>
                 <form action="./php/reservation_reject.php" method="post">
@@ -163,7 +171,7 @@
                         </div>
                         <div class="modal-body">
                           <textarea name="reject_reasons" class="form-control w-100" placeholder="Write a reasons..."
-                            style="height: 300px"></textarea>
+                            style="height: 300px" required></textarea>
                         </div>
                         <div class="modal-footer">
                           <input type="submit" name="reject_reservation" value="SUBMIT" class="btn btn-success">

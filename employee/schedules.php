@@ -58,6 +58,9 @@
             <a href="reservation.php" class="nav-link text-light">Reservation</a>
           </li>
           <li class="nav-item text-center">
+            <a href="accept.php" class="nav-link text-light">Approved</a>
+          </li>
+          <li class="nav-item text-center">
             <a href="cancellation.php" class="nav-link text-light">Cancellation</a>
           </li>
           <!-- USERS MENU -->

@@ -13,7 +13,7 @@
     $appQueryUpdate = "UPDATE reservations SET statuses = 'APPROVED' WHERE id = '$accept' ";
     $appSqlUpdate = mysqli_query($con, $appQueryUpdate);
 
-    pathTo('pending_reservation');
+    pathTo('approved');
 
   }
   

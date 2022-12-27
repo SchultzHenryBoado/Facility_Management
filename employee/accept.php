@@ -1,36 +1,30 @@
-<?php
+<?php 
   // DATABASE 
   require_once $_SERVER['DOCUMENT_ROOT'] . './facility_management/database/connection.php';
   // SESSION
   require './php/session.php';
 
-  // USERS
-  $queryUsers = "SELECT * FROM users_accounts";
-  $sqlUsers = mysqli_query($con, $queryUsers);
-  $results = mysqli_fetch_assoc($sqlUsers);
-  $company = $_SESSION['company_name'] = $results['company'];
-
-  // RESERVATIONS
-  $usersId = $_SESSION['users_id'];
-  $queryReservations = "SELECT * FROM reservations WHERE users_id = '$usersId' ORDER BY created_date DESC ";
-  $sqlReservation = mysqli_query($con, $queryReservations);
+  $users_id = $_SESSION['users_id'];
   
+  $queryReadReservation = "SELECT * FROM reservations WHERE users_id = '$users_id' AND statuses = 'APPROVED'";
+  $sqlReadReservation = mysqli_query($con, $queryReadReservation);
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HISTORY LOGS</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APPROVE</title>
 
   <!-- CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
 
-  <link rel="stylesheet" href="./styles/dashboard.css" />
+  <link rel="stylesheet" href="./styles/cancel.css" />
 
   <!-- JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
@@ -92,35 +86,32 @@
   <!-- TABLE -->
   <div class="container-fluid mt-5">
     <div class="container bg-primary shadow p-3 mb-5 bg-body rounded">
-      <p class="h1 text-center mb-3">History Logs</p>
+      <p class="h1 text-center mb-3">Reservation Accepted</p>
       <table class="table table-striped table-hover">
         <thead>
           <tr>
-            <th scope="col">Created Date:</th>
-            <th scope="col">Created By:</th>
             <th scope="col">Room Type:</th>
-            <th scope="col">Date From:</th>
-            <th scope="col">Date To:</th>
+            <th scope="col">Date:</th>
             <th scope="col">Time From:</th>
             <th scope="col">Time To:</th>
+            <th scope="col">Status:</th>
           </tr>
         </thead>
-        <tbody class="table-group-divider ">
-          <?php while($rowReservations = mysqli_fetch_assoc($sqlReservation)) { ?>
+        <tbody class="table-group-divider">
+          <?php while($rowReserve = mysqli_fetch_assoc($sqlReadReservation)) { ?>
           <tr>
-            <td><?php echo date("F d, Y", strtotime($rowReservations['created_date']))?></td>
-            <td><?php echo $rowReservations['created_by'] ?></td>
-            <td><?php echo $rowReservations['room_type'] ?></td>
-            <td><?php echo date("F d, Y", strtotime($rowReservations['date_from']))  ?></td>
-            <td><?php echo date("F d, Y", strtotime($rowReservations['date_to'])) ?></td>
-            <td><?php echo date("h:i A", strtotime($rowReservations['time_from']))?></td>
-            <td><?php echo date("h:i A", strtotime($rowReservations['time_to']))?></td>
+            <td><?php echo $rowReserve['room_type'] ?></td>
+            <td><?php echo $rowReserve['date_from'] ?></td>
+            <td><?php echo date("h:i A" , strtotime($rowReserve['time_from']))?></td>
+            <td><?php echo date("h:i A", strtotime($rowReserve['time_to'])) ?></td>
+            <td><?php echo $rowReserve['statuses'] ?></td>
           </tr>
           <?php } ?>
         </tbody>
       </table>
     </div>
   </div>
+
 </body>
 
 </html>
