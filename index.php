@@ -89,47 +89,43 @@
     }
   }
   </style>
-  <div class="container">
-    <div class="row m-5 no-gutters shadow-lg">
-      <div class="col-md-6 bg-white d-none d-md-block">
-        <img src="./employee/img/Facility hotel.jpg" class="img-fluid"
-          style="max-height: 8.5em; margin:20px 0px 0px 0px;" class="
+  <div class="container-fluid">
+    <div class="container">
+      <div class="row m-5 no-gutters shadow-lg">
+        <div class="col-md-6 bg-white d-none d-md-block">
+          <img src="./employee/img/Facility hotel.jpg" class="img-fluid"
+            style="max-height: 8.5em; margin:20px 0px 0px 0px;" class="
           responsive" />
-        <img src="./employee/img/pool.jpg" class="img-fluid" style="max-height: 8.5em; margin:20px 0px 0px 0px;"
-          class="responsive" />
-        <p>PREMIUMLANDS CORPORATION</p>
-        <h1>Facility Management </h1>
-        <img src="./employee/img/rooms.jpg" class="img-fluid" style="max-height: 8.5em; margin:  0px 0px -120px 0px;"
-          class="
+          <img src="./employee/img/pool.jpg" class="img-fluid" style="max-height: 8.5em; margin:20px 0px 0px 0px;"
+            class="responsive" />
+          <p>PREMIUMLANDS CORPORATION</p>
+          <h1>Facility Management </h1>
+          <img src="./employee/img/rooms.jpg" class="img-fluid" style="max-height: 8.5em; margin:  0px 0px -120px 0px;"
+            class="
           responsive" />
-        <img src="./employee/img/bedroom.jpg" class="img-fluid" style="max-height: 8.5em; margin: 0px 0px -120px 0px;"
-          class="
+          <img src="./employee/img/bedroom.jpg" class="img-fluid" style="max-height: 8.5em; margin: 0px 0px -120px 0px;"
+            class="
           responsive " />
-      </div>
-      <div class=" col-md-6 bg-white p-5">
-        <center>
-          <h4 class="pb-3">Facility Management </h4>
-        </center>
-        <div class="form-style">
-          <form class="box">
-            <div class="form-group pb-3">
-              <a type="submit" class="btn btn-info w-100 font-weight-bold mt-2" href="./admin/index.php">Admin</a>
-            </div>
-            <div class="form-group pb-3">
-              <a type="submit" class="btn btn-info w-100 font-weight-bold mt-2" href="./employee/index.php">Employee
-              </a>
-            </div>
-
-          </form>
-
-
-
         </div>
-
+        <div class=" col-md-6 bg-white p-5">
+          <center>
+            <h4 class="pb-3">Facility Management </h4>
+          </center>
+          <div class="form-style">
+            <form class="box">
+              <div class="form-group pb-3">
+                <a type="submit" class="btn btn-info w-100 font-weight-bold mt-2" href="./admin/index.php">Admin</a>
+              </div>
+              <div class="form-group pb-3">
+                <a type="submit" class="btn btn-info w-100 font-weight-bold mt-2" href="./employee/index.php">Employee
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
 </body>
 
 </html>

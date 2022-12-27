@@ -8,4 +8,4 @@ today = yyyy + "-" + mm + "-" + dd;
 $("#dateFrom").attr("min", today);
 $("#dateTo").attr("min", today);
 $("#updateDateFrom").attr("min", today);
-$("#updateDateFrom").attr("min", today);
+$("#updateDateTo").attr("min", today);

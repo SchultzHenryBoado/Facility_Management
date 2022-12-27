@@ -12,7 +12,7 @@
 
   // RESERVATIONS
   $usersId = $_SESSION['users_id'];
-  $queryReservations = "SELECT * FROM reservations WHERE users_id = '$usersId' ORDER BY created_date DESC ";
+  $queryReservations = "SELECT * FROM reservations WHERE users_id = '$usersId' AND statuses = 'APPROVED' ORDER BY created_date DESC ";
   $sqlReservation = mysqli_query($con, $queryReservations);
   
 ?>
@@ -103,6 +103,7 @@
             <th scope="col">Date To:</th>
             <th scope="col">Time From:</th>
             <th scope="col">Time To:</th>
+            <th scope="col">Status:</th>
           </tr>
         </thead>
         <tbody class="table-group-divider ">
@@ -115,6 +116,7 @@
             <td><?php echo date("F d, Y", strtotime($rowReservations['date_to'])) ?></td>
             <td><?php echo date("h:i A", strtotime($rowReservations['time_from']))?></td>
             <td><?php echo date("h:i A", strtotime($rowReservations['time_to']))?></td>
+            <td><?php echo $rowReservations['statuses'] ?></td>
           </tr>
           <?php } ?>
         </tbody>
