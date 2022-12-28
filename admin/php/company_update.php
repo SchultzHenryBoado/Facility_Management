@@ -1,5 +1,5 @@
 <?php 
-  require_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php';
+  include_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php';
 
   if (isset($_POST['edit'])) {
     $editId = mysqli_real_escape_string($con, $_POST['edit_id']);

@@ -1,5 +1,5 @@
 <?php 
-  require_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php';
+  include_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php';
   require './php/session.php';
 
   $queryCompany = "SELECT * FROM companies";
