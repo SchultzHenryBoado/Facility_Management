@@ -13,6 +13,10 @@
     $_SESSION['users_status'] = 'invalid';
   }
 
+  if ($_SESSION['users_status'] == 'valid') {
+    path("schedules");
+  }
+
   if (isset($_POST['login'])) {
     $email = mysqli_real_escape_string($con, $_POST['email']);
     $password = mysqli_real_escape_string($con, $_POST['password']);
