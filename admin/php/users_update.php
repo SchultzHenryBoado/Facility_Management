@@ -1,6 +1,6 @@
 <?php 
   // DATABASE
-  require_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php';
+  include_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php';
 
   // COMPANY
   $queryCompanyName = "SELECT company_name FROM companies";

@@ -53,6 +53,9 @@
             <a href="reservation.php" class="nav-link text-light">Reservation</a>
           </li>
           <li class="nav-item text-center">
+            <a href="accept.php" class="nav-link text-light">Approved</a>
+          </li>
+          <li class="nav-item text-center">
             <a href="cancellation.php" class="nav-link text-light">Cancellation</a>
           </li>
           <!-- USERS MENU -->
@@ -104,8 +107,8 @@
             <td><?php echo date("h:i A", strtotime($rowReserve['time_to'])) ?></td>
             <td><?php echo $rowReserve['statuses'] ?></td>
             <td><?php echo $rowReserve['cancel_reasons'] ?></td>
-          </tr>
-          <?php } ?>
+
+            <?php } ?>
         </tbody>
       </table>
     </div>

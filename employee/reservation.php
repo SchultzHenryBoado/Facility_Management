@@ -18,7 +18,7 @@
   $sqlReadFacilities = mysqli_query($con, $queryReadFacilities);
 
   // RESERVATIONS
-  $queryReadReservations = "SELECT * FROM reservations WHERE users_id = '$users_id'";
+  $queryReadReservations = "SELECT * FROM reservations WHERE users_id = '$users_id' ";
   $sqlReadReservations = mysqli_query($con, $queryReadReservations);
 
   if (isset($_POST['update_reservation'])) {
@@ -50,15 +50,21 @@
   <title>RESERVATION</title>
 
   <!-- CSS -->
+  <link href="https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="Stylesheet" type="text/css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
-  <!-- <link rel="stylesheet" href="./styles/reservation.css" /> -->
+  <link rel="stylesheet" href="./styles/reservation.css" />
 
   <!-- JS -->
+  <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"
+    integrity="sha256-xLD7nhI62fcsEZK2/v8LsBcb4lG7dgULkuXoXB/j91c=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
   </script>
   <script src="./js/validation.js" defer></script>
+  <script src="./js/date.js" defer></script>
 
   <!-- FONT AWESOME -->
   <script src="https://kit.fontawesome.com/8cbc2e0f0e.js" crossorigin="anonymous"></script>
@@ -80,6 +86,9 @@
           </li>
           <li class="nav-item text-center">
             <a href="reservation.php" class="nav-link text-light">Reservation</a>
+          </li>
+          <li class="nav-item text-center">
+            <a href="accept.php" class="nav-link text-light">Approved</a>
           </li>
           <li class="nav-item text-center">
             <a href="cancellation.php" class="nav-link text-light">Cancellation</a>
@@ -258,6 +267,8 @@
               <td><?php echo date("h:i A", strtotime($rowReservations['time_from'])) ?></td>
               <td><?php echo date("h:i A", strtotime($rowReservations['time_to']))  ?></td>
               <td><?php echo $rowReservations['statuses'] ?></td>
+
+              <!-- EDIT -->
               <td>
                 <button class="btn btn-success fw-bold" data-bs-toggle="modal"
                   data-bs-target="#modalEdit-<?php echo $rowReservations['id'] ?>">EDIT</button>
@@ -346,6 +357,7 @@
                 </form>
               </td>
 
+              <!-- DELETE -->
               <td>
                 <button class="btn btn-danger fw-bold" data-bs-toggle="modal"
                   data-bs-target="#modalDelete-<?php echo $rowReservations['id'] ?>">DELETE</button>

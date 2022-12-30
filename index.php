@@ -89,47 +89,44 @@
     }
   }
   </style>
-  <div class="container">
-    <div class="row m-5 no-gutters shadow-lg">
-      <div class="col-md-6 bg-white d-none d-md-block">
-        <img src="./employee/img/Facility hotel.jpg" class="img-fluid"
-          style="max-height: 8.5em; margin:20px 0px 0px 0px;" class="
+  <div class="container-fluid">
+    <div class="container">
+      <div class="row m-5 no-gutters shadow-lg">
+        <div class="col-md-6 bg-white d-none d-md-block">
+          <img src="./employee/img/board_room.jpg" class="img-fluid" style="max-height: 8.5em; margin:20px 0px 0px 0px;"
+            class="
           responsive" />
-        <img src="./employee/img/pool.jpg" class="img-fluid" style="max-height: 8.5em; margin:20px 0px 0px 0px;"
-          class="responsive" />
-        <p>PREMIUMLANDS CORPORATION</p>
-        <h1>Facility Management </h1>
-        <img src="./employee/img/rooms.jpg" class="img-fluid" style="max-height: 8.5em; margin:  0px 0px -120px 0px;"
-          class="
+          <img src="./employee/img/meeting_room.jpg" class="img-fluid"
+            style="max-height: 8.5em; margin:20px 0px 0px 0px;" class="responsive" />
+          <p>PREMIUMLANDS CORPORATION</p>
+          <h1>Facility Management </h1>
+          <img src="./employee/img/basketball_court.jpg" class="img-fluid"
+            style="max-height: 8.5em; margin:  0px 0px -120px 0px;" class="
           responsive" />
-        <img src="./employee/img/bedroom.jpg" class="img-fluid" style="max-height: 8.5em; margin: 0px 0px -120px 0px;"
-          class="
+          <img src="./employee/img/volleyball_court.jpg" class="img-fluid"
+            style="max-height: 8.5em; margin: 0px 0px -120px 0px;" class="
           responsive " />
-      </div>
-      <div class=" col-md-6 bg-white p-5">
-        <center>
-          <h4 class="pb-3">Facility Management </h4>
-        </center>
-        <div class="form-style">
-          <form class="box">
-            <div class="form-group pb-3">
-              <a type="submit" class="btn btn-info w-100 font-weight-bold mt-2" href="./admin/index.php">Admin</a>
-            </div>
-            <div class="form-group pb-3">
-              <a type="submit" class="btn btn-info w-100 font-weight-bold mt-2" href="./employee/index.php">Employee
-              </a>
-            </div>
-
-          </form>
-
-
-
         </div>
-
+        <div class=" col-md-6 bg-white p-5 d-flex flex-column align-items-center">
+          <img src="./employee/img/premiumlands_logo.jpg" class="img-fluid mb-3 w-50 " style="height: 100px">
+          <h4 class="pb-3 ms-auto">Facility Management </h4>
+          <div class="form-style">
+            <form class="box p-0">
+              <div class="form-group">
+                <a type="submit" class="btn btn-info font-weight-bold mt-2" style="width: 300px;"
+                  href="./admin/index.php">Admin</a>
+              </div>
+              <div class="form-group pb-3">
+                <a type="submit" class="btn btn-info font-weight-bold mt-2" href="./employee/index.php"
+                  style="width: 300px;">Employee
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
 </body>
 
 </html>

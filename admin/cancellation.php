@@ -1,6 +1,6 @@
 <?php 
   // DATABASE
-  require_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php';
+  include_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php';
   // SESSION
   require './php/session.php';
 
@@ -53,6 +53,9 @@
           </li>
           <li class="nav-item text-center">
             <a href="pending_reservation.php" class="nav-link text-light">Reservation</a>
+          </li>
+          <li class="nav-item text-center">
+            <a href="approved.php" class="nav-link text-light">Approved</a>
           </li>
           <li class="nav-item text-center">
             <a href="cancellation.php" class="nav-link text-light">Cancellation</a>

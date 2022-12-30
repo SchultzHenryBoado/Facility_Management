@@ -1,6 +1,6 @@
 <?php
   // DATABASE
-  require_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php';
+  include_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php';
 
   // PATH
   function pathTo($destination) {
@@ -13,7 +13,7 @@
     $appQueryUpdate = "UPDATE reservations SET statuses = 'APPROVED' WHERE id = '$accept' ";
     $appSqlUpdate = mysqli_query($con, $appQueryUpdate);
 
-    pathTo('pending_reservation');
+    pathTo('approved');
 
   }
   
