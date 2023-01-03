@@ -2,10 +2,9 @@
     $host = 'localhost';
     $username = 'root';
     $password = '';
-    $database = 'facility_management';
+    $dbname = 'facility_management';
 
-    $con = mysqli_connect($host, $username, $password, $database);
+    $dsn = "mysql:host=$host;dbname=$dbname";
 
-    if (mysqli_error($con)) {
-        echo 'not connected';
-    } 
+    $con = new PDO($dsn, $username, $password);
+    $con->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);

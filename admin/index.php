@@ -18,25 +18,43 @@
   }
 
   if (isset($_POST['login'])) {
-    $username = mysqli_real_escape_string($con, $_POST['username']);
-    $password = mysqli_real_escape_string($con, $_POST['password']);
+    $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    $queryLogin = "SELECT * FROM admin_accounts WHERE admin_username = '$username' AND admin_password = '$password' ";
-    $sqlLogin = mysqli_query($con, $queryLogin);
-    $results = mysqli_fetch_assoc($sqlLogin);
+    $sql = "SELECT * FROM admin_accounts WHERE admin_username=? AND admin_password=?";
+    $stmt = $con->prepare($sql);
+    $stmt->execute([$username, $password]);
+    $rows = $stmt->fetch();
 
-    if (mysqli_num_rows($sqlLogin) > 0) {
+    if ($count = $stmt->rowCount() > 0) {
       $_SESSION['admin_status'] = 'valid';
-      $_SESSION['admin_username'] = $results['admin_username'];
-      
+      $_SESSION['admin_username'] = $rows->admin_username;
       pathTo('dashboard_admin');
+
     } else {
-      echo '
-      <div class="container mt-5 d-flex justify-content-center">
-      <div class="alert alert-danger text-center w-25 mt-2">Invalid Credential</div>
-      </div>
-      ';
+        echo '
+       <div class="container mt-5 d-flex justify-content-center">
+         <div class="alert alert-danger text-center w-25 mt-2">Invalid Credential</div>
+       </div>
+       ';
     }
+
+    // $queryLogin = "SELECT * FROM admin_accounts WHERE admin_username = '$username' AND admin_password = '$password' ";
+    // $sqlLogin = mysqli_query($con, $queryLogin);
+    // $results = mysqli_fetch_assoc($sqlLogin);
+
+    // if (mysqli_num_rows($sqlLogin) > 0) {
+    //   $_SESSION['admin_status'] = 'valid';
+    //   $_SESSION['admin_username'] = $results['admin_username'];
+      
+    // } else {
+    //   echo '
+    //   <div class="container mt-5 d-flex justify-content-center">
+    //   <div class="alert alert-danger text-center w-25 mt-2">Invalid Credential</div>
+    //   </div>
+    //   ';
+    // }
+
   }
  
 ?>
