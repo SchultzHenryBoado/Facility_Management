@@ -5,34 +5,34 @@
   require ('./php/session.php');
 
   // USERS ACCOUNTS QUERY
-  $queryUsers = "SELECT * FROM users_accounts";
-  $sqlUsers = mysqli_query($con, $queryUsers);
-  $results = mysqli_fetch_assoc($sqlUsers);
-  $company = $_SESSION['company_name'] = $results['company'];
+  // $queryUsers = "SELECT * FROM users_accounts";
+  // $sqlUsers = mysqli_query($con, $queryUsers);
+  // $results = mysqli_fetch_assoc($sqlUsers);
+  // $company = $_SESSION['company_name'] = $results['company'];
 
   // RESERVATION QUERY
-  $queryReadReservations = "SELECT * FROM reservations WHERE statuses = 'APPROVED' AND date_from = CURRENT_DATE() ORDER BY time_from ASC ";
-  $sqlReadReservations = mysqli_query($con, $queryReadReservations);
+  // $queryReadReservations = "SELECT * FROM reservations WHERE statuses = 'APPROVED' AND date_from = CURRENT_DATE() ORDER BY time_from ASC ";
+  // $sqlReadReservations = mysqli_query($con, $queryReadReservations);
 
-  // TOTAL RESERVATION
-  $queryTotalReservations = "SELECT statuses FROM reservations ORDER BY statuses";
-  $sqlTotalReservations = mysqli_query($con, $queryTotalReservations);
-  $row = mysqli_num_rows($sqlTotalReservations);
+  // // TOTAL RESERVATION
+  // $queryTotalReservations = "SELECT statuses FROM reservations ORDER BY statuses";
+  // $sqlTotalReservations = mysqli_query($con, $queryTotalReservations);
+  // $row = mysqli_num_rows($sqlTotalReservations);
 
-  // FOR CONFIRMATION
-  $queryForConfirm = "SELECT statuses FROM reservations WHERE statuses = 'PENDING' ORDER BY statuses";
-  $sqlForConfirm = mysqli_query($con, $queryForConfirm);
-  $rowForConfirm = mysqli_num_rows($sqlForConfirm);
+  // // FOR CONFIRMATION
+  // $queryForConfirm = "SELECT statuses FROM reservations WHERE statuses = 'PENDING' ORDER BY statuses";
+  // $sqlForConfirm = mysqli_query($con, $queryForConfirm);
+  // $rowForConfirm = mysqli_num_rows($sqlForConfirm);
 
-  // TOTAL CONFIRMATION
-  $queryTotalConfirm = "SELECT statuses FROM reservations WHERE statuses = 'APPROVED' ORDER BY statuses";
-  $sqlTotalConfirm = mysqli_query($con, $queryTotalConfirm);
-  $rowConfirm = mysqli_num_rows($sqlTotalConfirm);
+  // // TOTAL CONFIRMATION
+  // $queryTotalConfirm = "SELECT statuses FROM reservations WHERE statuses = 'APPROVED' ORDER BY statuses";
+  // $sqlTotalConfirm = mysqli_query($con, $queryTotalConfirm);
+  // $rowConfirm = mysqli_num_rows($sqlTotalConfirm);
 
-  // TOTAL CANCELLED
-  $queryTotalCancel = "SELECT statuses FROM reservations WHERE statuses = 'REJECT' ORDER BY statuses";
-  $sqlTotalCancel = mysqli_query($con, $queryTotalCancel);
-  $rowCancel = mysqli_num_rows($sqlTotalCancel);
+  // // TOTAL CANCELLED
+  // $queryTotalCancel = "SELECT statuses FROM reservations WHERE statuses = 'REJECT' ORDER BY statuses";
+  // $sqlTotalCancel = mysqli_query($con, $queryTotalCancel);
+  // $rowCancel = mysqli_num_rows($sqlTotalCancel);
 
 ?>
 
