@@ -39,22 +39,6 @@
        ';
     }
 
-    // $queryLogin = "SELECT * FROM admin_accounts WHERE admin_username = '$username' AND admin_password = '$password' ";
-    // $sqlLogin = mysqli_query($con, $queryLogin);
-    // $results = mysqli_fetch_assoc($sqlLogin);
-
-    // if (mysqli_num_rows($sqlLogin) > 0) {
-    //   $_SESSION['admin_status'] = 'valid';
-    //   $_SESSION['admin_username'] = $results['admin_username'];
-      
-    // } else {
-    //   echo '
-    //   <div class="container mt-5 d-flex justify-content-center">
-    //   <div class="alert alert-danger text-center w-25 mt-2">Invalid Credential</div>
-    //   </div>
-    //   ';
-    // }
-
   }
  
 ?>
