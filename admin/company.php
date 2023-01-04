@@ -155,14 +155,15 @@
               </td>
               <td>
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDelete">
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                  data-bs-target="#modalDelete-<?php echo $results->id ?>">
                   <i class="fa-solid fa-trash"></i>
                 </button>
 
                 <form action="./php/company_delete.php" method="post">
                   <input type="hidden" name="delete_id" value="<?php echo $results->id ?>">
                   <!-- Modal -->
-                  <div class="modal fade" id="modalDelete" tabindex="-1">
+                  <div class="modal fade" id="modalDelete-<?php echo $results->id ?>" tabindex="-1">
                     <div class="modal-dialog modal-dialog-centered">
                       <div class="modal-content">
                         <div class="modal-header">
