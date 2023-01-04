@@ -5,9 +5,11 @@
   require './php/session.php';
 
   // RESERVATIONS
-  $queryReadReservations = "SELECT * FROM reservations WHERE statuses = 'REJECT'";
-  $sqlReadReservations = mysqli_query($con, $queryReadReservations);
-  $sqlReserve = mysqli_query($con, $queryReadReservations);
+  $sqlReadReservations = "SELECT * FROM reservations WHERE statuses = 'REJECT'";
+  $stmt = $con->prepare($sqlReadReservations);
+  $stmt->execute();
+  // $sqlReadReservations = mysqli_query($con, $queryReadReservations);
+  // $sqlReserve = mysqli_query($con, $queryReadReservations);
 
 
 ?>
@@ -112,16 +114,16 @@
             </tr>
           </thead>
           <tbody class="table-group-divider">
-            <?php while($rowReservations = mysqli_fetch_assoc($sqlReadReservations)) { ?>
+            <?php while($rowReservations = $stmt->fetch()) { ?>
             <tr>
-              <td><?php echo $rowReservations['rsvn_no'] ?></td>
-              <td><?php echo $rowReservations['room_type'] ?></td>
-              <td><?php echo $rowReservations['date_from'] ?></td>
-              <td><?php echo date("h:i A", strtotime($rowReservations['time_from'])) ?></td>
-              <td><?php echo date("h:i A", strtotime($rowReservations['time_to'])) ?></td>
-              <td><?php echo $rowReservations['created_by'] ?></td>
-              <td><?php echo $rowReservations['statuses'] ?></td>
-              <td><?php echo $rowReservations['cancel_reasons'] ?></td>
+              <td><?php echo $rowReservations->rsvn_no ?></td>
+              <td><?php echo $rowReservations->room_type ?></td>
+              <td><?php echo $rowReservations->date_from ?></td>
+              <td><?php echo date("h:i A", strtotime($rowReservations->time_from)) ?></td>
+              <td><?php echo date("h:i A", strtotime($rowReservations->time_to)) ?></td>
+              <td><?php echo $rowReservations->created_by ?></td>
+              <td><?php echo $rowReservations->statuses ?></td>
+              <td><?php echo $rowReservations->cancel_reasons ?></td>
             </tr>
             <?php } ?>
           </tbody>

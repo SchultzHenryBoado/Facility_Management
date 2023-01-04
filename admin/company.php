@@ -2,8 +2,9 @@
   include_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php';
   require './php/session.php';
 
-  $queryCompany = "SELECT * FROM companies";
-  $sqlCompany = mysqli_query($con, $queryCompany);
+  $sqlCompany = "SELECT * FROM companies";
+  $stmt = $con->prepare($sqlCompany);
+  $stmt->execute();
 ?>
 
 <!DOCTYPE html>
@@ -140,22 +141,41 @@
             </tr>
           </thead>
           <tbody>
-            <?php while($results = mysqli_fetch_assoc($sqlCompany)) { ?>
+            <?php while($results = $stmt->fetch()) { ?>
             <tr>
-              <td><?php echo $results['company_code']?></td>
-              <td><?php echo $results['company_name']?></td>
+              <td><?php echo $results->company_code?></td>
+              <td><?php echo $results->company_name?></td>
               <td>
                 <form action="./php/company_update.php" method="post">
                   <input type="submit" name="edit" value="EDIT" class="btn btn-success fw-bold">
-                  <input type="hidden" name="edit_id" value="<?php echo $results['id'] ?>">
-                  <input type="hidden" name="edit_code" value="<?php echo $results['company_code'] ?>">
-                  <input type="hidden" name="edit_company_name" value="<?php echo $results['company_name'] ?>">
+                  <input type="hidden" name="edit_id" value="<?php echo $results->id ?>">
+                  <input type="hidden" name="edit_code" value="<?php echo $results->company_code ?>">
+                  <input type="hidden" name="edit_company_name" value="<?php echo $results->company_name ?>">
                 </form>
               </td>
               <td>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDelete">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+
                 <form action="./php/company_delete.php" method="post">
-                  <input type="submit" name="delete" value="DELETE" class="btn btn-danger fw-bold">
-                  <input type="hidden" name="delete_id" value="<?php echo $results['id'] ?>">
+                  <input type="hidden" name="delete_id" value="<?php echo $results->id ?>">
+                  <!-- Modal -->
+                  <div class="modal fade" id="modalDelete" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5">Are you sure you want to Delete?</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                          <button type="submit" class="btn btn-danger" name="delete">Delete</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </form>
               </td>
             </tr>

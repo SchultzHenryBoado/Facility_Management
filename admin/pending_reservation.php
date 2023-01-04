@@ -5,8 +5,9 @@
   require './php/session.php';
 
   // RESERVATIONS
-  $queryReadReservations = "SELECT * FROM reservations WHERE statuses = 'PENDING'";
-  $sqlReadReservations = mysqli_query($con, $queryReadReservations);
+  $sqlReadReservations = "SELECT * FROM reservations WHERE statuses = 'PENDING'";
+  $stmt = $con->prepare($sqlReadReservations);
+  $stmt->execute();
 
 ?>
 
@@ -118,26 +119,26 @@
             </tr>
           </thead>
           <tbody class="table-group-divider">
-            <?php while($rowReservations = mysqli_fetch_assoc($sqlReadReservations)) { ?>
+            <?php while($rowReservations = $stmt->fetch()) { ?>
             <tr id="myTableRow">
-              <td><?php echo $rowReservations['created_date'] ?></td>
-              <td><?php echo $rowReservations['rsvn_no'] ?></td>
-              <td><?php echo $rowReservations['created_by'] ?></td>
-              <td><?php echo $rowReservations['room_type'] ?></td>
-              <td><?php echo $rowReservations['date_from'] ?></td>
-              <td><?php echo $rowReservations['date_to'] ?></td>
-              <td><?php echo date("h:i A", strtotime($rowReservations['time_from'])) ?></td>
-              <td><?php echo date("h:i A", strtotime($rowReservations['time_to'])) ?></td>
-              <td><?php echo $rowReservations['statuses'] ?></td>
+              <td><?php echo $rowReservations->created_date ?></td>
+              <td><?php echo $rowReservations->rsvn_no ?></td>
+              <td><?php echo $rowReservations->created_by ?></td>
+              <td><?php echo $rowReservations->room_type ?></td>
+              <td><?php echo $rowReservations->date_from ?></td>
+              <td><?php echo $rowReservations->date_to?></td>
+              <td><?php echo date("h:i A", strtotime($rowReservations->time_from)) ?></td>
+              <td><?php echo date("h:i A", strtotime($rowReservations->time_to)) ?></td>
+              <td><?php echo $rowReservations->statuses ?></td>
 
               <!-- ACCEPT -->
               <td>
                 <form action="./php/reservation_accept.php" method="post">
-                  <input type="hidden" name="accept_id" value="<?php echo $rowReservations['id']?>">
+                  <input type="hidden" name="accept_id" value="<?php echo $rowReservations->id?>">
                   <button type="button" class="btn btn-success fw-bold" data-bs-toggle="modal"
-                    data-bs-target="#acceptModal-<?php echo $rowReservations['id'] ?>"
-                    value="<?php echo $rowReservations['id'] ?>">ACCEPT</button>
-                  <div class="modal fade" id="acceptModal-<?php echo $rowReservations['id'] ?>" tabindex="-1">
+                    data-bs-target="#acceptModal-<?php echo $rowReservations->id ?>"
+                    value="<?php echo $rowReservations->id ?>">ACCEPT</button>
+                  <div class="modal fade" id="acceptModal-<?php echo $rowReservations->id ?>" tabindex="-1">
                     <div class="modal-dialog modal-dialog-centered">
                       <div class="modal-content">
                         <div class="modal-header">
@@ -156,13 +157,13 @@
               <!-- REJECT -->
               <td>
                 <form action="./php/reservation_reject.php" method="post">
-                  <input type="hidden" name="reject_id" id="" value="<?php echo $rowReservations['id'] ?>">
+                  <input type="hidden" name="reject_id" id="" value="<?php echo $rowReservations->id ?>">
                   <button type="button" class="btn btn-danger fw-bold" data-bs-toggle="modal"
-                    data-bs-target="#rejectModal-<?php echo $rowReservations['id'] ?>"
-                    value="<?php echo $rowReservations['id'] ?>">
+                    data-bs-target="#rejectModal-<?php echo $rowReservations->id ?>"
+                    value="<?php echo $rowReservations->id ?>">
                     REJECT
                   </button>
-                  <div class="modal fade" id="rejectModal-<?php echo $rowReservations['id'] ?>" tabindex="-1">
+                  <div class="modal fade" id="rejectModal-<?php echo $rowReservations->id ?>" tabindex="-1">
                     <div class="modal-dialog modal-dialog-centered">
                       <div class="modal-content">
                         <div class="modal-header">

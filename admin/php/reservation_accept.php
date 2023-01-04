@@ -10,8 +10,9 @@
   if (isset($_POST['accept_reservation'])) {
     $accept = $_POST['accept_id'];
 
-    $appQueryUpdate = "UPDATE reservations SET statuses = 'APPROVED' WHERE id = '$accept' ";
-    $appSqlUpdate = mysqli_query($con, $appQueryUpdate);
+    $sqlAcceptReservation = "UPDATE reservations SET statuses = 'APPROVED' WHERE id=?";
+    $stmt = $con->prepare($sqlAcceptReservation);
+    $stmt->execute([$accept]);
 
     pathTo('approved');
 

@@ -7,12 +7,13 @@
   }
   
   if (isset($_POST['create_company'])) {
-    $companyCode = mysqli_real_escape_string($con, $_POST['company_code']);
-    $upperCaseCode = strtoupper($companyCode);
-    $companyName = mysqli_real_escape_string($con, $_POST['company_name']);
 
-    $queryCompany = "INSERT INTO companies VALUES (null, '$upperCaseCode', '$companyName') ";
-    $sqlCompany = mysqli_query($con, $queryCompany);
+    $companyCode = strtoupper(filter_input(INPUT_POST, 'company_code', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+    $companyName = filter_input(INPUT_POST, 'company_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+    $sqlCompany = "INSERT INTO companies (company_code, company_name) VALUES (?,?)";
+    $stmt = $con->prepare($sqlCompany);
+    $stmt->execute([$companyCode, $companyName]);
 
     pathTo('company');
   }
