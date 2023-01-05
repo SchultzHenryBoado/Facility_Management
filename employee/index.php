@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
   require_once $_SERVER["DOCUMENT_ROOT"] . "/facility_management/database/connection.php";
 
   // path
@@ -43,7 +43,7 @@
       ';
     }
   }
-?>
+?> -->
 
 <!DOCTYPE html>
 <html lang="en">
