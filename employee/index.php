@@ -18,15 +18,14 @@
   }
 
   if (isset($_POST['login'])) {
-    $email = mysqli_real_escape_string($con, $_POST['email']);
-    $password = mysqli_real_escape_string($con, $_POST['password']);
-    $encryptPassword = md5($password);
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $password = md5(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
 
-    $queryLogin = "SELECT * FROM users_accounts WHERE emails = '$email' AND passwords = '$encryptPassword' ";
-    $sqlLogin = mysqli_query($con, $queryLogin);
-    $row = mysqli_fetch_assoc($sqlLogin);
+    $sqlLogin = "SELECT * FROM users_accounts WHERE emails=? AND passwords=? ";
+    $stmtLogin = $con->prepare($sqlLogin);
+    $stmtLogin->execute([$email, $password]);
 
-    if (mysqli_num_rows($sqlLogin) > 0) {
+    if ($stmtLogin->rowCount() > 0) {
 
       $_SESSION['users_id'] = $row['id'];
 

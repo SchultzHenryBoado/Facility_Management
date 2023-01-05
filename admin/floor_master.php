@@ -4,8 +4,8 @@
 
   // FLOOR DATABASE
   $sqlFloor = "SELECT * FROM floors ORDER BY floor_number ASC";
-  $stmt = $con->prepare($sqlFloor);
-  $stmt->execute();
+  $stmtFloor = $con->prepare($sqlFloor);
+  $stmtFloor->execute();
 
   // UPDATE FLOOR
   if (isset($_POST['update_floor_master'])) {
@@ -158,7 +158,7 @@
             </tr>
           </thead>
           <tbody>
-            <?php while($rowFloors = $stmt->fetch()) { ?>
+            <?php while($rowFloors = $stmtFloor->fetch()) { ?>
             <tr>
               <td><?php echo $rowFloors->floor_code ?></td>
               <td><?php echo $rowFloors->floor_number ?></td>

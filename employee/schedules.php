@@ -5,14 +5,15 @@
   require './php/session.php';
 
   // USERS
-  $queryUsers = "SELECT * FROM users_accounts";
-  $sqlUsers = mysqli_query($con, $queryUsers);
-  $results = mysqli_fetch_assoc($sqlUsers);
-  $company = $_SESSION['company_name'] = $results['company'];
+  $sqlUsers = "SELECT * FROM users_accounts";
+  $stmtUsers = $con->prepare($sqlUsers);
+  $stmtUsers->execute();
+  $results = $stmtUsers->fetch();
+  $company = $_SESSION['company_name'] = $results->company;
 
   // RESERVATIONS
-  $queryReservations = "SELECT * FROM reservations WHERE statuses = 'APPROVED' AND date_from = CURRENT_DATE() ORDER BY time_from ASC ";
-  $sqlReservation = mysqli_query($con, $queryReservations);
+  // $queryReservations = "SELECT * FROM reservations WHERE statuses = 'APPROVED' AND date_from = CURRENT_DATE() ORDER BY time_from ASC ";
+  // $sqlReservation = mysqli_query($con, $queryReservations);
   
 ?>
 
