@@ -3,8 +3,10 @@
   require './php/session.php';
 
   // FLOOR DATABASE
-  $queryFloor = "SELECT * FROM floors";
-  $sqlFloor = mysqli_query($con, $queryFloor);
+  $sqlFloor = "SELECT * FROM floors";
+  $stmt = $con->prepare($sqlFloor);
+  $stmt->execute();
+
   
 ?>
 
@@ -144,23 +146,23 @@
             </tr>
           </thead>
           <tbody>
-            <?php while($rows = mysqli_fetch_assoc($sqlFloor)) { ?>
+            <?php while($rowFloors = $stmt->fetch()) { ?>
             <tr>
-              <td><?php echo $rows['floor_code'] ?></td>
-              <td><?php echo $rows['floor_name'] ?></td>
+              <td><?php echo $rowFloors->floor_code ?></td>
+              <td><?php echo $rowFloors->floor_number ?></td>
               <td>
-                <form action="./php/floormaster_update.php" method="post">
+                <!-- <form action="./php/floormaster_update.php" method="post">
                   <input type="submit" name="edit" value="EDIT" class="btn btn-success fw-bold">
                   <input type="hidden" name="edit_id" value="<?php echo $rows['id'] ?>">
                   <input type="hidden" name="edit_floor_code" value="<?php echo $rows['floor_code'] ?>">
                   <input type="hidden" name="edit_floor_name" value="<?php echo $rows['floor_name'] ?>">
-                </form>
+                </form> -->
               </td>
               <td>
-                <form action="./php/floormaster_delete.php" method="post">
+                <!-- <form action="./php/floormaster_delete.php" method="post">
                   <input type="submit" name="delete" value="DELETE" class="btn btn-danger fw-bold">
                   <input type="hidden" name="delete_id" value="<?php echo $rows['id'] ?>">
-                </form>
+                </form> -->
               </td>
             </tr>
             <?php } ?>

@@ -14,11 +14,7 @@
   }
 
   if ($_SESSION['users_status'] == 'valid') {
-<<<<<<< HEAD
-    path("schedules");
-=======
     path('schedules');
->>>>>>> 8bc63b35e7f09b1ca6b3e25ece2ce5de19a57fee
   }
 
   if (isset($_POST['login'])) {

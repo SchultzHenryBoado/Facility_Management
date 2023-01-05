@@ -5,6 +5,19 @@
   $sqlCompany = "SELECT * FROM companies";
   $stmt = $con->prepare($sqlCompany);
   $stmt->execute();
+
+  // UPDATE
+  if (isset($_POST['update_company'])) {
+    $updateId = $_POST['update_id'];
+    $updateCode = strtoupper(filter_input(INPUT_POST, 'update_company_code', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+    $updateCompany = filter_input(INPUT_POST, 'update_company_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+    $sqlUpdateCompany = "UPDATE companies SET company_code=?, company_name=? WHERE id=?";
+    $stmt = $con->prepare($sqlUpdateCompany);
+    $stmt->execute([$updateCode, $updateCompany, $updateId]);
+
+    pathTo('company');
+  }
 ?>
 
 <!DOCTYPE html>
@@ -146,15 +159,56 @@
               <td><?php echo $results->company_code?></td>
               <td><?php echo $results->company_name?></td>
               <td>
-                <form action="./php/company_update.php" method="post">
-                  <input type="submit" name="edit" value="EDIT" class="btn btn-success fw-bold">
-                  <input type="hidden" name="edit_id" value="<?php echo $results->id ?>">
-                  <input type="hidden" name="edit_code" value="<?php echo $results->company_code ?>">
-                  <input type="hidden" name="edit_company_name" value="<?php echo $results->company_name ?>">
+                <!-- UPDATE COMPANY -->
+                <button class="btn btn-warning" data-bs-toggle="modal"
+                  data-bs-target="#editModal-<?php echo $results->id ?>">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+
+                <form action="company.php" method="post" class="needs-validation" novalidate>
+                  <div class="modal fade" id="editModal-<?php echo $results->id ?>" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <p class="fs-5 modal-title fw-bold">Update Company</p>
+                        </div>
+                        <div class="modal-body">
+                          <input type="hidden" name="update_id" value="<?php echo $results->id ?>">
+                          <!-- COMPANY CODE -->
+                          <div class="col-12 ">
+                            <div class="mb-3" class="form-group">
+                              <label for="code" class="form-label">Code:</label>
+                              <input type="text" name="update_company_code" id="code" class="form-control"
+                                value="<?php echo $results->company_code ?>" required />
+                              <div class="invalid-feedback">
+                                Please fill-up the company code.
+                              </div>
+                            </div>
+                          </div>
+                          <!-- COMPANY NAME -->
+                          <div class="col-12 ">
+                            <div class="mb-3" class="form-group">
+                              <label for="companyName" class="form-label">Company name:</label>
+                              <input type="text" name="update_company_name" id="companyName" class="form-control"
+                                value="<?php echo $results->company_name ?>" required />
+                              <div class="invalid-feedback">
+                                Please fill-up the company name.
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <div class="mb-3">
+                            <button type="submit" name="update_company" class="btn btn-success fw-bold">Update</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </form>
               </td>
               <td>
-                <!-- Button trigger modal -->
+                <!-- DELETE BUTTON -->
                 <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                   data-bs-target="#modalDelete-<?php echo $results->id ?>">
                   <i class="fa-solid fa-trash"></i>
@@ -162,7 +216,6 @@
 
                 <form action="./php/company_delete.php" method="post">
                   <input type="hidden" name="delete_id" value="<?php echo $results->id ?>">
-                  <!-- Modal -->
                   <div class="modal fade" id="modalDelete-<?php echo $results->id ?>" tabindex="-1">
                     <div class="modal-dialog modal-dialog-centered">
                       <div class="modal-content">
