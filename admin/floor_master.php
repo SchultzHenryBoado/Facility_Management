@@ -163,13 +163,13 @@
               <td><?php echo $rowFloors->floor_code ?></td>
               <td><?php echo $rowFloors->floor_number ?></td>
               <td>
-                <!-- EDIT -->
+                <!-- UPDATE -->
                 <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                   data-bs-target="#updateModal-<?php echo $rowFloors->id ?>">
                   <i class="fa-solid fa-pen-to-square"></i>
                 </button>
 
-                <form action="floor_master.php" method="post">
+                <form action="floor_master.php" method="post" class="needs-validation" novalidate>
                   <!-- Modal -->
                   <div class="modal fade" id="updateModal-<?php echo $rowFloors->id ?>" tabindex="-1">
                     <input type="hidden" name="update_id" value="<?php echo $rowFloors->id ?>">
@@ -185,14 +185,20 @@
                               <div class="mb-3">
                                 <label for="floorCode" class="form-label">Floor Code</label>
                                 <input type="text" name="update_floor_code" id="floorCode" class="form-control"
-                                  value="<?php echo $rowFloors->floor_code ?>">
+                                  value="<?php echo $rowFloors->floor_code ?>" required>
+                                <div class="invalid-feedback">
+                                  Please fill-up the floor code.
+                                </div>
                               </div>
                             </div>
                             <div class="col-12">
                               <div class="mb-3">
                                 <label for="floorNumber" class="form-label">Floor Number</label>
                                 <input type="text" name="update_floor_number" id="floorNumber" class="form-control"
-                                  value="<?php echo $rowFloors->floor_number ?>">
+                                  value="<?php echo $rowFloors->floor_number ?>" required>
+                                <div class="invalid-feedback">
+                                  Please fill-up the floor number.
+                                </div>
                               </div>
                             </div>
                           </div>

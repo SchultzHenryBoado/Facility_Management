@@ -169,7 +169,7 @@
                   <i class="fa-solid fa-pen-to-square"></i>
                 </button>
 
-                <form action="facility_type.php" method="post">
+                <form action="facility_type.php" method="post" class="needs-validation" novalidate>
                   <!-- Modal -->
                   <div class="modal fade" id="updateModal-<?php echo $rowFacility->id ?>" tabindex="-1">
                     <input type="hidden" name="update_id" value="<?php echo $rowFacility->id ?>">
@@ -184,14 +184,20 @@
                               <div class="mb-3">
                                 <label for="updateFacilityCode" class="form-label">Facility Code</label>
                                 <input type="text" name="update_facility_code" id="updateFacilityCode"
-                                  class="form-control" value="<?php echo $rowFacility->facility_code ?>">
+                                  class="form-control" value="<?php echo $rowFacility->facility_code ?>" required>
+                                <div class="invalid-feedback">
+                                  Please fill-up the facility code.
+                                </div>
                               </div>
                             </div>
                             <div class="col-12">
                               <div class="mb-3">
                                 <label for="updateFacilityName" class="form-label">Facility Code</label>
                                 <input type="text" name="update_facility_name" id="updateFacilityName"
-                                  class="form-control" value="<?php echo $rowFacility->facility_name ?>">
+                                  class="form-control" value="<?php echo $rowFacility->facility_name ?>" required>
+                                <div class="invalid-feedback">
+                                  Please fill-up the facility name.
+                                </div>
                               </div>
                             </div>
                           </div>

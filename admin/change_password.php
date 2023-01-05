@@ -7,19 +7,23 @@
   }
 
   if (isset($_POST['change_password'])) {
-    $oldPassword = mysqli_real_escape_string($con, $_POST['old_password']);
+    $oldPassword = filter_input(INPUT_POST, 'old_password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    $queryPassword = "SELECT * FROM admin_accounts";
-    $sqlPassword = mysqli_query($con, $queryPassword);
-    $row = mysqli_fetch_assoc($sqlPassword);
+    $sqlPassword = "SELECT * FROM admin_accounts";
+    $stmtPass = $con->prepare($sqlPassword);
+    $stmtPass->execute([$oldPassword]);
+    $rowPass = $stmtPass->fetch();
 
-    if ($oldPassword == $row['admin_password']) {
-      $newPassword = mysqli_real_escape_string($con, $_POST['new_password']);
-      $confirmPassword = mysqli_real_escape_string($con, $_POST['confirm_password']);
+    if ($oldPassword == $rowPass->admin_password) {
+      // $newPassword = mysqli_real_escape_string($con, $_POST['new_password']);
+      // $confirmPassword = mysqli_real_escape_string($con, $_POST['confirm_password']);
+      $newPassword = filter_input(INPUT_POST, 'new_password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+      $confirmPassword = filter_input(INPUT_POST, 'confirm_password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
       if ($newPassword == $confirmPassword) {
-        $queryUpdatePassword = "UPDATE admin_accounts SET admin_password = '$confirmPassword'";
-        $sqlUpdatePassword = mysqli_query($con, $queryUpdatePassword);
+        $sqlUpdatePassword = "UPDATE admin_accounts SET admin_password=?";
+        $stmtUpdatePass = $con->prepare($sqlUpdatePassword);
+        $stmtUpdatePass->execute([$confirmPassword]);
         
         $_SESSION['admin_status'] = 'invalid';
         path('index');

@@ -7,26 +7,26 @@
   }
 
    if (isset($_POST['register'])) {
-      $lastName = mysqli_real_escape_string($con, $_POST['last_name']);
-      $firstName = mysqli_real_escape_string($con, $_POST['first_name']);
-      $username = mysqli_real_escape_string($con, $_POST['username']);
-      $company = mysqli_real_escape_string($con, $_POST['company']);
-      $email = mysqli_real_escape_string($con, $_POST['email']);
-      $password = mysqli_real_escape_string($con, $_POST['password']);
-      $encryptPassword = md5($password);
-      $status = mysqli_real_escape_string($con, $_POST['status']);
+      $lastName = filter_input(INPUT_POST, 'last_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+      $firstName = filter_input(INPUT_POST, 'first_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+      $company = filter_input(INPUT_POST, 'company', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+      $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+      $password = md5(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+      $status = filter_input(INPUT_POST, 'status', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-      $queryValidate = "SELECT * FROM users_accounts WHERE emails = '$email' ";
-      $sqlValidate = mysqli_query($con, $queryValidate);
-         
-      if (mysqli_num_rows($sqlValidate) == 1 ) {
+      $sqlRegisterValidate = "SELECT * FROM users_accounts WHERE emails=?";
+      $stmtRegisterValidate = $con->prepare($sqlRegisterValidate);
+      $stmtRegisterValidate->execute([$email]);
+
+      if ($stmtRegisterValidate->rowCount() == 1) {
          echo '<script>window.alert("The email is existed")</script>';
                    
          pathTo('register');
       } else {
-         $queryCreate = "INSERT INTO users_accounts VALUES (null ,'$lastName', '$firstName', '$username', '$company',  '$email', '$encryptPassword', '$status')";
-         $sqlCreate = mysqli_query($con, $queryCreate);
+         $sqlCreate = "INSERT INTO users_accounts (last_names, first_names, company, emails, passwords, statuses) VALUES (?,?,?,?,?,?)";
+         $stmtCreate = $con->prepare($sqlCreate);
+         $stmtCreate->execute([$lastName, $firstName, $company, $email, $password, $status]);
+         
          pathTo('register');
       }
-  
    }
