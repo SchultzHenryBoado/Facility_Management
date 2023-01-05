@@ -2,7 +2,7 @@
   // DATABASE
   include_once $_SERVER["DOCUMENT_ROOT"] . "/facility_management/database/connection.php";
   // SESSION
-  // require ('./php/session.php');
+  require ('./php/session.php');
 
   // USERS ACCOUNTS QUERY
   $sqlCompanyUsers = "SELECT * FROM users_accounts";
