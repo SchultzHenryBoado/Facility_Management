@@ -1,21 +1,21 @@
-<!-- <?php 
+<?php 
   include_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php'; 
 
-  session_start();
+  // session_start();
 
   // path
   function pathTo($destination) {
     echo "<script>window.location.href = '/facility_management/admin/$destination.php' </script>";
   }
 
-  if (empty($_SESSION['admin_status'])) {
-    // set default status
-    $_SESSION['admin_status'] = 'invalid';
-  }
+  // if (empty($_SESSION['admin_status'])) {
+  //   // set default status
+  //   $_SESSION['admin_status'] = 'invalid';
+  // }
 
-  if ($_SESSION['admin_status'] == 'valid') {
-    pathTo('dashboard_admin');
-  }
+  // if ($_SESSION['admin_status'] == 'valid') {
+  //   pathTo('dashboard_admin');
+  // }
 
   if (isset($_POST['login'])) {
     $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -41,7 +41,7 @@
 
   }
  
-?> -->
+?>
 
 <!DOCTYPE html>
 <html lang="en">
