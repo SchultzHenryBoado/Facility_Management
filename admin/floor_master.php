@@ -3,10 +3,22 @@
   require './php/session.php';
 
   // FLOOR DATABASE
-  $sqlFloor = "SELECT * FROM floors";
+  $sqlFloor = "SELECT * FROM floors ORDER BY floor_number ASC";
   $stmt = $con->prepare($sqlFloor);
   $stmt->execute();
 
+  // UPDATE FLOOR
+  if (isset($_POST['update_floor_master'])) {
+    $updateId = $_POST['update_id'];
+    $updateFloorCode = strtoupper(filter_input(INPUT_POST, 'update_floor_code', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+    $updateFloorName = filter_input(INPUT_POST, 'update_floor_number', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+    $sqlUpdate = "UPDATE floors SET floor_code=? , floor_number=? WHERE id=? ";
+    $stmtUpdateFloorCode = $con->prepare($sqlUpdate);
+    $stmtUpdateFloorCode->execute([$updateFloorCode, $updateFloorName, $updateId]);
+
+    pathTo('floor_master');
+  }
   
 ?>
 
@@ -141,7 +153,7 @@
           <thead>
             <tr>
               <th scope="col">Code:</th>
-              <th scope="col">Description:</th>
+              <th scope="col">Floor Number:</th>
               <th col="2">Actions:</th>
             </tr>
           </thead>
@@ -151,18 +163,74 @@
               <td><?php echo $rowFloors->floor_code ?></td>
               <td><?php echo $rowFloors->floor_number ?></td>
               <td>
-                <!-- <form action="./php/floormaster_update.php" method="post">
-                  <input type="submit" name="edit" value="EDIT" class="btn btn-success fw-bold">
-                  <input type="hidden" name="edit_id" value="<?php echo $rows['id'] ?>">
-                  <input type="hidden" name="edit_floor_code" value="<?php echo $rows['floor_code'] ?>">
-                  <input type="hidden" name="edit_floor_name" value="<?php echo $rows['floor_name'] ?>">
-                </form> -->
+                <!-- EDIT -->
+                <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                  data-bs-target="#updateModal-<?php echo $rowFloors->id ?>">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+
+                <form action="floor_master.php" method="post">
+                  <!-- Modal -->
+                  <div class="modal fade" id="updateModal-<?php echo $rowFloors->id ?>" tabindex="-1">
+                    <input type="hidden" name="update_id" value="<?php echo $rowFloors->id ?>">
+
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="updateModal">Update Floor Master</h1>
+                        </div>
+                        <div class="modal-body">
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="mb-3">
+                                <label for="floorCode" class="form-label">Floor Code</label>
+                                <input type="text" name="update_floor_code" id="floorCode" class="form-control"
+                                  value="<?php echo $rowFloors->floor_code ?>">
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <div class="mb-3">
+                                <label for="floorNumber" class="form-label">Floor Number</label>
+                                <input type="text" name="update_floor_number" id="floorNumber" class="form-control"
+                                  value="<?php echo $rowFloors->floor_number ?>">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" name="update_floor_master" class="btn btn-success">Update</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
               </td>
               <td>
-                <!-- <form action="./php/floormaster_delete.php" method="post">
-                  <input type="submit" name="delete" value="DELETE" class="btn btn-danger fw-bold">
-                  <input type="hidden" name="delete_id" value="<?php echo $rows['id'] ?>">
-                </form> -->
+                <!-- DELETE -->
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                  data-bs-target="#deleteModal-<?php echo $rowFloors->id ?>">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+
+                <form action="./php/floormaster_delete.php" method="post">
+                  <!-- Modal -->
+                  <div class="modal fade" id="deleteModal-<?php echo $rowFloors->id ?>" tabindex="-1">
+                    <input type="hidden" name="delete_id" value="<?php echo $rowFloors->id ?>">
+
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="deleteModal">Are you sure you want to Delete?</h1>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" name="delete" class="btn btn-danger">Delete</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
               </td>
             </tr>
             <?php } ?>

@@ -7,15 +7,16 @@
   }
   
   if (isset($_POST['register_facility'])) {
-    $facilityType = mysqli_real_escape_string($con, $_POST['facility_type']);
-    $facilityNumber = mysqli_real_escape_string($con, $_POST['facility_number']);
-    $description = mysqli_real_escape_string($con, $_POST['description']);
-    $floorLocation = mysqli_real_escape_string($con, $_POST['floor_location']);
-    $maxCapacity = mysqli_real_escape_string($con, $_POST['max_capacity']);
-    $status = mysqli_real_escape_string($con, $_POST['status']);
+    $facilityType = filter_input(INPUT_POST, 'facility_type', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $facilityNumber = filter_input(INPUT_POST, 'facility_number', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $floorLocation = filter_input(INPUT_POST, 'floor_location', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $maxCapacity = filter_input(INPUT_POST, 'max_capacity', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $status = filter_input(INPUT_POST, 'status', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    $queryFacilityRoomMaster = "INSERT INTO facility_room_masters VALUES (null, '$facilityType', '$facilityNumber', '$description', '$floorLocation', '$maxCapacity', '$status' ) ";
-    $sqlFacilityRoomMaster = mysqli_query($con, $queryFacilityRoomMaster);
+    $sqlFacilityRoomMaster = "INSERT INTO facility_room_masters (facility_type, facility_number, descriptions, floor_location, max_capacity, statuses) VALUES (?,?,?,?,?,?)";
+    $stmtFacilityRoomMaster = $con->prepare($sqlFacilityRoomMaster);
+    $stmtFacilityRoomMaster->execute([$facilityType, $facilityNumber, $description, $floorLocation, $maxCapacity, $status]);
 
     pathTo('facility_room_master');
   }

@@ -9,8 +9,9 @@
   if (isset($_POST['delete'])) {
     $deleteId = $_POST['delete_id'];
 
-    $queryDelete = "DELETE FROM facility_room_masters WHERE id = '$deleteId' ";
-    $sqlDelete = mysqli_query($con, $queryDelete);
+    $sqlDelete = "DELETE FROM facility_room_masters WHERE id=?";
+    $stmt = $con->prepare($sqlDelete);
+    $stmt->execute([$deleteId]);
 
     pathTo('facility_room_master');
   }

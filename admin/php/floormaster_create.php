@@ -8,10 +8,6 @@
   }
 
   if (isset($_POST['floor_master'])) {
-    // $floorCode = mysqli_real_escape_string($con, $_POST['floor_code']);
-    // $upperCaseFloorCode = strtoupper($floorCode);
-    // $floorNumber = mysqli_real_escape_string($con, $_POST['floor_number']);
-
     $floorCode = strtoupper(filter_input(INPUT_POST, 'floor_code', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
     $floorNumber = filter_input(INPUT_POST, 'floor_number', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 

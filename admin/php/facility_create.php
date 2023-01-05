@@ -7,12 +7,12 @@
   }
 
   if (isset($_POST['register_facility'])) {
-    $facilityCode = mysqli_real_escape_string($con, $_POST['facility_code']);
-    $facilityCodeUppercase = strtoupper($facilityCode);
-    $facilityName = mysqli_real_escape_string($con, $_POST['facility_name']);
+    $facilityCode = strtoupper(filter_input(INPUT_POST, 'facility_code', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+    $facilityName = filter_input(INPUT_POST, 'facility_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    $queryCreate = "INSERT INTO facilities VALUES (null ,'$facilityCodeUppercase','$facilityName')";
-    $sqlCreate = mysqli_query($con, $queryCreate);
+    $sqlCreate = "INSERT INTO facilities (facility_code, facility_name) VALUES (?,?)";
+    $stmtCreateFacility = $con->prepare($sqlCreate);
+    $stmtCreateFacility->execute([$facilityCode, $facilityName]);
 
     pathTo('facility_type');
   }

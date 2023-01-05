@@ -3,8 +3,22 @@
   require './php/session.php';
 
   // FACILITIES
-  $queryFacilities = "SELECT * FROM facilities";
-  $sqlFacilitites = mysqli_query($con, $queryFacilities);
+  $sqlFacilities = "SELECT * FROM facilities";
+  $stmtFacilities = $con->prepare($sqlFacilities);
+  $stmtFacilities->execute();
+
+  // UPDATE FACILITIES
+  if (isset($_POST['update_facility'])) {
+    $updateId = $_POST['update_id'];
+    $updateFacilityCode = strtoupper(filter_input(INPUT_POST, 'update_facility_code', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+    $updateFacilityName = filter_input(INPUT_POST, 'update_facility_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+    $sqlUpdate = "UPDATE facilities SET facility_code=?, facility_name=? WHERE id=? ";
+    $stmtUpdateFacilities = $con->prepare($sqlUpdate);
+    $stmtUpdateFacilities->execute([$updateFacilityCode, $updateFacilityName, $updateId]);
+
+    pathTo('facility_type');  
+  }
 
 ?>
 
@@ -144,22 +158,80 @@
             </tr>
           </thead>
           <tbody>
-            <?php while($rows = mysqli_fetch_assoc($sqlFacilitites)) { ?>
+            <?php while($rowFacility = $stmtFacilities->fetch()) { ?>
             <tr>
-              <td><?php echo $rows['facility_code'] ?></td>
-              <td><?php echo $rows['facility_name'] ?></td>
+              <td><?php echo $rowFacility->facility_code ?></td>
+              <td><?php echo $rowFacility->facility_name ?></td>
               <td>
-                <form action="./php/facility_update.php" method="post">
-                  <input type="submit" name="edit" value="EDIT" class="btn btn-success fw-bold">
-                  <input type="hidden" name="edit_id" value="<?php echo $rows['id'] ?>">
-                  <input type="hidden" name="edit_facility_code" value="<?php echo $rows['facility_code'] ?>">
-                  <input type="hidden" name="edit_facility_name" value="<?php echo $rows['facility_name'] ?>">
+                <!-- UPDATE FACILITIES -->
+                <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                  data-bs-target="#updateModal-<?php echo $rowFacility->id ?>">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+
+                <form action="facility_type.php" method="post">
+                  <!-- Modal -->
+                  <div class="modal fade" id="updateModal-<?php echo $rowFacility->id ?>" tabindex="-1">
+                    <input type="hidden" name="update_id" value="<?php echo $rowFacility->id ?>">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="updateModal">Update Facilities</h1>
+                        </div>
+                        <div class="modal-body">
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="mb-3">
+                                <label for="updateFacilityCode" class="form-label">Facility Code</label>
+                                <input type="text" name="update_facility_code" id="updateFacilityCode"
+                                  class="form-control" value="<?php echo $rowFacility->facility_code ?>">
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <div class="mb-3">
+                                <label for="updateFacilityName" class="form-label">Facility Code</label>
+                                <input type="text" name="update_facility_name" id="updateFacilityName"
+                                  class="form-control" value="<?php echo $rowFacility->facility_name ?>">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" name="update_facility" class="btn btn-success">Update</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </form>
               </td>
               <td>
-                <form action="./php/facility_delete.php" method="post">
+                <!-- <form action="./php/facility_delete.php" method="post">
                   <input type="submit" name="delete" class="btn btn-danger fw-bold" value="DELETE">
-                  <input type="hidden" name="delete_id" value="<?php echo $rows['id'] ?>">
+                </form> -->
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                  data-bs-target="#deleteModal-<?php echo $rowFacility->id ?>">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+
+                <form action="./php/facility_delete.php" method="post">
+                  <input type="hidden" name="delete_id" value="<?php echo $rowFacility->id ?>">
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="deleteModal-<?php echo $rowFacility->id ?>" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="deleteModalLabel">Are you sure you want to Delete?</h1>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" name="delete" class="btn btn-danger">Delete</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </form>
               </td>
             </tr>
