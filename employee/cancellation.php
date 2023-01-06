@@ -10,6 +10,7 @@
   $stmtCancel = $con->prepare($sqlReservationCancel);
   $stmtCancel->execute([$users_id]);
 
+
 ?>
 
 <!DOCTYPE html>
@@ -97,6 +98,7 @@
             <th scope="col">Time To:</th>
             <th scope="col">Status:</th>
             <th scope="col">Reasons:</th>
+            <th scope="col">Actions:</th>
           </tr>
         </thead>
         <tbody class="table-group-divider">
@@ -108,6 +110,78 @@
             <td><?php echo date("h:i A", strtotime($rowReserveCancel->time_to)) ?></td>
             <td><?php echo $rowReserveCancel->statuses ?></td>
             <td><?php echo $rowReserveCancel->cancel_reasons ?></td>
+            <td>
+              <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="editModal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">Update Reservation</h1>
+                    </div>
+                    <div class="modal-body">
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="mb-3">
+                            <label for="rsvn_no" class="form-label">RSVN No.</label>
+                            <input type="text" name="update_rsvn_no" id="rsvn_no" class="form-control">
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="mb-3">
+                            <label for="createdBy" class="form-label">Created By</label>
+                            <input type="text" name="update_created_by" id="createdBy" class="form-control">
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="mb-3">
+                            <label for="roomType" class="form-label">Room Type</label>
+                            <select name="update_room_type" id="roomType" class="form-select"></select>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="mb-3">
+                            <label for="dateFrom" class="form-label">Date from</label>
+                            <input type="date" name="update_date_from" id="dateFrom" class="form-control">
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="mb-3">
+                            <label for="dateTo" class="form-label">Date To</label>
+                            <input type="date" name="update_date_to" id="dateTo" class="form-control">
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="mb-3">
+                            <label for="timeFrom" class="form-label">Time From</label>
+                            <input type="time" name="update_time_from" id="timeFrom" class="form-control">
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="mb-3">
+                            <label for="timeTo" class="form-label">Time To</label>
+                            <input type="time" name="update_time_to" id="timeTo" class="form-control">
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <label for="status" class="form-label">Status</label>
+                          <select name="update_status" id="status" class="form-select">
+                            <option></option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-success">Edit</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
           </tr>
           <?php } ?>
         </tbody>
