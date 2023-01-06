@@ -1,7 +1,6 @@
 <?php 
   include_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php';
   include_once './php/session.php';
-  include_once './php/company.php';
 
   $sqlCompany = "SELECT * FROM companies";
   $stmt = $con->prepare($sqlCompany);
