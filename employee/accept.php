@@ -6,8 +6,9 @@
 
   $users_id = $_SESSION['users_id'];
   
-  $queryReadReservation = "SELECT * FROM reservations WHERE users_id = '$users_id' AND statuses = 'APPROVED'";
-  $sqlReadReservation = mysqli_query($con, $queryReadReservation);
+  $sqlReadReservation = "SELECT * FROM reservations WHERE users_id=? AND statuses='APPROVED'";
+  $stmtReservation = $con->prepare($sqlReadReservation);
+  $stmtReservation->execute([$users_id]);
 
 ?>
 
@@ -98,13 +99,13 @@
           </tr>
         </thead>
         <tbody class="table-group-divider">
-          <?php while($rowReserve = mysqli_fetch_assoc($sqlReadReservation)) { ?>
+          <?php while($rowReserve = $stmtReservation->fetch()) { ?>
           <tr>
-            <td><?php echo $rowReserve['room_type'] ?></td>
-            <td><?php echo $rowReserve['date_from'] ?></td>
-            <td><?php echo date("h:i A" , strtotime($rowReserve['time_from']))?></td>
-            <td><?php echo date("h:i A", strtotime($rowReserve['time_to'])) ?></td>
-            <td><?php echo $rowReserve['statuses'] ?></td>
+            <td><?php echo $rowReserve->room_type ?></td>
+            <td><?php echo $rowReserve->date_from ?></td>
+            <td><?php echo date("h:i A" , strtotime($rowReserve->time_from))?></td>
+            <td><?php echo date("h:i A", strtotime($rowReserve->time_to)) ?></td>
+            <td><?php echo $rowReserve->statuses ?></td>
           </tr>
           <?php } ?>
         </tbody>

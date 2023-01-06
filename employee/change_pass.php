@@ -5,21 +5,23 @@
   $users_id = $_SESSION['users_id'];
 
   if (isset($_POST['change_password'])) {
-    $oldPassword = mysqli_real_escape_string($con, $_POST['old_password']);
-    $encryptPassword = md5($oldPassword);
 
-    $queryPassword = "SELECT * FROM users_accounts WHERE id = '$users_id' ";
-    $sqlPassword = mysqli_query($con, $queryPassword);
-    $row = mysqli_fetch_assoc($sqlPassword);
+    $oldPassword = md5(filter_input(INPUT_POST, 'old_password', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
 
-    if ($encryptPassword == $row['passwords']) {
-      $newPassword = mysqli_real_escape_string($con, $_POST['new_password']);
-      $confirmPassword = mysqli_real_escape_string($con, $_POST['confirm_password']);
-      $password = md5($confirmPassword);
+    $sqlOldPassword = "SELECT * FROM users_accounts WHERE id=?";
+    $stmt = $con->prepare($sqlOldPassword);
+    $stmt->execute([$users_id]);
+    $rowPass = $stmt->fetch();
+
+    if ($oldPassword == $rowPass->passwords) {
+      $newPassword = md5(filter_input(INPUT_POST, 'new_password', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+      $confirmPassword = md5(filter_input(INPUT_POST, 'confirm_password', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
 
       if ($newPassword == $confirmPassword) {
-        $queryUpdatePassword = "UPDATE users_accounts SET passwords = '$password' WHERE id = '$users_id' ";
-        $sqlUpdatePassword = mysqli_query($con, $queryUpdatePassword);
+
+        $sqlUpdatePassword = "UPDATE users_accounts SET passwords=? WHERE id=?";
+        $stmt = $con->prepare($sqlUpdatePassword);
+        $stmt->execute([$confirmPassword, $users_id]);
 
         $_SESSION['users_status'] = 'invalid';
         path('index');

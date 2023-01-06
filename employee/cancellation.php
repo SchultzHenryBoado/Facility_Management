@@ -6,8 +6,9 @@
 
   $users_id = $_SESSION['users_id'];
   
-  $queryReadReservation = "SELECT * FROM reservations WHERE users_id = '$users_id' AND statuses = 'REJECT'";
-  $sqlReadReservation = mysqli_query($con, $queryReadReservation);
+  $sqlReservationCancel = "SELECT * FROM reservations WHERE users_id=? AND statuses='REJECT'";
+  $stmtCancel = $con->prepare($sqlReservationCancel);
+  $stmtCancel->execute([$users_id]);
 
 ?>
 
@@ -99,14 +100,14 @@
           </tr>
         </thead>
         <tbody class="table-group-divider">
-          <?php while($rowReserve = mysqli_fetch_assoc($sqlReadReservation)) { ?>
+          <?php while($rowReserveCancel = $stmtCancel->fetch()) { ?>
           <tr>
-            <td><?php echo $rowReserve['room_type'] ?></td>
-            <td><?php echo $rowReserve['date_from'] ?></td>
-            <td><?php echo date("h:i A" , strtotime($rowReserve['time_from']))?></td>
-            <td><?php echo date("h:i A", strtotime($rowReserve['time_to'])) ?></td>
-            <td><?php echo $rowReserve['statuses'] ?></td>
-            <td><?php echo $rowReserve['cancel_reasons'] ?></td>
+            <td><?php echo $rowReserveCancel->room_type ?></td>
+            <td><?php echo $rowReserveCancel->date_from ?></td>
+            <td><?php echo date("h:i A" , strtotime($rowReserveCancel->time_from))?></td>
+            <td><?php echo date("h:i A", strtotime($rowReserveCancel->time_to)) ?></td>
+            <td><?php echo $rowReserveCancel->statuses ?></td>
+            <td><?php echo $rowReserveCancel->cancel_reasons ?></td>
 
             <?php } ?>
         </tbody>

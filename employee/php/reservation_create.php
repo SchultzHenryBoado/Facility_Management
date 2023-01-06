@@ -11,19 +11,20 @@
 
   if (isset($_POST['submit'])) {
     $users_id = $_SESSION['users_id'];
-    $rsvnNo = mysqli_real_escape_string($con, $_POST['rsvn_no']);
-    $createdBy = mysqli_real_escape_string($con, $_POST['created_by']);
-    $roomType = mysqli_real_escape_string($con, $_POST['room_type']);
-    $dateFrom = mysqli_real_escape_string($con, $_POST['date_from']);
-    $dateTo = mysqli_real_escape_string($con, $_POST['date_to']);
-    $timeFrom = mysqli_real_escape_string($con, $_POST['time_from']);
-    $timeTo = mysqli_real_escape_string($con, $_POST['time_to']);
-    $status = mysqli_real_escape_string($con, $_POST['pending_status']);
+    $rsvnNo = filter_input(INPUT_POST, 'rsvn_no', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $createdBy = filter_input(INPUT_POST, 'created_by', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $roomType = filter_input(INPUT_POST, 'room_type', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $dateFrom = filter_input(INPUT_POST, 'date_from', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $dateTo = filter_input(INPUT_POST, 'date_to', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $timeFrom = filter_input(INPUT_POST, 'time_from', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $timeTo = filter_input(INPUT_POST, 'time_to', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $status = filter_input(INPUT_POST, 'pending_status', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    $queryReservationCreate = "INSERT INTO reservations (id, users_id, created_date, rsvn_no, created_by, room_type, date_from, date_to, time_from, time_to, statuses) 
-    VALUES (null, '$users_id', curdate(), '$rsvnNo', '$createdBy', '$roomType', '$dateFrom', '$dateTo', '$timeFrom' , '$timeTo', '$status') ";
-    $sqlReservationCreate = mysqli_query($con, $queryReservationCreate);
+    $sqlReservationCreate = "INSERT INTO reservations (users_id, created_date, rsvn_no, created_by, room_type, date_from, date_to, time_from, time_to, statuses) 
+    VALUES (?, curdate(), ?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmtReservationCreate = $con->prepare($sqlReservationCreate);
+    $stmtReservationCreate->execute([$users_id,  $rsvnNo, $createdBy, $roomType, $dateFrom, $dateTo, $timeFrom, $timeTo, $status]);
+
     pathTo('reservation');
-
     
   }

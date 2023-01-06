@@ -9,30 +9,33 @@
 
   // USERS SESSION
   $users_id = $_SESSION['users_id'];
-  $queryReadUsers = "SELECT * FROM users_accounts WHERE id = '$users_id' ";
-  $sqlReadUsers = mysqli_query($con, $queryReadUsers);
-  $rows = mysqli_fetch_assoc($sqlReadUsers);
+  $sqlReadUsers = "SELECT * FROM users_accounts WHERE id=?";
+  $stmtUsers = $con->prepare($sqlReadUsers);
+  $stmtUsers->execute([$users_id]);
+  $rowUsers = $stmtUsers->fetch();
 
   // FACILITIES
-  $queryReadFacilities = "SELECT facility_name FROM facilities";
-  $sqlReadFacilities = mysqli_query($con, $queryReadFacilities);
+  $sqlReadFacilities = "SELECT facility_name FROM facilities";
+  $stmtFacilities = $con->prepare($sqlReadFacilities);
+  $stmtFacilities->execute();
 
   // RESERVATIONS
-  $queryReadReservations = "SELECT * FROM reservations WHERE users_id = '$users_id' ";
-  $sqlReadReservations = mysqli_query($con, $queryReadReservations);
+  $sqlReadReservations = "SELECT * FROM reservations WHERE users_id=?";
+  $stmtReservations = $con->prepare($sqlReadReservations);
+  $stmtReservations->execute([$users_id]);
 
   if (isset($_POST['update_reservation'])) {
     $updateId = $_POST['update_id'];
-    $updateRsvnNo = mysqli_real_escape_string($con, $_POST['update_rsvn_no']);
-    $updateRoomType = mysqli_real_escape_string($con, $_POST['update_room_type']);
-    $updateDateFrom = mysqli_real_escape_string($con, $_POST['update_date_from']);
-    $updateDateTo = mysqli_real_escape_string($con, $_POST['update_date_to']);
-    $updateTimeFrom = mysqli_real_escape_string($con, $_POST['update_time_from']);
-    $updateTimeTo = mysqli_real_escape_string($con, $_POST['update_time_to']);
-    $updateStatus = mysqli_real_escape_string($con, $_POST['update_status']);
+    $updateRsvnNo = filter_input(INPUT_POST, 'update_rsvn_no', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $updateRoomType = filter_input(INPUT_POST, 'update_room_type', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $updateDateFrom = filter_input(INPUT_POST, 'update_date_from', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $updateDateTo = filter_input(INPUT_POST, 'update_date_to', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $updateTimeFrom = filter_input(INPUT_POST, 'update_time_from', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $updateTimeTo = filter_input(INPUT_POST, 'update_time_to', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    $queryUpdate = "UPDATE reservations SET rsvn_no = '$updateRsvnNo', room_type = '$updateRoomType', date_from = '$updateDateFrom', date_to = '$updateDateTo', time_from = '$updateTimeFrom', time_to = '$updateTimeTo', statuses = '$updateStatus' WHERE id = '$updateId'";
-    $sqlUpdate = mysqli_query($con, $queryUpdate);
+    $sqlUpdate = "UPDATE reservations SET rsvn_no=?, room_type=?, date_from=?, date_to=?, time_from=?, time_to=? WHERE id=?";
+    $stmtUpdate = $con->prepare($sqlUpdate);
+    $stmtUpdate->execute([$updateRsvnNo, $updateRoomType, $updateDateFrom, $updateDateTo, $updateTimeFrom, $updateTimeTo, $updateId]);
 
     path('reservation');
   }
@@ -149,7 +152,7 @@
             <div class="mb-3">
               <label for="createdBy" class="form-label">Created By:</label>
               <input type="text" id="createdBy" name="created_by" class="form-control"
-                value="<?php echo $rows['last_names'] . ', ' . $rows['first_names'] ?>" readonly required />
+                value="<?php echo $rowUsers->last_names . ', ' . $rowUsers->first_names ?>" readonly required />
             </div>
           </div>
 
@@ -159,9 +162,9 @@
               <label for="roomType" class="form-label">Room Type:</label>
               <select name="room_type" id="roomType" class="form-select" required>
                 <option disabled selected value>-- Room Type --</option>
-                <?php while($rowFacilities = mysqli_fetch_assoc($sqlReadFacilities)) { ?>
-                <option value="<?php echo $rowFacilities['facility_name'] ?>">
-                  <?php echo $rowFacilities['facility_name'] ?></option>
+                <?php while($rowFacilities = $stmtFacilities->fetch()) { ?>
+                <option value="<?php echo $rowFacilities->facility_name ?>">
+                  <?php echo $rowFacilities->facility_name ?></option>
                 <?php } ?>
               </select>
               <div class="invalid-feedback">
@@ -256,93 +259,103 @@
             </tr>
           </thead>
           <tbody class="table-group-divider">
-            <?php while($rowReservations = mysqli_fetch_assoc($sqlReadReservations) ) { ?>
+            <?php while($rowReserve = $stmtReservations->fetch()) { ?>
             <tr>
-              <td><?php echo $rowReservations['created_date'] ?></td>
-              <td><?php echo $rowReservations['rsvn_no'] ?></td>
-              <td><?php echo $rowReservations['created_by'] ?></td>
-              <td><?php echo $rowReservations['room_type'] ?></td>
-              <td><?php echo $rowReservations['date_from'] ?></td>
-              <td><?php echo $rowReservations['date_to'] ?></td>
-              <td><?php echo date("h:i A", strtotime($rowReservations['time_from'])) ?></td>
-              <td><?php echo date("h:i A", strtotime($rowReservations['time_to']))  ?></td>
-              <td><?php echo $rowReservations['statuses'] ?></td>
+              <td><?php echo $rowReserve->created_date ?></td>
+              <td><?php echo $rowReserve->rsvn_no ?></td>
+              <td><?php echo $rowReserve->created_by ?></td>
+              <td><?php echo $rowReserve->room_type ?></td>
+              <td><?php echo $rowReserve->date_from ?></td>
+              <td><?php echo $rowReserve->date_to ?></td>
+              <td><?php echo date("h:i A", strtotime($rowReserve->time_from)) ?></td>
+              <td><?php echo date("h:i A", strtotime($rowReserve->time_to))  ?></td>
+              <td><?php echo $rowReserve->statuses ?></td>
 
               <!-- EDIT -->
               <td>
                 <button class="btn btn-success fw-bold" data-bs-toggle="modal"
-                  data-bs-target="#modalEdit-<?php echo $rowReservations['id'] ?>">EDIT</button>
-                <form action="reservation.php" method="post">
+                  data-bs-target="#modalEdit-<?php echo $rowReserve->id ?>">EDIT</button>
+
+                <form action="reservation.php" method="post" class="needs-validation" novalidate>
 
                   <?php 
-                    $query = "SELECT * FROM facilities";
-                    $sql = mysqli_query($con, $query);
+                    $sql = "SELECT * FROM facilities";
+                    $stmt = $con->prepare($sql);
+                    $stmt->execute();
                   ?>
 
-                  <div class="modal fade" id="modalEdit-<?php echo $rowReservations['id'] ?>" tabindex="-1">
+                  <div class="modal fade" id="modalEdit-<?php echo $rowReserve->id ?>" tabindex="-1">
                     <div class="modal-dialog modal-dialog-centered">
                       <div class="modal-content">
                         <div class="modal-title">
                           <p class="fs-3 my-3 text-center">Edit Reservations</p>
                         </div>
                         <div class="modal-body">
-                          <input class="form-control" type="hidden" name="update_id"
-                            value="<?php echo $rowReservations['id'] ?>">
+                          <input type="hidden" name="update_id" value="<?php echo $rowReserve->id ?>">
                           <div class="row">
                             <div class="col-12">
                               <div class="mb-3">
                                 <label for="updateRsvn" class="form-label">Update RSVN No.</label>
                                 <input class="form-control" type="text" name="update_rsvn_no" id="updateRsvn"
-                                  value="<?php echo $rowReservations['rsvn_no'] ?>">
+                                  value="<?php echo $rowReserve->rsvn_no ?>" required>
+                                <div class="invalid-feedback">
+                                  Please fill-up the rsvn.
+                                </div>
                               </div>
                             </div>
                             <div class="col-12">
                               <div class="mb-3">
                                 <label for="updateRoomType" class="form-label">Update Room Type:</label>
-                                <select name="update_room_type" id="updateRoomType" class="form-select">
+                                <select name="update_room_type" id="updateRoomType" class="form-select" required>
                                   <option disabled selected value>-- Room Type --</option>
-                                  <?php while($row = mysqli_fetch_assoc($sql)) { ?>
-                                  <option value="<?php echo $row['facility_name'] ?>">
-                                    <?php echo $row['facility_name'] ?></option>
+                                  <?php while($row = $stmt->fetch()) { ?>
+                                  <option value="<?php echo $row->facility_name ?>">
+                                    <?php echo $row->facility_name ?></option>
                                   <?php } ?>
                                 </select>
+                                <div class="invalid-feedback">
+                                  Please choose a facility.
+                                </div>
                               </div>
                             </div>
                             <div class="col-12">
                               <div class="mb-3">
                                 <label for="updateDateFrom" class="form-label">Update Date From:</label>
                                 <input class="form-control" type="date" name="update_date_from" id="updateDateFrom"
-                                  value="<?php echo $rowReservations['date_from'] ?>">
+                                  value="<?php echo $rowReserve->date_from ?>" required>
+                                <div class="invalid-feedback">
+                                  Please fill-up the date from.
+                                </div>
                               </div>
                             </div>
                             <div class="col-12">
                               <div class="mb-3">
                                 <label for="updateDateTo" class="form-label">Update Date To:</label>
                                 <input class="form-control" type="date" name="update_date_to" id="updateDateTo"
-                                  value="<?php echo $rowReservations['date_to'] ?>">
+                                  value="<?php echo $rowReserve->date_to ?>" required>
+                                <div class="invalid-feedback">
+                                  Please fill-up the date to.
+                                </div>
                               </div>
                             </div>
                             <div class="col-12">
                               <div class="mb-3">
                                 <label for="updateTimeFrom" class="form-label">Update Time From:</label>
                                 <input class="form-control" type="time" name="update_time_from" id="updateTimeFrom"
-                                  value="<?php echo $rowReservations['time_from'] ?>">
+                                  value="<?php echo $rowReserve->time_from ?>" required>
+                                <div class="invalid-feedback">
+                                  Please fill-up the time from.
+                                </div>
                               </div>
                             </div>
                             <div class="col-12">
                               <div class="mb-3">
                                 <label for="updateTimeTo" class="form-label">Update Time To:</label>
                                 <input class="form-control" type="time" name="update_time_to" id="updateTimeTo"
-                                  value="<?php echo $rowReservations['time_to'] ?>">
-                              </div>
-                            </div>
-                            <div class="col-12">
-                              <div class="mb-3">
-                                <label for="updateStatus" class="form-label">Status:</label>
-                                <select class="form-control" type="text" name="update_status" id="updateStatus"
-                                  value="<?php echo $rowReservations['statuses'] ?>">
-                                  <option value="PENDING">PENDING</option>
-                                </select>
+                                  value="<?php echo $rowReserve->time_to ?>" required>
+                                <div class="invalid-feedback">
+                                  Please fill-up the time to.
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -360,19 +373,19 @@
               <!-- DELETE -->
               <td>
                 <button class="btn btn-danger fw-bold" data-bs-toggle="modal"
-                  data-bs-target="#modalDelete-<?php echo $rowReservations['id'] ?>">DELETE</button>
+                  data-bs-target="#modalDelete-<?php echo $rowReserve->id ?>">DELETE</button>
 
                 <form action="./php/reservation_delete.php" method="post" id="deleteForm">
-                  <input type="hidden" name="delete_id" value="<?php echo $rowReservations['id'] ?>">
-                  <div class="modal fade" tabindex="-1" id="modalDelete-<?php echo $rowReservations['id'] ?>">
+                  <input type="hidden" name="delete_id" value="<?php echo $rowReserve->id ?>">
+                  <div class="modal fade" tabindex="-1" id="modalDelete-<?php echo $rowReserve->id ?>">
                     <div class="modal-dialog modal-dialog-centered">
                       <div class="modal-content">
-                        <div class="modal-title text-center my-5">
-                          <p class="fs-3">Are you sure you want to delete?</p>
+                        <div class="modal-title">
+                          <p class="fs-5 p-3 m-0">Are you sure you want to delete?</p>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                          <button type="submit" class="btn btn-primary" name="delete" id="deleteBtn">OK</button>
+                          <button type="submit" class="btn btn-danger" name="delete" id="deleteBtn">Delete</button>
                         </div>
                       </div>
                     </div>

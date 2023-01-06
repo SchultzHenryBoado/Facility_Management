@@ -5,15 +5,21 @@
   require './php/session.php';
 
   // USERS
-  $queryUsers = "SELECT * FROM users_accounts";
-  $sqlUsers = mysqli_query($con, $queryUsers);
-  $results = mysqli_fetch_assoc($sqlUsers);
-  $company = $_SESSION['company_name'] = $results['company'];
+  // $queryUsers = "SELECT * FROM users_accounts";
+  // $sqlUsers = mysqli_query($con, $queryUsers);
+  // $results = mysqli_fetch_assoc($sqlUsers);
+  // $company = $_SESSION['company_name'] = $results['company'];
+  $sqlUsers = "SELECT * FROM users_accounts";
+  $stmtUsers = $con->prepare($sqlUsers);
+  $stmtUsers->execute();
+  $results = $stmtUsers->fetch();
+  $company = $_SESSION['company_name'] = $results->company;
 
   // RESERVATIONS
   $usersId = $_SESSION['users_id'];
-  $queryReservations = "SELECT * FROM reservations WHERE users_id = '$usersId' AND statuses = 'APPROVED' ORDER BY created_date DESC ";
-  $sqlReservation = mysqli_query($con, $queryReservations);
+  $sqlReservationHistory = "SELECT * FROM reservations WHERE users_id=? AND statuses='APPROVED' ORDER BY created_date DESC";
+  $stmtReservationHistory = $con->prepare($sqlReservationHistory);
+  $stmtReservationHistory->execute([$usersId]);
   
 ?>
 
@@ -107,16 +113,16 @@
           </tr>
         </thead>
         <tbody class="table-group-divider ">
-          <?php while($rowReservations = mysqli_fetch_assoc($sqlReservation)) { ?>
+          <?php while($rowReservations = $stmtReservationHistory->fetch()) { ?>
           <tr>
-            <td><?php echo date("F d, Y", strtotime($rowReservations['created_date']))?></td>
-            <td><?php echo $rowReservations['created_by'] ?></td>
-            <td><?php echo $rowReservations['room_type'] ?></td>
-            <td><?php echo date("F d, Y", strtotime($rowReservations['date_from']))  ?></td>
-            <td><?php echo date("F d, Y", strtotime($rowReservations['date_to'])) ?></td>
-            <td><?php echo date("h:i A", strtotime($rowReservations['time_from']))?></td>
-            <td><?php echo date("h:i A", strtotime($rowReservations['time_to']))?></td>
-            <td><?php echo $rowReservations['statuses'] ?></td>
+            <td><?php echo date("F d, Y", strtotime($rowReservations->created_date))?></td>
+            <td><?php echo $rowReservations->created_by ?></td>
+            <td><?php echo $rowReservations->room_type ?></td>
+            <td><?php echo date("F d, Y", strtotime($rowReservations->date_from))  ?></td>
+            <td><?php echo date("F d, Y", strtotime($rowReservations->date_to)) ?></td>
+            <td><?php echo date("h:i A", strtotime($rowReservations->time_from))?></td>
+            <td><?php echo date("h:i A", strtotime($rowReservations->time_to))?></td>
+            <td><?php echo $rowReservations->statuses ?></td>
           </tr>
           <?php } ?>
         </tbody>

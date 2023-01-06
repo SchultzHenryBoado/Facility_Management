@@ -4,6 +4,8 @@
   // SESSION
   require './php/session.php';
 
+  $date = date('m/d/Y');
+
   // USERS
   $sqlUsers = "SELECT * FROM users_accounts";
   $stmtUsers = $con->prepare($sqlUsers);
@@ -12,8 +14,9 @@
   $company = $_SESSION['company_name'] = $results->company;
 
   // RESERVATIONS
-  // $queryReservations = "SELECT * FROM reservations WHERE statuses = 'APPROVED' AND date_from = CURRENT_DATE() ORDER BY time_from ASC ";
-  // $sqlReservation = mysqli_query($con, $queryReservations);
+  $sqlReservation = "SELECT * FROM reservations WHERE statuses = 'APPROVED' AND date_from = CURRENT_DATE() ORDER BY time_from ASC";
+  $stmtReservation = $con->prepare($sqlReservation);
+  $stmtReservation->execute();
   
 ?>
 
@@ -105,13 +108,13 @@
           </tr>
         </thead>
         <tbody class="table-group-divider ">
-          <?php while($rowReservations = mysqli_fetch_assoc($sqlReservation)) { ?>
+          <?php while($rowReservations = $stmtReservation->fetch()) { ?>
           <tr>
-            <td><?php echo $rowReservations['rsvn_no'] ?></td>
-            <td><?php echo $rowReservations['room_type'] ?></td>
-            <td><?php echo date("h:i A", strtotime($rowReservations['time_from']))?></td>
-            <td><?php echo date("h:i A", strtotime($rowReservations['time_to']))?></td>
-            <td><?php echo $rowReservations['created_by'] ?></td>
+            <td><?php echo $rowReservations->rsvn_no ?></td>
+            <td><?php echo $rowReservations->room_type ?></td>
+            <td><?php echo date("h:i A", strtotime($rowReservations->time_from))?></td>
+            <td><?php echo date("h:i A", strtotime($rowReservations->time_to))?></td>
+            <td><?php echo $rowReservations->created_by ?></td>
             <td><?php echo $company ?></td>
           </tr>
           <?php } ?>
