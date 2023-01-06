@@ -1,6 +1,6 @@
 <?php
   include_once $_SERVER["DOCUMENT_ROOT"] . "/facility_management/database/connection.php";
-  require './php/session.php';
+  include './php/session.php';
   // path
   function path($destination) {
     echo "<script>window.location.href = '/facility_management/admin/$destination.php'</script>";

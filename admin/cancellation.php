@@ -2,15 +2,12 @@
   // DATABASE
   include_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php';
   // SESSION
-  require './php/session.php';
+  include './php/session.php';
 
   // RESERVATIONS
   $sqlReadReservations = "SELECT * FROM reservations WHERE statuses = 'REJECT'";
   $stmt = $con->prepare($sqlReadReservations);
   $stmt->execute();
-  // $sqlReadReservations = mysqli_query($con, $queryReadReservations);
-  // $sqlReserve = mysqli_query($con, $queryReadReservations);
-
 
 ?>
 

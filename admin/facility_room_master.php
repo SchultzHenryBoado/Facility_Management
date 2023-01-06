@@ -1,6 +1,6 @@
 <?php 
   include_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php';
-  require './php/session.php';
+  include './php/session.php';
 
   // FACILITY ROOM MASTER DATABASE
   $sqlFacilityRoomMaster = "SELECT * FROM facility_room_masters";
