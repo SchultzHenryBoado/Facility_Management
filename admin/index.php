@@ -1,4 +1,5 @@
 <?php 
+
   include_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php'; 
 
   session_start();
