@@ -20,7 +20,7 @@
   $stmtFacilities->execute();
 
   // RESERVATIONS
-  $sqlReadReservations = "SELECT * FROM reservations WHERE users_id=?";
+  $sqlReadReservations = "SELECT * FROM reservations WHERE users_id=? AND statuses='PENDING'";
   $stmtReservations = $con->prepare($sqlReadReservations);
   $stmtReservations->execute([$users_id]);
 
@@ -32,10 +32,11 @@
     $updateDateTo = filter_input(INPUT_POST, 'update_date_to', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $updateTimeFrom = filter_input(INPUT_POST, 'update_time_from', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $updateTimeTo = filter_input(INPUT_POST, 'update_time_to', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $updateStatus = filter_input(INPUT_POST, 'update_status', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    $sqlUpdate = "UPDATE reservations SET rsvn_no=?, room_type=?, date_from=?, date_to=?, time_from=?, time_to=? WHERE id=?";
+    $sqlUpdate = "UPDATE reservations SET rsvn_no=?, room_type=?, date_from=?, date_to=?, time_from=?, time_to=?, statuses=? WHERE id=?";
     $stmtUpdate = $con->prepare($sqlUpdate);
-    $stmtUpdate->execute([$updateRsvnNo, $updateRoomType, $updateDateFrom, $updateDateTo, $updateTimeFrom, $updateTimeTo, $updateId]);
+    $stmtUpdate->execute([$updateRsvnNo, $updateRoomType, $updateDateFrom, $updateDateTo, $updateTimeFrom, $updateTimeTo, $updateStatus, $updateId]);
 
     path('reservation');
   }
@@ -356,6 +357,15 @@
                                 <div class="invalid-feedback">
                                   Please fill-up the time to.
                                 </div>
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <div class="mb-3">
+                                <label for="status" class="form-label">Status:</label>
+                                <select name="update_status" id="status" class="form-select"
+                                  value="<?php echo $rowReserve->statuses ?>" required>
+                                  <option value="PENDING">PENDING</option>
+                                </select>
                               </div>
                             </div>
                           </div>
