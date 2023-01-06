@@ -8,7 +8,7 @@
     echo "<script>window.location.href = '/facility_management/admin/$destination.php' </script>";
   }
 
-  if (empty($_SESSION['admin_status'])) {
+  if ($_SESSION['admin_status'] == 'invalid' || empty($_SESSION['admin_status'])) {
     // set default status
     $_SESSION['admin_status'] = 'invalid';
   }
