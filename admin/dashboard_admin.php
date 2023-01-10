@@ -1,38 +1,38 @@
-<!-- <?php 
-  // // DATABASE
-  // include_once $_SERVER["DOCUMENT_ROOT"] . "/facility_management/database/connection.php";
-  // // SESSION
-  // include_once ('./php/session.php');
+<?php 
+  // DATABASE
+  include_once $_SERVER["DOCUMENT_ROOT"] . "/facility_management/database/connection.php";
+  // SESSION
+  include_once ('./php/session.php');
 
-  // // USERS ACCOUNTS QUERY
-  // $sqlCompanyUsers = "SELECT * FROM users_accounts";
-  // $stmt = $con->prepare($sqlCompanyUsers);
-  // $stmt->execute();
-  // $results = $stmt->fetch();
-  // $company = $_SESSION['company_name'] = $results->company;
+  // USERS ACCOUNTS QUERY
+  $sqlCompanyUsers = "SELECT * FROM users_accounts";
+  $stmt = $con->prepare($sqlCompanyUsers);
+  $stmt->execute();
+  $results = $stmt->fetch();
+  $company = $_SESSION['company_name'] = $results->company;
 
-  // // RESERVATION QUERY
-  // $sqlReadReservations = "SELECT * FROM reservations WHERE statuses = 'APPROVED' AND date_from = CURRENT_DATE() ORDER BY time_from ASC ";
-  // $stmt = $con->prepare($sqlReadReservations);
-  // $stmt->execute();
+  // RESERVATION QUERY
+  $sqlReadReservations = "SELECT * FROM reservations WHERE statuses = 'APPROVED' AND date_from = CURRENT_DATE() ORDER BY time_from ASC ";
+  $stmt = $con->prepare($sqlReadReservations);
+  $stmt->execute();
 
-  // // // TOTAL RESERVATION
-  // $sqlTotalReservations = $con->query("SELECT statuses FROM reservations ORDER BY statuses"); 
-  // $row = $sqlTotalReservations->rowCount();
+  // // TOTAL RESERVATION
+  $sqlTotalReservations = $con->query("SELECT statuses FROM reservations ORDER BY statuses"); 
+  $row = $sqlTotalReservations->rowCount();
 
-  // // // FOR CONFIRMATION
-  // $sqlForConfirm = $con->query("SELECT statuses FROM reservations WHERE statuses = 'PENDING' ORDER BY statuses");
-  // $rowForConfirm = $sqlForConfirm->rowCount();
+  // // FOR CONFIRMATION
+  $sqlForConfirm = $con->query("SELECT statuses FROM reservations WHERE statuses = 'PENDING' ORDER BY statuses");
+  $rowForConfirm = $sqlForConfirm->rowCount();
 
-  // // // TOTAL CONFIRMATION
-  // $sqlTotalConfirm = $con->query("SELECT statuses FROM reservations WHERE statuses = 'APPROVED' ORDER BY statuses");
-  // $rowConfirm = $sqlTotalConfirm->rowCount();
+  // // TOTAL CONFIRMATION
+  $sqlTotalConfirm = $con->query("SELECT statuses FROM reservations WHERE statuses = 'APPROVED' ORDER BY statuses");
+  $rowConfirm = $sqlTotalConfirm->rowCount();
 
-  // // // TOTAL CANCELLED
-  // $sqlTotalCancel = $con->query("SELECT statuses FROM reservations WHERE statuses = 'REJECT' ORDER BY statuses");
-  // $rowCancel = $sqlTotalCancel->rowCount();
+  // // TOTAL CANCELLED
+  $sqlTotalCancel = $con->query("SELECT statuses FROM reservations WHERE statuses = 'REJECT' ORDER BY statuses");
+  $rowCancel = $sqlTotalCancel->rowCount();
 
-?> -->
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -125,21 +125,21 @@
           <p class="h3 fw-bold text-light text-center mt-3">
             Total Reservation
           </p>
-          <!-- <p class="fs-1 text-warning fw-bold text-center"><?php echo $row ?></p> -->
+          <p class="fs-1 text-warning fw-bold text-center"><?php echo $row ?></p>
         </div>
         <div class="col-12 col-md-4 bg-primary">
           <p class="h3 fw-bold text-light text-center mt-3">
             For Confirmation
           </p>
-          <!-- <p class="fs-1 text-warning fw-bold text-center"><?php echo $rowForConfirm ?></p> -->
+          <p class="fs-1 text-warning fw-bold text-center"><?php echo $rowForConfirm ?></p>
         </div>
         <div class="col-12 col-md-4 bg-primary">
           <p class="h3 fw-bold text-light text-center mt-3">Total Confirmed</p>
-          <!-- <p class="fs-1 text-warning fw-bold text-center"><?php echo $rowConfirm  ?></p> -->
+          <p class="fs-1 text-warning fw-bold text-center"><?php echo $rowConfirm  ?></p>
         </div>
         <div class="col-12 col-md-4 bg-primary">
           <p class="h3 fw-bold text-light text-center mt-3">Total Cancelled</p>
-          <!-- <p class="fs-1 text-warning fw-bold text-center"><?php echo $rowCancel ?></p> -->
+          <p class="fs-1 text-warning fw-bold text-center"><?php echo $rowCancel ?></p>
         </div>
       </div>
     </div>
@@ -160,7 +160,7 @@
           </tr>
         </thead>
         <tbody class="table-group-divider">
-          <!-- <?php while($rowUsers = $stmt->fetch()) { ?>
+          <?php while($rowUsers = $stmt->fetch()) { ?>
           <tr>
             <td><?php echo $rowUsers->rsvn_no ?></td>
             <td><?php echo date("h:i A", strtotime($rowUsers->time_from)) ?></td>
@@ -168,7 +168,7 @@
             <td><?php echo $rowUsers->created_by ?></td>
             <td><?php echo $company ?></td>
           </tr>
-          <?php } ?> -->
+          <?php } ?>
         </tbody>
       </table>
     </div>
