@@ -1,4 +1,4 @@
-<?php 
+<!-- <?php 
   // // DATABASE
   // include_once $_SERVER["DOCUMENT_ROOT"] . "/facility_management/database/connection.php";
   // // SESSION
@@ -32,7 +32,7 @@
   // $sqlTotalCancel = $con->query("SELECT statuses FROM reservations WHERE statuses = 'REJECT' ORDER BY statuses");
   // $rowCancel = $sqlTotalCancel->rowCount();
 
-?>
+?> -->
 
 <!DOCTYPE html>
 <html lang="en">

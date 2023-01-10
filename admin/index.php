@@ -1,4 +1,4 @@
-<?php 
+<!-- <?php 
 
   include_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php'; 
 
@@ -44,7 +44,7 @@
 
   }
  
-?>
+?> -->
 
 <!DOCTYPE html>
 <html lang="en">
