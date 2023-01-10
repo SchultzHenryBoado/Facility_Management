@@ -15,34 +15,31 @@
   }
 
   if ($_SESSION['admin_status'] == 'valid') {
-    // pathTo('dashboard_admin');
-    header("Location: dashboard_admin.php");
+    pathTo('dashboard_admin');
   }
 
-  if (isset($_POST['login'])) {
-    $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+  // if (isset($_POST['login'])) {
+  //   $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+  //   $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    $sql = "SELECT * FROM admin_accounts WHERE admin_username=? AND admin_password=?";
-    $stmt = $con->prepare($sql);
-    $stmt->execute([$username, $password]);
-    $rows = $stmt->fetch();
+  //   $sql = "SELECT * FROM admin_accounts WHERE admin_username=? AND admin_password=?";
+  //   $stmt = $con->prepare($sql);
+  //   $stmt->execute([$username, $password]);
+  //   $rows = $stmt->fetch();
 
-    if ($count = $stmt->rowCount() > 0) {
-      $_SESSION['admin_status'] = 'valid';
-      $_SESSION['admin_username'] = $rows->admin_username;
-      // pathTo('dashboard_admin');
-      header("Location: dashboard_admin.php");
+  //   if ($stmt->rowCount() > 0) {
+  //     $_SESSION['admin_status'] = 'valid';
+  //     $_SESSION['admin_username'] = $rows->admin_username;
+  //     pathTo('dashboard_admin');
       
-    } else {
-        echo '
-       <div class="container mt-5 d-flex justify-content-center">
-         <div class="alert alert-danger text-center w-25 mt-2">Invalid Credential</div>
-       </div>
-       '; 
-    }
-
-  }
+  //   } else {
+  //       echo '
+  //      <div class="container mt-5 d-flex justify-content-center">
+  //        <div class="alert alert-danger text-center w-25 mt-2">Invalid Credential</div>
+  //      </div>
+  //      '; 
+  //   }
+  // }
  
 ?>
 
