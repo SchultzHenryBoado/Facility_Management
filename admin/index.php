@@ -19,10 +19,8 @@
   }
 
   if (isset($_POST['login'])) {
-    // $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    // $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $username = filter_var($_POST['username'], FILTER_SANITIZE_SPECIAL_CHARS);
-    $password = filter_var($_POST['password'], FILTER_SANITIZE_SPECIAL_CHARS);
+    $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
     $sql = "SELECT * FROM admin_accounts WHERE admin_username=? AND admin_password=?";
     $stmt = $con->prepare($sql);
