@@ -15,7 +15,8 @@
   }
 
   if ($_SESSION['admin_status'] == 'valid') {
-    pathTo('dashboard_admin');
+    // pathTo('dashboard_admin');
+    header("Location: dashboard_admin.php");
   }
 
   if (isset($_POST['login'])) {
@@ -30,8 +31,9 @@
     if ($count = $stmt->rowCount() > 0) {
       $_SESSION['admin_status'] = 'valid';
       $_SESSION['admin_username'] = $rows->admin_username;
-      pathTo('dashboard_admin');
-
+      // pathTo('dashboard_admin');
+      header("Location: dashboard_admin.php");
+      
     } else {
         echo '
        <div class="container mt-5 d-flex justify-content-center">
