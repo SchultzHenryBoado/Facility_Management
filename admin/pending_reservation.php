@@ -137,7 +137,10 @@
                   <input type="hidden" name="accept_id" value="<?php echo $rowReservations->id?>">
                   <button type="button" class="btn btn-success fw-bold" data-bs-toggle="modal"
                     data-bs-target="#acceptModal-<?php echo $rowReservations->id ?>"
-                    value="<?php echo $rowReservations->id ?>">ACCEPT</button>
+                    value="<?php echo $rowReservations->id ?>">
+                    <i class="fa-solid fa-thumbs-up"></i>
+                  </button>
+
                   <div class="modal fade" id="acceptModal-<?php echo $rowReservations->id ?>" tabindex="-1">
                     <div class="modal-dialog modal-dialog-centered">
                       <div class="modal-content">
@@ -161,7 +164,7 @@
                   <button type="button" class="btn btn-danger fw-bold" data-bs-toggle="modal"
                     data-bs-target="#rejectModal-<?php echo $rowReservations->id ?>"
                     value="<?php echo $rowReservations->id ?>">
-                    REJECT
+                    <i class="fa-solid fa-thumbs-down"></i>
                   </button>
                   <div class="modal fade" id="rejectModal-<?php echo $rowReservations->id ?>" tabindex="-1">
                     <div class="modal-dialog modal-dialog-centered">

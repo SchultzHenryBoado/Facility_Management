@@ -120,7 +120,25 @@
                 <td><?php echo date("h:i A", strtotime($rowReservations->time_to)) ?></td>
                 <td><?php echo $rowReservations->created_by ?></td>
                 <td><?php echo $rowReservations->statuses ?></td>
-                <td><?php echo $rowReservations->cancel_reasons ?></td>
+                <td>
+                  <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                    data-bs-target="#rejectModal-<?php echo $rowReservations->id ?>">
+                    <i class="fa-solid fa-eye"></i>
+                  </button>
+
+                  <div class="modal fade" id="rejectModal-<?php echo $rowReservations->id ?>" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <p class="modal-title fs-5 fw-bold">Reasons for Rejection</p>
+                        </div>
+                        <div class="modal-body">
+                          <p class="fs-5"><?php echo $rowReservations->cancel_reasons ?></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
               </tr>
               <?php } ?>
             </tbody>

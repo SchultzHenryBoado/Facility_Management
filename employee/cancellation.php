@@ -131,7 +131,28 @@
             <td><?php echo date("h:i A" , strtotime($rowReserveCancel->time_from))?></td>
             <td><?php echo date("h:i A", strtotime($rowReserveCancel->time_to)) ?></td>
             <td><?php echo $rowReserveCancel->statuses ?></td>
-            <td><?php echo $rowReserveCancel->cancel_reasons ?></td>
+            <td>
+              <button type="button" class="btn btn-danger fw-bold" data-bs-toggle="modal"
+                data-bs-target="#reasonModal-<?php echo $rowReserveCancel->id ?>">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+
+              <div class="modal fade" id="reasonModal-<?php echo $rowReserveCancel->id ?>" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <p class="fs-5 fw-bold m-0">Reason for rejection</p>
+                    </div>
+                    <div class="modal-body">
+                      <p class="fs-5 text-break"><?php echo $rowReserveCancel->cancel_reasons ?></p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary fw-bold" data-bs-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
             <td>
               <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                 data-bs-target="#editModal-<?php echo $rowReserveCancel->id ?>">
