@@ -145,7 +145,7 @@
                     <div class="modal-dialog modal-dialog-centered">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h1 class="text-center">Are you sure?</h1>
+                          <p class="modal-title fs-3 fw-bold">Are you sure?</p>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
@@ -170,7 +170,7 @@
                     <div class="modal-dialog modal-dialog-centered">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h1 class="fs-5">Reason for rejection</h1>
+                          <p class="modal-title fs-5 fw-bold">Reason for rejection</p>
                         </div>
                         <div class="modal-body">
                           <textarea name="reject_reasons" class="form-control w-100" placeholder="Write a reasons..."
