@@ -69,7 +69,7 @@
         <div class="card border-0 shadow rounded-3 my-5">
           <div class="card-body p-4 p-sm-5">
             <h5 class="card-title text-center mb-5 fw-normal fs-2">Facility Management System</h5>
-            <form action="./index.php" method="post" class="needs-validation" novalidate>
+            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" class="needs-validation" novalidate>
               <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="floatingInput" placeholder="Username" name="username"
                   required>
