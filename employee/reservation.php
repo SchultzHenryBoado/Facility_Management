@@ -274,8 +274,10 @@
 
               <!-- EDIT -->
               <td>
-                <button class="btn btn-success fw-bold" data-bs-toggle="modal"
-                  data-bs-target="#modalEdit-<?php echo $rowReserve->id ?>">EDIT</button>
+                <button class="btn btn-warning fw-bold" data-bs-toggle="modal"
+                  data-bs-target="#modalEdit-<?php echo $rowReserve->id ?>">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
 
                 <form action="reservation.php" method="post" class="needs-validation" novalidate>
 
@@ -288,8 +290,8 @@
                   <div class="modal fade" id="modalEdit-<?php echo $rowReserve->id ?>" tabindex="-1">
                     <div class="modal-dialog modal-dialog-centered">
                       <div class="modal-content">
-                        <div class="modal-title">
-                          <p class="fs-3 my-3 text-center">Edit Reservations</p>
+                        <div class="modal-header">
+                          <p class="modal-title fs-5 fw-bold">Edit Reservations</p>
                         </div>
                         <div class="modal-body">
                           <input type="hidden" name="update_id" value="<?php echo $rowReserve->id ?>">
@@ -383,15 +385,17 @@
               <!-- DELETE -->
               <td>
                 <button class="btn btn-danger fw-bold" data-bs-toggle="modal"
-                  data-bs-target="#modalDelete-<?php echo $rowReserve->id ?>">DELETE</button>
+                  data-bs-target="#modalDelete-<?php echo $rowReserve->id ?>">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
 
                 <form action="./php/reservation_delete.php" method="post" id="deleteForm">
                   <input type="hidden" name="delete_id" value="<?php echo $rowReserve->id ?>">
                   <div class="modal fade" tabindex="-1" id="modalDelete-<?php echo $rowReserve->id ?>">
                     <div class="modal-dialog modal-dialog-centered">
                       <div class="modal-content">
-                        <div class="modal-title">
-                          <p class="fs-5 p-3 m-0">Are you sure you want to delete?</p>
+                        <div class="modal-header">
+                          <p class="modal-title fw-bold fs-5">Are you sure you want to delete?</p>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
