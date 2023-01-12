@@ -4,6 +4,10 @@
   // SESSION
   require './php/session.php';
 
+  function pathTo($destination) {
+    echo "<script>window.location.href = './$destination.php'</script>";
+  }
+
   $users_id = $_SESSION['users_id'];
   
   $sqlReservationCancel = "SELECT * FROM reservations WHERE users_id=? AND statuses='REJECT'";
@@ -29,7 +33,7 @@
     $stmtUpdate = $con->prepare($sqlUpdate);
     $stmtUpdate->execute([$updateRsvnNo, $updateRoomType, $updateDateFrom, $updateDateTo, $updateTimeFrom, $updateTimeTo, $updateStatus, $updateId]);
 
-    path('reservation');
+    pathTo('reservation');
   }
 ?>
 
