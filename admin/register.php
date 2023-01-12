@@ -174,7 +174,7 @@
           <div class="col-12">
             <div class="mb-3" id="passwordGroup" class="form-group">
               <label for="password" class="form-label">Password:</label>
-              <input type="password" name="password" id="password" class="form-control" required />
+              <input type="password" name="password" id="password" class="form-control" value="abc123" required />
               <div class="invalid-feedback">
                 Please fill-up the password.
               </div>
@@ -185,7 +185,6 @@
             <div class="mb-3">
               <label for="status" class="form-label">Status:</label>
               <select name="status" id="status" class="form-select" required>
-                <option disabled selected value>-- Select Status --</option>
                 <option value="ACTIVE">ACTIVE</option>
                 <option value="INACTIVE">INACTIVE</option>
               </select>
