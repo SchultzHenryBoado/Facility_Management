@@ -1,5 +1,5 @@
 <?php 
-  require_once $_SERVER["DOCUMENT_ROOT"] . "/facility_management/database/connection.php";
+  require_once "../database/connection.php";
   require './php/session.php';
 
   $users_id = $_SESSION['users_id'];
