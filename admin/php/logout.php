@@ -2,7 +2,7 @@
   session_start();
   
   function pathTo($destination) {
-    echo "<script>window.location.href = '/facility_management/admin/$destination.php'</script>";
+    echo "<script>window.location.href = '../$destination.php'</script>";
   }
   
   $_SESSION['admin_status'] = 'invalid';

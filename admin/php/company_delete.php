@@ -1,6 +1,6 @@
 <?php
-  include_once '../database/connection.php';
-
+  include_once "../../database/connection.php";
+  
   // path
   function pathTo($destination) {
     echo "<script>window.location.href = '/facility_management/admin/$destination.php'</script>";

@@ -1,6 +1,6 @@
 <?php
   // DATABASE
-  include_once '../database/connection.php';
+  include_once "../../database/connection.php";
 
   // PATH
   function pathTo($destination) {
