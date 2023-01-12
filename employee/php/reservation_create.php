@@ -1,6 +1,6 @@
 <?php 
   // DATABASE 
-  require_once $_SERVER['DOCUMENT_ROOT'] . './facility_management/database/connection.php';
+  require_once '../database/connection.php';
   // SESSION
   require './session.php';
 

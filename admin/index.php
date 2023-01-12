@@ -1,12 +1,12 @@
 <?php 
 
-  include_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php'; 
+  include_once "../database/connection.php"; 
 
   session_start();
 
   // path
   function pathTo($destination) {
-    echo "<script>window.location.href = '/facility_management/admin/$destination.php' </script>";
+    echo "<script>window.location.href = '../admin/$destination.php' </script>";
   }
 
   if ($_SESSION['admin_status'] == 'invalid' || empty($_SESSION['admin_status'])) {

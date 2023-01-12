@@ -1,9 +1,9 @@
 <?php
-  include_once $_SERVER["DOCUMENT_ROOT"] . "/facility_management/database/connection.php";
+  include_once "../database/connection.php";
   include_once './php/session.php';
   // path
   function path($destination) {
-    echo "<script>window.location.href = '/facility_management/admin/$destination.php'</script>";
+    echo "<script>window.location.href = '../admin/$destination.php'</script>";
   }
 
   if (isset($_POST['change_password'])) {

@@ -1,6 +1,6 @@
 <?php 
   // DATABASE
-  include_once $_SERVER['DOCUMENT_ROOT'] . '/facility_management/database/connection.php';
+  include_once '../database/connection.php';
   // SESSION
   include_once './php/session.php';
 
