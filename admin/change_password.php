@@ -15,8 +15,6 @@
     $rowPass = $stmtPass->fetch();
 
     if ($oldPassword == $rowPass->admin_password) {
-      // $newPassword = mysqli_real_escape_string($con, $_POST['new_password']);
-      // $confirmPassword = mysqli_real_escape_string($con, $_POST['confirm_password']);
       $newPassword = filter_input(INPUT_POST, 'new_password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
       $confirmPassword = filter_input(INPUT_POST, 'confirm_password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
