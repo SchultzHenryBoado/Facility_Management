@@ -9,7 +9,6 @@
   $stmt = $con->prepare($sqlReadReservations);
   $stmt->execute();
 
-
 ?>
 
 <!DOCTYPE html>
@@ -129,7 +128,7 @@
                   <button type="button" class="btn btn-danger fw-bold" data-bs-toggle="modal"
                     data-bs-target="#rejectModal-<?php echo $rowReservations->id ?>"
                     value="<?php echo $rowReservations->id ?>">
-                    REJECT
+                      <i class="fa-solid fa-thumbs-down"></i>
                   </button>
                   <div class="modal fade" id="rejectModal-<?php echo $rowReservations->id ?>" tabindex="-1">
                     <div class="modal-dialog modal-dialog-centered">

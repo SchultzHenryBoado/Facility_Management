@@ -2,6 +2,10 @@
   include_once '../database/connection.php';
   include_once './php/session.php';
 
+  function path($destination) {
+    echo "<script>window.location.href = './$destination.php'</script>";
+  }
+
   // FACILITIES
   $sqlFacilities = "SELECT * FROM facilities";
   $stmtFacilities = $con->prepare($sqlFacilities);
@@ -17,7 +21,7 @@
     $stmtUpdateFacilities = $con->prepare($sqlUpdate);
     $stmtUpdateFacilities->execute([$updateFacilityCode, $updateFacilityName, $updateId]);
 
-    pathTo('facility_type');  
+    path('facility_type');  
   }
 
 ?>

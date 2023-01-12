@@ -2,6 +2,10 @@
   include_once '../database/connection.php';
   include_once './php/session.php';
 
+  function path($destination) {
+    echo "<script>window.location.href = './$destination.php'</script>";
+  }
+
   // FLOOR DATABASE
   $sqlFloor = "SELECT * FROM floors ORDER BY floor_number ASC";
   $stmtFloor = $con->prepare($sqlFloor);
@@ -17,7 +21,7 @@
     $stmtUpdateFloorCode = $con->prepare($sqlUpdate);
     $stmtUpdateFloorCode->execute([$updateFloorCode, $updateFloorName, $updateId]);
 
-    pathTo('floor_master');
+    path('floor_master');
   }
   
 ?>

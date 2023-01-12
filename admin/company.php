@@ -5,7 +5,10 @@
   $sqlCompany = "SELECT * FROM companies";
   $stmt = $con->prepare($sqlCompany);
   $stmt->execute();
-  
+
+  function path($destination) {
+    echo "<script>window.location.href = './$destination.php'</script>";
+  }
 
   // UPDATE
   if (isset($_POST['update_company'])) {
@@ -17,7 +20,7 @@
     $stmt = $con->prepare($sqlUpdateCompany);
     $stmt->execute([$updateCode, $updateCompany, $updateId]);
 
-    pathTo('company');
+    path('company');
   }
 ?>
 

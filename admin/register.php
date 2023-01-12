@@ -2,6 +2,10 @@
   // DATABASE
   include_once '../database/connection.php';
   include_once './php/session.php';
+
+  function path($destination) {
+    echo "<script>window.location.href = './$destination.php'</script>";
+  }
   
   // USERS
   $sqlUsers = "SELECT * FROM users_accounts";
@@ -27,7 +31,7 @@
     $stmtUpdates = $con->prepare($sqlUpdateUsers);
     $stmtUpdates->execute([$updateLastname, $updateFirstname, $updateCompany, $updateEmail, $updatePassword, $updateStatus, $updateId]);
 
-    pathTo('register');
+    path('register');
   }
 ?>
 
@@ -311,7 +315,6 @@
                               <div class="mb-3">
                                 <label for="status" class="form-label">Status</label>
                                 <select name="update_status" id="status" class="form-select" required>
-                                  <option disabled selected value>-- Select Status --</option>
                                   <option value="ACTIVE">ACTIVE</option>
                                   <option value="INACTIVE">INACTIVE</option>
                                 </select>
