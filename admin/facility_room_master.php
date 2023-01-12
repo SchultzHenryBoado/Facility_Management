@@ -199,7 +199,6 @@
             <div class="mb-3" class="form-group">
               <label for="status" class="form-label">Status:</label>
               <select name="status" id="status" class="form-select" required>
-                <option disabled selected value>-- Status --</option>
                 <option value="ACTIVE">ACTIVE</option>
                 <option value="INACTIVE">INACTIVE</option>
               </select>
@@ -322,7 +321,6 @@
                               <div class="mb-3">
                                 <label for="status" class="form-label">Status</label>
                                 <select name="update_status" id="status" class="form-select" required>
-                                  <option disabled selected value>-- Status --</option>
                                   <option value="ACTIVE">ACTIVE</option>
                                   <option value="INACTIVE">INACTIVE</option>
                                 </select>

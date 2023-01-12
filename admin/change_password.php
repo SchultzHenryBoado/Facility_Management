@@ -3,13 +3,13 @@
   include_once './php/session.php';
   // path
   function path($destination) {
-    echo "<script>window.location.href = '../admin/$destination.php'</script>";
+    echo "<script>window.location.href = './$destination.php'</script>";
   }
 
   if (isset($_POST['change_password'])) {
     $oldPassword = filter_input(INPUT_POST, 'old_password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    $sqlPassword = "SELECT * FROM admin_accounts";
+    $sqlPassword = "SELECT * FROM admin_accounts WHERE admin_password=?";
     $stmtPass = $con->prepare($sqlPassword);
     $stmtPass->execute([$oldPassword]);
     $rowPass = $stmtPass->fetch();
