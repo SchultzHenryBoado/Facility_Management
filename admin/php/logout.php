@@ -10,4 +10,5 @@
   unset($_SESSION['admin_username']);
 
   pathTo('index');
+  
 ?>
