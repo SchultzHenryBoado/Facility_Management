@@ -3,7 +3,7 @@
 
   // path
   function path($destination) {
-    echo "<script>window.location.href = '/facility_management/employee/$destination.php'</script>";
+    echo "<script>window.location.href = '../$destination.php'</script>";
   }
 
   if ($_SESSION['users_status'] == 'invalid' || empty($_SESSION['users_status'])) {

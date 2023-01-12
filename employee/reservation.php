@@ -7,6 +7,11 @@
   // CURRENT DATE
   $date = date('m/d/Y');
 
+   // path
+   function pathTo($destination) {
+    echo "<script>window.location.href = './$destination.php'</script>";
+  }
+
   // USERS SESSION
   $users_id = $_SESSION['users_id'];
   $sqlReadUsers = "SELECT * FROM users_accounts WHERE id=?";
@@ -38,7 +43,7 @@
     $stmtUpdate = $con->prepare($sqlUpdate);
     $stmtUpdate->execute([$updateRsvnNo, $updateRoomType, $updateDateFrom, $updateDateTo, $updateTimeFrom, $updateTimeTo, $updateStatus, $updateId]);
 
-    path('reservation');
+    pathTo('reservation');
   }
 
 
