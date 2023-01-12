@@ -8,7 +8,7 @@
 
   session_start();
 
-  if (empty($_SESSION['users_status'])) {
+  if ($_SESSION['users_status'] == 'invalid' || empty($_SESSION['users_status'])) {
     // default status
     $_SESSION['users_status'] = 'invalid';
   }
@@ -35,6 +35,7 @@
       $_SESSION['users_id'] = $rowLogin->id;
       $_SESSION['users_status'] = 'valid';
       path('schedules');
+
     } else {
       echo '
         <div class="container mt-5 d-flex justify-content-center">
