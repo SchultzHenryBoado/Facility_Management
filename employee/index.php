@@ -1,50 +1,51 @@
-<?php
-  include_once "../database/connection.php";
+<!-- <?php
+      include_once "../database/connection.php";
 
-  // path
-  function path($destination) {
-    echo "<script>window.location.href = './$destination.php'</script>";
-  }
-
-  session_start();
-
-  if ($_SESSION['users_status'] == 'invalid' || empty($_SESSION['users_status'])) {
-    // default status
-    $_SESSION['users_status'] = 'invalid';
-  }
-
-  if ($_SESSION['users_status'] == 'valid') {
-    path('schedules');
-  }
-
-  if (isset($_POST['login'])) {
-    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $password = md5(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
-
-    $sqlLogin = "SELECT * FROM users_accounts WHERE emails=? AND passwords=? ";
-    $stmtLogin = $con->prepare($sqlLogin);
-    $stmtLogin->execute([$email, $password]);
-    $rowLogin = $stmtLogin->fetch();
-
-    if ($stmtLogin->rowCount() > 0) {
-
-      if ($password == 'e99a18c428cb38d5f260853678922e03') {
-        path('change_pass');
+      // path
+      function path($destination)
+      {
+        echo "<script>window.location.href = './$destination.php'</script>";
       }
 
-      $_SESSION['users_id'] = $rowLogin->id;
-      $_SESSION['users_status'] = 'valid';
-      path('schedules');
+      session_start();
 
-    } else {
-      echo '
+
+      if ($_SESSION['users_status'] == 'invalid' || empty($_SESSION['users_status'])) {
+        // default status
+        $_SESSION['users_status'] = 'invalid';
+      }
+
+      if ($_SESSION['users_status'] == 'valid') {
+        path('schedules');
+      }
+
+      if (isset($_POST['login'])) {
+        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $password = md5(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+
+        $sqlLogin = "SELECT * FROM users_accounts WHERE emails=? AND passwords=? ";
+        $stmtLogin = $con->prepare($sqlLogin);
+        $stmtLogin->execute([$email, $password]);
+        $rowLogin = $stmtLogin->fetch();
+
+        if ($stmtLogin->rowCount() > 0) {
+
+          if ($password == 'e99a18c428cb38d5f260853678922e03') {
+            path('change_pass');
+          }
+
+          $_SESSION['users_id'] = $rowLogin->id;
+          $_SESSION['users_status'] = 'valid';
+          path('schedules');
+        } else {
+          echo '
         <div class="container mt-5 d-flex justify-content-center">
           <div class="alert alert-danger text-center w-25 mt-2">Invalid Credential</div>
         </div
       ';
-    }
-  }
-?>
+        }
+      }
+      ?> -->
 
 <!DOCTYPE html>
 <html lang="en">

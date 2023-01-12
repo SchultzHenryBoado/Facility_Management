@@ -1,3 +1,26 @@
+<?php
+include './database/connection.php';
+
+session_start();
+
+if (isset($_POST['login_users'])) {
+  $emails = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+  $passwords = md5(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+
+  $sqlLogin = "SELECT * FROM users_accounts WHERE emails=? AND passwords=?";
+  $stmtLogin = $con->prepare($sqlLogin);
+  $stmtLogin->execute([$emails, $passwords]);
+  $rowUsersAccounts = $stmtLogin->fetch();
+
+  if ($stmtLogin->rowCount() > 0) {
+    echo 'correct';
+  } else {
+    echo 'wrong';
+  }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,6 +41,7 @@
     integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
   </script>
   <script src="./carousel.js" defer></script>
+  <script src="./validation.js" defer></script>
 </head>
 
 <body>
@@ -71,7 +95,7 @@
             </div>
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
               <!-- FORMS -->
-              <form>
+              <form action="./index.php" method="post" class="needs-validation" novalidate>
                 <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
                   <p class="fs-4 fw-bold text-center">Facility Management System</p>
                 </div>
@@ -81,15 +105,22 @@
 
                 <!-- Email input -->
                 <div class="form-floating mb-4">
-                  <input type="email" id="form3Example3" class="form-control"
-                    placeholder="Enter a valid email address" />
+                  <input type="email" name="email" id="form3Example3" class="form-control"
+                    placeholder="Enter a valid email address" required />
                   <label class="form-label" for="form3Example3">Email address</label>
+                  <div class="invalid-feedback">
+                    Please input an email.
+                  </div>
                 </div>
 
                 <!-- Password input -->
                 <div class="form-floating mb-3">
-                  <input type="password" id="form3Example4" class="form-control" placeholder="Enter password" />
+                  <input type="password" name="password" id="form3Example4" class="form-control"
+                    placeholder="Enter password" required />
                   <label class="form-label" for="form3Example4">Password</label>
+                  <div class="invalid-feedback">
+                    Please input a password.
+                  </div>
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center">
@@ -104,7 +135,7 @@
                 </div>
 
                 <div class="text-center text-lg-start mt-4 pt-2">
-                  <button type="button" class="btn btn-primary btn-lg"
+                  <button type="submit" name="login_users" class="btn btn-primary btn-lg"
                     style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
                 </div>
 
@@ -119,23 +150,6 @@
             Copyright © 2020. All rights reserved.
           </div>
           <!-- Copyright -->
-
-          <!-- Right -->
-          <div>
-            <a href="#!" class="text-white me-4">
-              <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="#!" class="text-white me-4">
-              <i class="fab fa-twitter"></i>
-            </a>
-            <a href="#!" class="text-white me-4">
-              <i class="fab fa-google"></i>
-            </a>
-            <a href="#!" class="text-white">
-              <i class="fab fa-linkedin-in"></i>
-            </a>
-          </div>
-          <!-- Right -->
         </div>
       </section>
     </div>
