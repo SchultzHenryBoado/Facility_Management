@@ -14,7 +14,7 @@ function pathTo($destination)
 }
 
 // USERS SESSION
-$users_id = $_SESSION['users_id'];
+$users_id = $_SESSION['users_approval_id'];
 $sqlReadUsers = "SELECT * FROM users_accounts WHERE id=?";
 $stmtUsers = $con->prepare($sqlReadUsers);
 $stmtUsers->execute([$users_id]);

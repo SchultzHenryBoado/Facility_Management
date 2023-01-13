@@ -1,50 +1,45 @@
-<?php 
-  require_once "../database/connection.php";
-  require './php/session.php';
+<?php
+require_once "../database/connection.php";
+require './php/session.php';
 
-  function pathTo($destination) {
-    echo "<script>window.location.href = './$destination.php'</script>";
-  }
+$users_id = $_SESSION['users_approval_id'];
 
-  $users_id = $_SESSION['users_id'];
+if (isset($_POST['change_password'])) {
 
-  if (isset($_POST['change_password'])) {
+  $oldPassword = filter_input(INPUT_POST, 'old_password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    $oldPassword = md5(filter_input(INPUT_POST, 'old_password', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+  $sqlOldPassword = "SELECT * FROM users_accounts WHERE id=?";
+  $stmt = $con->prepare($sqlOldPassword);
+  $stmt->execute([$users_id]);
+  $rowPass = $stmt->fetch();
 
-    $sqlOldPassword = "SELECT * FROM users_accounts WHERE id=?";
-    $stmt = $con->prepare($sqlOldPassword);
-    $stmt->execute([$users_id]);
-    $rowPass = $stmt->fetch();
+  if ($oldPassword == $rowPass->passwords) {
+    $newPassword = filter_input(INPUT_POST, 'new_password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $confirmPassword = filter_input(INPUT_POST, 'confirm_password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    if ($oldPassword == $rowPass->passwords) {
-      $newPassword = md5(filter_input(INPUT_POST, 'new_password', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
-      $confirmPassword = md5(filter_input(INPUT_POST, 'confirm_password', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+    if ($newPassword == $confirmPassword) {
 
-      if ($newPassword == $confirmPassword) {
+      $sqlUpdatePassword = "UPDATE users_accounts SET passwords=? WHERE id=?";
+      $stmt = $con->prepare($sqlUpdatePassword);
+      $stmt->execute([$confirmPassword, $users_id]);
 
-        $sqlUpdatePassword = "UPDATE users_accounts SET passwords=? WHERE id=?";
-        $stmt = $con->prepare($sqlUpdatePassword);
-        $stmt->execute([$confirmPassword, $users_id]);
-
-        $_SESSION['users_status'] = 'invalid';
-        pathTo('index');
-      } else {
-        echo '
+      $_SESSION['users_approval_status'] = 'invalid';
+      header("Location: ../employee/index.php");
+    } else {
+      echo '
         <div class="container mt-5 d-flex justify-content-center">
           <div class="alert alert-danger text-center w-25 mt-2">Your confirm password is not same with the new password</div>
         </div
         ';
-      }
-
-    } else {
-      echo '
+    }
+  } else {
+    echo '
        <div class="container mt-5 d-flex justify-content-center">
           <div class="alert alert-danger text-center w-25 mt-2">Wrong old password</div>
         </div
       ';
-    }
   }
+}
 
 ?>
 

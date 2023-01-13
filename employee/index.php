@@ -31,7 +31,7 @@ if ($_SESSION['users_approval_status'] == 'valid') {
 
 if (isset($_POST['login'])) {
   $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-  $password = md5(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+  $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
   $sqlLogin = "SELECT * FROM users_accounts WHERE emails=? AND passwords=? ";
   $stmtLogin = $con->prepare($sqlLogin);
@@ -40,7 +40,7 @@ if (isset($_POST['login'])) {
 
   if ($stmtLogin->rowCount() > 0) {
 
-    if ($password == 'e99a18c428cb38d5f260853678922e03') {
+    if ($password == "abc123") {
       path('change_pass');
     }
 
@@ -50,9 +50,11 @@ if (isset($_POST['login'])) {
       header("Location: ../employee_approval/schedules.php");
     }
 
-    $_SESSION['users_id'] = $rowLogin->id;
-    $_SESSION['users_status'] = 'valid';
-    path('schedules');
+    if ($rowLogin->roles == "Users") {
+      $_SESSION['users_id'] = $rowLogin->id;
+      $_SESSION['users_status'] = 'valid';
+      path('schedules');
+    }
   } else {
     echo '
         <div class="container mt-5 d-flex justify-content-center">

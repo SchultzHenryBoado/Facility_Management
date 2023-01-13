@@ -25,7 +25,7 @@ if (isset($_POST['update_users'])) {
   $updateFirstname = filter_input(INPUT_POST, 'update_first_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
   $updateCompany = filter_input(INPUT_POST, 'update_company', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
   $updateEmail = filter_input(INPUT_POST, 'update_email', FILTER_SANITIZE_EMAIL);
-  $updatePassword = md5(filter_input(INPUT_POST, 'update_password', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+  $updatePassword = filter_input(INPUT_POST, 'update_password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
   $updateRoles = filter_input(INPUT_POST, 'update_users_role', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
   $updateStatus = filter_input(INPUT_POST, 'update_status', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
@@ -80,7 +80,7 @@ if (isset($_POST['update_users'])) {
             <a href="dashboard_admin.php" class="nav-link text-light">Dashboard</a>
           </li>
           <li class="nav-item text-center">
-            <a href="pending_reservation" class="nav-link text-light">Reservation</a>
+            <a href="pending_reservation.php" class="nav-link text-light">Reservation</a>
           </li>
           <li class="nav-item text-center">
             <a href="approved.php" class="nav-link text-light">Approved</a>
@@ -305,7 +305,6 @@ if (isset($_POST['update_users'])) {
                               <div class="mb-3">
                                 <label for="company" class="form-label">Company</label>
                                 <select name="update_company" id="company" class="form-select" required>
-                                  <option disabled selected value>-- Select Company --</option>
                                   <?php while ($rowCompanyName = $stmtCompany->fetch()) { ?>
                                   <option value="<?php echo $rowCompanyName->company_name ?>">
                                     <?php echo $rowCompanyName->company_name ?></option>
@@ -334,7 +333,7 @@ if (isset($_POST['update_users'])) {
                               <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
                                 <input type="password" name="update_password" id="password" class="form-control"
-                                  value="abc123" readonly required>
+                                  value="<?php echo $rowUsers->passwords ?>" required>
                                 <div class="invalid-feedback">
                                   Please fill-up the password.
                                 </div>
