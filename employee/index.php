@@ -19,9 +19,19 @@ if ($_SESSION['users_status'] == 'valid') {
   path('schedules');
 }
 
+// EMPLOYEE APPROVAL
+if ($_SESSION['users_approval_status'] == 'invalid' || empty($_SESSION['users_approval_status'])) {
+  // default status
+  $_SESSION['users_approval_status'] = 'invalid';
+}
+
+if ($_SESSION['users_approval_status'] == 'valid') {
+  header("Location: ../employee_approval/schedules.php");
+}
+
 if (isset($_POST['login'])) {
   $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-  $password = md5(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+  $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
   $sqlLogin = "SELECT * FROM users_accounts WHERE emails=? AND passwords=? ";
   $stmtLogin = $con->prepare($sqlLogin);
@@ -30,13 +40,21 @@ if (isset($_POST['login'])) {
 
   if ($stmtLogin->rowCount() > 0) {
 
-    if ($password == 'e99a18c428cb38d5f260853678922e03') {
+    if ($password == "abc123") {
       path('change_pass');
     }
 
-    $_SESSION['users_id'] = $rowLogin->id;
-    $_SESSION['users_status'] = 'valid';
-    path('schedules');
+    if ($rowLogin->roles == "Users Approval") {
+      $_SESSION['users_approval_status'] = 'valid';
+      $_SESSION['users_approval_id'] = $rowLogin->id;
+      header("Location: ../employee_approval/schedules.php");
+    }
+
+    if ($rowLogin->roles == "Users") {
+      $_SESSION['users_id'] = $rowLogin->id;
+      $_SESSION['users_status'] = 'valid';
+      path('schedules');
+    }
   } else {
     echo '
         <div class="container mt-5 d-flex justify-content-center">
@@ -88,12 +106,7 @@ if (isset($_POST['login'])) {
                 </div>
               </div>
 
-              <div class="mb-3">
-                <a href="./forgot_password.php"
-                  class="h6 text-dark text-decoration-none text-primary fst-italic float-end">Forgot
-                  Password</a>
-              </div>
-              <div class=" mt-5 d-grid">
+              <div class=" mb-3 d-grid">
                 <button class="btn btn-primary btn-login text-uppercase fw-bold mt-1" type="submit" name="login">Sign
                   in</button>
             </form>
@@ -104,4 +117,4 @@ if (isset($_POST['login'])) {
   </div>
 </body>
 
-</html> -->
+</html>

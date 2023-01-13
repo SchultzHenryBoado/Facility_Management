@@ -2,12 +2,7 @@
 require_once "../database/connection.php";
 require './php/session.php';
 
-function pathTo($destination)
-{
-  echo "<script>window.location.href = './$destination.php'</script>";
-}
-
-$users_id = $_SESSION['users_id'];
+$users_id = $_SESSION['users_approval_id'];
 
 if (isset($_POST['change_password'])) {
 
@@ -28,8 +23,8 @@ if (isset($_POST['change_password'])) {
       $stmt = $con->prepare($sqlUpdatePassword);
       $stmt->execute([$confirmPassword, $users_id]);
 
-      $_SESSION['users_status'] = 'invalid';
-      pathTo('index');
+      $_SESSION['users_approval_status'] = 'invalid';
+      header("Location: ../employee/index.php");
     } else {
       echo '
         <div class="container mt-5 d-flex justify-content-center">
