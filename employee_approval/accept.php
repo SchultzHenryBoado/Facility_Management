@@ -1,14 +1,14 @@
-<?php 
-  // DATABASE 
-  require_once '../database/connection.php';
-  // SESSION
-  require './php/session.php';
+<?php
+// DATABASE 
+require_once '../database/connection.php';
+// SESSION
+require './php/session.php';
 
-  $users_id = $_SESSION['users_id'];
-  
-  $sqlReadReservation = "SELECT * FROM reservations WHERE users_id=? AND statuses='APPROVED'";
-  $stmtReservation = $con->prepare($sqlReadReservation);
-  $stmtReservation->execute([$users_id]);
+$users_id = $_SESSION['users_approval_id'];
+
+$sqlReadReservation = "SELECT * FROM reservations WHERE users_id=? AND statuses='APPROVED'";
+$stmtReservation = $con->prepare($sqlReadReservation);
+$stmtReservation->execute([$users_id]);
 
 ?>
 
@@ -59,6 +59,10 @@
           <li class="nav-item text-center">
             <a href="cancellation.php" class="nav-link text-light">Cancellation</a>
           </li>
+          <li class="nav-item text-center">
+            <a href="./pending_reservation.php" class="nav-link text-light">Pending Reservation</a>
+          </li>
+
           <!-- USERS MENU -->
           <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
@@ -99,11 +103,11 @@
           </tr>
         </thead>
         <tbody class="table-group-divider">
-          <?php while($rowReserve = $stmtReservation->fetch()) { ?>
+          <?php while ($rowReserve = $stmtReservation->fetch()) { ?>
           <tr>
             <td><?php echo $rowReserve->room_type ?></td>
             <td><?php echo $rowReserve->date_from ?></td>
-            <td><?php echo date("h:i A" , strtotime($rowReserve->time_from))?></td>
+            <td><?php echo date("h:i A", strtotime($rowReserve->time_from)) ?></td>
             <td><?php echo date("h:i A", strtotime($rowReserve->time_to)) ?></td>
             <td><?php echo $rowReserve->statuses ?></td>
           </tr>

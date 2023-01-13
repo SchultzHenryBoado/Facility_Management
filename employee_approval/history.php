@@ -1,26 +1,22 @@
 <?php
-  // DATABASE 
-  require_once "../database/connection.php";
-  // SESSION
-  require './php/session.php';
+// DATABASE 
+require_once "../database/connection.php";
+// SESSION
+require './php/session.php';
 
-  // USERS
-  // $queryUsers = "SELECT * FROM users_accounts";
-  // $sqlUsers = mysqli_query($con, $queryUsers);
-  // $results = mysqli_fetch_assoc($sqlUsers);
-  // $company = $_SESSION['company_name'] = $results['company'];
-  $sqlUsers = "SELECT * FROM users_accounts";
-  $stmtUsers = $con->prepare($sqlUsers);
-  $stmtUsers->execute();
-  $results = $stmtUsers->fetch();
-  $company = $_SESSION['company_name'] = $results->company;
+// USERS
+$sqlUsers = "SELECT * FROM users_accounts";
+$stmtUsers = $con->prepare($sqlUsers);
+$stmtUsers->execute();
+$results = $stmtUsers->fetch();
+$company = $_SESSION['company_name'] = $results->company;
 
-  // RESERVATIONS
-  $usersId = $_SESSION['users_id'];
-  $sqlReservationHistory = "SELECT * FROM reservations WHERE users_id=? AND statuses='APPROVED' ORDER BY created_date DESC";
-  $stmtReservationHistory = $con->prepare($sqlReservationHistory);
-  $stmtReservationHistory->execute([$usersId]);
-  
+// RESERVATIONS
+$usersId = $_SESSION['users_approval_id'];
+$sqlReservationHistory = "SELECT * FROM reservations WHERE users_id=? AND statuses='APPROVED' ORDER BY created_date DESC";
+$stmtReservationHistory = $con->prepare($sqlReservationHistory);
+$stmtReservationHistory->execute([$usersId]);
+
 ?>
 
 <!DOCTYPE html>
@@ -70,6 +66,10 @@
           <li class="nav-item text-center">
             <a href="cancellation.php" class="nav-link text-light">Cancellation</a>
           </li>
+          <li class="nav-item text-center">
+            <a href="./pending_reservation.php" class="nav-link text-light">Pending Reservation</a>
+          </li>
+
           <!-- USERS MENU -->
           <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
@@ -113,15 +113,15 @@
           </tr>
         </thead>
         <tbody class="table-group-divider ">
-          <?php while($rowReservations = $stmtReservationHistory->fetch()) { ?>
+          <?php while ($rowReservations = $stmtReservationHistory->fetch()) { ?>
           <tr>
-            <td><?php echo date("F d, Y", strtotime($rowReservations->created_date))?></td>
+            <td><?php echo date("F d, Y", strtotime($rowReservations->created_date)) ?></td>
             <td><?php echo $rowReservations->created_by ?></td>
             <td><?php echo $rowReservations->room_type ?></td>
             <td><?php echo date("F d, Y", strtotime($rowReservations->date_from))  ?></td>
             <td><?php echo date("F d, Y", strtotime($rowReservations->date_to)) ?></td>
-            <td><?php echo date("h:i A", strtotime($rowReservations->time_from))?></td>
-            <td><?php echo date("h:i A", strtotime($rowReservations->time_to))?></td>
+            <td><?php echo date("h:i A", strtotime($rowReservations->time_from)) ?></td>
+            <td><?php echo date("h:i A", strtotime($rowReservations->time_to)) ?></td>
             <td><?php echo $rowReservations->statuses ?></td>
           </tr>
           <?php } ?>

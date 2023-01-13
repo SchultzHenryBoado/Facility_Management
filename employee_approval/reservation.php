@@ -103,6 +103,10 @@ if (isset($_POST['update_reservation'])) {
           <li class="nav-item text-center">
             <a href="cancellation.php" class="nav-link text-light">Cancellation</a>
           </li>
+          <li class="nav-item text-center">
+            <a href="./pending_reservation.php" class="nav-link text-light">Pending Reservation</a>
+          </li>
+
           <!-- USERS MENU -->
           <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">

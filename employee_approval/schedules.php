@@ -27,7 +27,7 @@ $stmtReservation->execute();
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SCHEDULES APPROVAL</title>
+  <title>SCHEDULES</title>
 
   <!-- CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -67,6 +67,10 @@ $stmtReservation->execute();
           <li class="nav-item text-center">
             <a href="cancellation.php" class="nav-link text-light">Cancellation</a>
           </li>
+          <li class="nav-item text-center">
+            <a href="./pending_reservation.php" class="nav-link text-light">Pending Reservation</a>
+          </li>
+
           <!-- USERS MENU -->
           <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
