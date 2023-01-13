@@ -88,12 +88,7 @@ if (isset($_POST['login'])) {
                 </div>
               </div>
 
-              <div class="mb-3">
-                <a href="./forgot_password.php"
-                  class="h6 text-dark text-decoration-none text-primary fst-italic float-end">Forgot
-                  Password</a>
-              </div>
-              <div class=" mt-5 d-grid">
+              <div class=" mb-3 d-grid">
                 <button class="btn btn-primary btn-login text-uppercase fw-bold mt-1" type="submit" name="login">Sign
                   in</button>
             </form>
@@ -104,4 +99,4 @@ if (isset($_POST['login'])) {
   </div>
 </body>
 
-</html> -->
+</html>
