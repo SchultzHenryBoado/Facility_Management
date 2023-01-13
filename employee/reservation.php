@@ -1,50 +1,51 @@
-<?php 
-  // DATABASE 
-  require_once '../database/connection.php';
-  // SESSION
-  require './php/session.php';
-  
-  // CURRENT DATE
-  $date = date('m/d/Y');
+<?php
+// DATABASE 
+require_once '../database/connection.php';
+// SESSION
+require './php/session.php';
 
-   // path
-   function pathTo($destination) {
-    echo "<script>window.location.href = './$destination.php'</script>";
-  }
+// CURRENT DATE
+$date = date('m/d/Y');
 
-  // USERS SESSION
-  $users_id = $_SESSION['users_id'];
-  $sqlReadUsers = "SELECT * FROM users_accounts WHERE id=?";
-  $stmtUsers = $con->prepare($sqlReadUsers);
-  $stmtUsers->execute([$users_id]);
-  $rowUsers = $stmtUsers->fetch();
+// path
+function pathTo($destination)
+{
+  echo "<script>window.location.href = './$destination.php'</script>";
+}
 
-  // FACILITIES
-  $sqlReadFacilities = "SELECT facility_name FROM facilities";
-  $stmtFacilities = $con->prepare($sqlReadFacilities);
-  $stmtFacilities->execute();
+// USERS SESSION
+$users_id = $_SESSION['users_id'];
+$sqlReadUsers = "SELECT * FROM users_accounts WHERE id=?";
+$stmtUsers = $con->prepare($sqlReadUsers);
+$stmtUsers->execute([$users_id]);
+$rowUsers = $stmtUsers->fetch();
 
-  // RESERVATIONS
-  $sqlReadReservations = "SELECT * FROM reservations WHERE users_id=? AND statuses='PENDING'";
-  $stmtReservations = $con->prepare($sqlReadReservations);
-  $stmtReservations->execute([$users_id]);
+// FACILITIES
+$sqlReadFacilities = "SELECT facility_name FROM facilities";
+$stmtFacilities = $con->prepare($sqlReadFacilities);
+$stmtFacilities->execute();
 
-  if (isset($_POST['update_reservation'])) {
-    $updateId = $_POST['update_id'];
-    $updateRsvnNo = filter_input(INPUT_POST, 'update_rsvn_no', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $updateRoomType = filter_input(INPUT_POST, 'update_room_type', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $updateDateFrom = filter_input(INPUT_POST, 'update_date_from', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $updateDateTo = filter_input(INPUT_POST, 'update_date_to', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $updateTimeFrom = filter_input(INPUT_POST, 'update_time_from', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $updateTimeTo = filter_input(INPUT_POST, 'update_time_to', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $updateStatus = filter_input(INPUT_POST, 'update_status', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+// RESERVATIONS
+$sqlReadReservations = "SELECT * FROM reservations WHERE users_id=? AND statuses='PENDING'";
+$stmtReservations = $con->prepare($sqlReadReservations);
+$stmtReservations->execute([$users_id]);
 
-    $sqlUpdate = "UPDATE reservations SET rsvn_no=?, room_type=?, date_from=?, date_to=?, time_from=?, time_to=?, statuses=? WHERE id=?";
-    $stmtUpdate = $con->prepare($sqlUpdate);
-    $stmtUpdate->execute([$updateRsvnNo, $updateRoomType, $updateDateFrom, $updateDateTo, $updateTimeFrom, $updateTimeTo, $updateStatus, $updateId]);
+if (isset($_POST['update_reservation'])) {
+  $updateId = $_POST['update_id'];
+  $updateRsvnNo = filter_input(INPUT_POST, 'update_rsvn_no', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+  $updateRoomType = filter_input(INPUT_POST, 'update_room_type', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+  $updateDateFrom = filter_input(INPUT_POST, 'update_date_from', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+  $updateDateTo = filter_input(INPUT_POST, 'update_date_to', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+  $updateTimeFrom = filter_input(INPUT_POST, 'update_time_from', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+  $updateTimeTo = filter_input(INPUT_POST, 'update_time_to', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+  $updateStatus = filter_input(INPUT_POST, 'update_status', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    pathTo('reservation');
-  }
+  $sqlUpdate = "UPDATE reservations SET rsvn_no=?, room_type=?, date_from=?, date_to=?, time_from=?, time_to=?, statuses=? WHERE id=?";
+  $stmtUpdate = $con->prepare($sqlUpdate);
+  $stmtUpdate->execute([$updateRsvnNo, $updateRoomType, $updateDateFrom, $updateDateTo, $updateTimeFrom, $updateTimeTo, $updateStatus, $updateId]);
+
+  pathTo('reservation');
+}
 
 
 ?>
@@ -146,7 +147,8 @@
           <div class="col-12 col-md-6 col-lg-6">
             <div class="mb-3">
               <label for="rsvn-no" class="form-label">RSVN No.</label>
-              <input type="text" name="rsvn_no" id="rsvn-no" class="form-control" required />
+              <input type="text" name="rsvn_no" id="rsvn-no" class="form-control" value="<?php echo $rowUsers->id ?>"
+                readonly required />
               <div class="invalid-feedback">
                 Please fill-up the rsvn no.
               </div>
@@ -168,7 +170,7 @@
               <label for="roomType" class="form-label">Room Type:</label>
               <select name="room_type" id="roomType" class="form-select" required>
                 <option disabled selected value>-- Room Type --</option>
-                <?php while($rowFacilities = $stmtFacilities->fetch()) { ?>
+                <?php while ($rowFacilities = $stmtFacilities->fetch()) { ?>
                 <option value="<?php echo $rowFacilities->facility_name ?>">
                   <?php echo $rowFacilities->facility_name ?></option>
                 <?php } ?>
@@ -265,7 +267,7 @@
             </tr>
           </thead>
           <tbody class="table-group-divider">
-            <?php while($rowReserve = $stmtReservations->fetch()) { ?>
+            <?php while ($rowReserve = $stmtReservations->fetch()) { ?>
             <tr>
               <td><?php echo $rowReserve->created_date ?></td>
               <td><?php echo $rowReserve->rsvn_no ?></td>
@@ -286,11 +288,11 @@
 
                 <form action="reservation.php" method="post" class="needs-validation" novalidate>
 
-                  <?php 
+                  <?php
                     $sql = "SELECT * FROM facilities";
                     $stmt = $con->prepare($sql);
                     $stmt->execute();
-                  ?>
+                    ?>
 
                   <div class="modal fade" id="modalEdit-<?php echo $rowReserve->id ?>" tabindex="-1">
                     <div class="modal-dialog modal-dialog-centered">
@@ -316,7 +318,7 @@
                                 <label for="updateRoomType" class="form-label">Update Room Type:</label>
                                 <select name="update_room_type" id="updateRoomType" class="form-select" required>
                                   <option disabled selected value>-- Room Type --</option>
-                                  <?php while($row = $stmt->fetch()) { ?>
+                                  <?php while ($row = $stmt->fetch()) { ?>
                                   <option value="<?php echo $row->facility_name ?>">
                                     <?php echo $row->facility_name ?></option>
                                   <?php } ?>
