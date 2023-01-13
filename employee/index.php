@@ -19,6 +19,16 @@ if ($_SESSION['users_status'] == 'valid') {
   path('schedules');
 }
 
+// EMPLOYEE APPROVAL
+if ($_SESSION['users_approval_status'] == 'invalid' || empty($_SESSION['users_approval_status'])) {
+  // default status
+  $_SESSION['users_approval_status'] = 'invalid';
+}
+
+if ($_SESSION['users_approval_status'] == 'valid') {
+  header("Location: ../employee_approval/schedules.php");
+}
+
 if (isset($_POST['login'])) {
   $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
   $password = md5(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
@@ -32,6 +42,12 @@ if (isset($_POST['login'])) {
 
     if ($password == 'e99a18c428cb38d5f260853678922e03') {
       path('change_pass');
+    }
+
+    if ($rowLogin->roles == "Users Approval") {
+      $_SESSION['users_approval_status'] = 'valid';
+      $_SESSION['users_approval_id'] = $rowLogin->id;
+      header("Location: ../employee_approval/schedules.php");
     }
 
     $_SESSION['users_id'] = $rowLogin->id;
