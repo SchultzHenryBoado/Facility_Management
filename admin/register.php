@@ -1,38 +1,40 @@
-<?php 
-  // DATABASE
-  include_once '../database/connection.php';
-  include_once './php/session.php';
+<?php
+// DATABASE
+include_once '../database/connection.php';
+include_once './php/session.php';
 
-  function path($destination) {
-    echo "<script>window.location.href = './$destination.php'</script>";
-  }
-  
-  // USERS
-  $sqlUsers = "SELECT * FROM users_accounts";
-  $stmtUsers = $con->prepare($sqlUsers);
-  $stmtUsers->execute();
+function path($destination)
+{
+  echo "<script>window.location.href = './$destination.php'</script>";
+}
 
-  // COMPANY
-  $sqlCompany = "SELECT company_name FROM companies";
-  $stmtCompany = $con->prepare($sqlCompany);
-  $stmtCompany->execute();
+// USERS
+$sqlUsers = "SELECT * FROM users_accounts";
+$stmtUsers = $con->prepare($sqlUsers);
+$stmtUsers->execute();
 
-  // UPDATE USERS
-  if (isset($_POST['update_users'])) {
-    $updateId = $_POST['update_id'];
-    $updateLastname = filter_input(INPUT_POST, 'update_last_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $updateFirstname = filter_input(INPUT_POST, 'update_first_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $updateCompany = filter_input(INPUT_POST, 'update_company', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $updateEmail = filter_input(INPUT_POST, 'update_email', FILTER_SANITIZE_EMAIL);
-    $updatePassword = md5(filter_input(INPUT_POST, 'update_password', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
-    $updateStatus = filter_input(INPUT_POST, 'update_status', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+// COMPANY
+$sqlCompany = "SELECT company_name FROM companies";
+$stmtCompany = $con->prepare($sqlCompany);
+$stmtCompany->execute();
 
-    $sqlUpdateUsers = "UPDATE users_accounts SET last_names=?, first_names=?, company=?, emails=?, passwords=?, statuses=? WHERE id=?";
-    $stmtUpdates = $con->prepare($sqlUpdateUsers);
-    $stmtUpdates->execute([$updateLastname, $updateFirstname, $updateCompany, $updateEmail, $updatePassword, $updateStatus, $updateId]);
+// UPDATE USERS
+if (isset($_POST['update_users'])) {
+  $updateId = $_POST['update_id'];
+  $updateLastname = filter_input(INPUT_POST, 'update_last_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+  $updateFirstname = filter_input(INPUT_POST, 'update_first_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+  $updateCompany = filter_input(INPUT_POST, 'update_company', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+  $updateEmail = filter_input(INPUT_POST, 'update_email', FILTER_SANITIZE_EMAIL);
+  $updatePassword = md5(filter_input(INPUT_POST, 'update_password', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+  $updateRoles = filter_input(INPUT_POST, 'update_users_role', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+  $updateStatus = filter_input(INPUT_POST, 'update_status', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    path('register');
-  }
+  $sqlUpdateUsers = "UPDATE users_accounts SET last_names=?, first_names=?, company=?, emails=?, passwords=?, roles=?, statuses=? WHERE id=?";
+  $stmtUpdates = $con->prepare($sqlUpdateUsers);
+  $stmtUpdates->execute([$updateLastname, $updateFirstname, $updateCompany, $updateEmail, $updatePassword, $updateRoles, $updateStatus, $updateId]);
+
+  path('register');
+}
 ?>
 
 <!DOCTYPE html>
@@ -154,7 +156,7 @@
               <label for="company" class="form-label">Company:</label>
               <select name="company" id="company" class="form-select" required>
                 <option disabled selected value>-- Select Company --</option>
-                <?php while($rowCompanyName = $stmtCompany->fetch()) { ?>
+                <?php while ($rowCompanyName = $stmtCompany->fetch()) { ?>
                 <option value="<?php echo $rowCompanyName->company_name ?>">
                   <?php echo $rowCompanyName->company_name ?></option>
                 <?php } ?>
@@ -178,7 +180,21 @@
           <div class="col-12">
             <div class="mb-3" id="passwordGroup" class="form-group">
               <label for="password" class="form-label">Password:</label>
-              <input type="password" name="password" id="password" class="form-control" value="abc123" readonly required />
+              <input type="password" name="password" id="password" class="form-control" value="abc123" readonly
+                required />
+              <div class="invalid-feedback">
+                Please fill-up the password.
+              </div>
+            </div>
+          </div>
+          <!-- APPROVAL -->
+          <div class="col-12">
+            <div class="mb-3" id="passwordGroup" class="form-group">
+              <label for="usersRole" class="form-label">Approval:</label>
+              <select name="users_role" id="usersRole" class="form-select">
+                <option value="Users">Users</option>
+                <option value="Users Approval">Users Approval</option>
+              </select>
               <div class="invalid-feedback">
                 Please fill-up the password.
               </div>
@@ -219,18 +235,20 @@
               <th scope="col">Company:</th>
               <th scope="col">Company Email:</th>
               <th scope="col">Password:</th>
+              <th scope="col">Role:</th>
               <th scope="col">Status:</th>
               <th scope="col">Actions:</th>
             </tr>
           </thead>
           <tbody class="table-group-divider">
-            <?php while($rowUsers = $stmtUsers->fetch()) { ?>
+            <?php while ($rowUsers = $stmtUsers->fetch()) { ?>
             <tr>
               <td><?php echo $rowUsers->last_names ?></td>
               <td><?php echo $rowUsers->first_names ?></td>
               <td><?php echo $rowUsers->company ?></td>
               <td><?php echo $rowUsers->emails ?></td>
               <td><?php echo $rowUsers->passwords ?></td>
+              <td><?php echo $rowUsers->roles ?></td>
               <td><?php echo $rowUsers->statuses ?></td>
               <td>
                 <!-- UPDATE -->
@@ -240,12 +258,12 @@
                 </button>
 
                 <form action="register.php" method="post" class="needs-validation" novalidate>
-                  <?php 
+                  <?php
                     // COMPANY
                     $sqlCompany = "SELECT company_name FROM companies";
                     $stmtCompany = $con->prepare($sqlCompany);
                     $stmtCompany->execute();
-                  ?>
+                    ?>
                   <!-- Modal -->
                   <div class="modal fade" id="updateModal-<?php echo $rowUsers->id ?>" tabindex="-1">
                     <div class="modal-dialog modal-dialog-centered">
@@ -255,7 +273,10 @@
                         </div>
                         <div class="modal-body">
                           <div class="row">
+                            <!-- ID -->
                             <input type="hidden" name="update_id" value="<?php echo $rowUsers->id ?>">
+
+                            <!-- LAST NAME -->
                             <div class="col-12">
                               <div class="mb-3">
                                 <label for="lastName" class="form-label">Lastname</label>
@@ -266,6 +287,8 @@
                                 </div>
                               </div>
                             </div>
+
+                            <!-- FIRST NAME -->
                             <div class="col-12">
                               <div class="mb-3">
                                 <label for="firstName" class="form-label">Firstname</label>
@@ -276,12 +299,14 @@
                                 </div>
                               </div>
                             </div>
+
+                            <!-- COMPANY -->
                             <div class="col-12">
                               <div class="mb-3">
                                 <label for="company" class="form-label">Company</label>
                                 <select name="update_company" id="company" class="form-select" required>
                                   <option disabled selected value>-- Select Company --</option>
-                                  <?php while($rowCompanyName = $stmtCompany->fetch()) { ?>
+                                  <?php while ($rowCompanyName = $stmtCompany->fetch()) { ?>
                                   <option value="<?php echo $rowCompanyName->company_name ?>">
                                     <?php echo $rowCompanyName->company_name ?></option>
                                   <?php } ?>
@@ -291,6 +316,8 @@
                                 </div>
                               </div>
                             </div>
+
+                            <!-- EMAILS -->
                             <div class="col-12">
                               <div class="mb-3">
                                 <label for="email" class="form-label">Company Email</label>
@@ -301,16 +328,34 @@
                                 </div>
                               </div>
                             </div>
+
+                            <!-- PASSWORD -->
                             <div class="col-12">
                               <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
                                 <input type="password" name="update_password" id="password" class="form-control"
-                                  value="<?php echo $rowUsers->password ?>" required>
+                                  value="abc123" readonly required>
                                 <div class="invalid-feedback">
                                   Please fill-up the password.
                                 </div>
                               </div>
                             </div>
+
+                            <!-- APPROVAL -->
+                            <div class="col-12">
+                              <div class="mb-3" id="passwordGroup" class="form-group">
+                                <label for="role" class="form-label">Approval:</label>
+                                <select name="update_users_role" id="role" class="form-select">
+                                  <option value="Users">Users</option>
+                                  <option value="Users Approval">Users Approval</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                  Please fill-up the password.
+                                </div>
+                              </div>
+                            </div>
+
+                            <!-- STATUS -->
                             <div class="col-12">
                               <div class="mb-3">
                                 <label for="status" class="form-label">Status</label>
