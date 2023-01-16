@@ -1,23 +1,23 @@
 <?php
-  // DATABASE 
-  require_once '../database/connection.php';
-  // SESSION
-  require './php/session.php';
+// DATABASE 
+require_once '../database/connection.php';
+// SESSION
+require './php/session.php';
 
-  $date = date('m/d/Y');
+$date = date('m/d/Y');
 
-  // USERS
-  $sqlUsers = "SELECT * FROM users_accounts";
-  $stmtUsers = $con->prepare($sqlUsers);
-  $stmtUsers->execute();
-  $results = $stmtUsers->fetch();
-  $company = $_SESSION['company_name'] = $results->company;
+// USERS
+$sqlUsers = "SELECT * FROM users_accounts";
+$stmtUsers = $con->prepare($sqlUsers);
+$stmtUsers->execute();
+$results = $stmtUsers->fetch();
+$company = $_SESSION['company_name'] = $results->company;
 
-  // RESERVATIONS
-  $sqlReservation = "SELECT * FROM reservations WHERE statuses = 'APPROVED' AND date_from = CURRENT_DATE() ORDER BY time_from ASC";
-  $stmtReservation = $con->prepare($sqlReservation);
-  $stmtReservation->execute();
-  
+// RESERVATIONS
+$sqlReservation = "SELECT * FROM reservations WHERE statuses = 'APPROVED' AND date_from = CURRENT_DATE() ORDER BY time_from ASC";
+$stmtReservation = $con->prepare($sqlReservation);
+$stmtReservation->execute();
+
 ?>
 
 <!DOCTYPE html>
@@ -97,7 +97,7 @@
     <div class="container bg-primary shadow p-3 mb-5 bg-body rounded">
       <p class="h1 text-center mb-3">Schedules Today</p>
       <table class="table table-striped table-hover">
-        <thead>
+        <thead class="bg-primary text-white">
           <tr>
             <th scope="col">Room No.</th>
             <th scope="col">Room Type</th>
@@ -107,13 +107,13 @@
             <th scope="col">Company</th>
           </tr>
         </thead>
-        <tbody class="table-group-divider ">
-          <?php while($rowReservations = $stmtReservation->fetch()) { ?>
+        <tbody>
+          <?php while ($rowReservations = $stmtReservation->fetch()) { ?>
           <tr>
             <td><?php echo $rowReservations->rsvn_no ?></td>
             <td><?php echo $rowReservations->room_type ?></td>
-            <td><?php echo date("h:i A", strtotime($rowReservations->time_from))?></td>
-            <td><?php echo date("h:i A", strtotime($rowReservations->time_to))?></td>
+            <td><?php echo date("h:i A", strtotime($rowReservations->time_from)) ?></td>
+            <td><?php echo date("h:i A", strtotime($rowReservations->time_to)) ?></td>
             <td><?php echo $rowReservations->created_by ?></td>
             <td><?php echo $company ?></td>
           </tr>

@@ -1,36 +1,36 @@
-<?php 
-  // DATABASE
-  include_once "../database/connection.php";
-  // SESSION
-  include_once ('./php/session.php');
+<?php
+// DATABASE
+include_once "../database/connection.php";
+// SESSION
+include_once('./php/session.php');
 
-  // USERS ACCOUNTS QUERY
-  $sqlCompanyUsers = "SELECT * FROM users_accounts";
-  $stmt = $con->prepare($sqlCompanyUsers);
-  $stmt->execute();
-  $results = $stmt->fetch();
-  $company = $_SESSION['company_name'] = $results->company;
+// USERS ACCOUNTS QUERY
+$sqlCompanyUsers = "SELECT * FROM users_accounts";
+$stmt = $con->prepare($sqlCompanyUsers);
+$stmt->execute();
+$results = $stmt->fetch();
+$company = $_SESSION['company_name'] = $results->company;
 
-  // RESERVATION QUERY
-  $sqlReadReservations = "SELECT * FROM reservations WHERE statuses = 'APPROVED' AND date_from = CURRENT_DATE() ORDER BY time_from ASC ";
-  $stmt = $con->prepare($sqlReadReservations);
-  $stmt->execute();
+// RESERVATION QUERY
+$sqlReadReservations = "SELECT * FROM reservations WHERE statuses = 'APPROVED' AND date_from = CURRENT_DATE() ORDER BY time_from ASC ";
+$stmt = $con->prepare($sqlReadReservations);
+$stmt->execute();
 
-  // // TOTAL RESERVATION
-  $sqlTotalReservations = $con->query("SELECT statuses FROM reservations ORDER BY statuses"); 
-  $row = $sqlTotalReservations->rowCount();
+// // TOTAL RESERVATION
+$sqlTotalReservations = $con->query("SELECT statuses FROM reservations ORDER BY statuses");
+$row = $sqlTotalReservations->rowCount();
 
-  // // FOR CONFIRMATION
-  $sqlForConfirm = $con->query("SELECT statuses FROM reservations WHERE statuses = 'PENDING' ORDER BY statuses");
-  $rowForConfirm = $sqlForConfirm->rowCount();
+// // FOR CONFIRMATION
+$sqlForConfirm = $con->query("SELECT statuses FROM reservations WHERE statuses = 'PENDING' ORDER BY statuses");
+$rowForConfirm = $sqlForConfirm->rowCount();
 
-  // // TOTAL CONFIRMATION
-  $sqlTotalConfirm = $con->query("SELECT statuses FROM reservations WHERE statuses = 'APPROVED' ORDER BY statuses");
-  $rowConfirm = $sqlTotalConfirm->rowCount();
+// // TOTAL CONFIRMATION
+$sqlTotalConfirm = $con->query("SELECT statuses FROM reservations WHERE statuses = 'APPROVED' ORDER BY statuses");
+$rowConfirm = $sqlTotalConfirm->rowCount();
 
-  // // TOTAL CANCELLED
-  $sqlTotalCancel = $con->query("SELECT statuses FROM reservations WHERE statuses = 'REJECT' ORDER BY statuses");
-  $rowCancel = $sqlTotalCancel->rowCount();
+// // TOTAL CANCELLED
+$sqlTotalCancel = $con->query("SELECT statuses FROM reservations WHERE statuses = 'REJECT' ORDER BY statuses");
+$rowCancel = $sqlTotalCancel->rowCount();
 
 ?>
 
@@ -150,7 +150,7 @@
     <div class="container bg-primary shadow p-3 mb-5 bg-body rounded">
       <p class="h1 text-center mb-3">Schedules Today</p>
       <table class="table table-striped table-hover">
-        <thead>
+        <thead class="bg-primary text-white">
           <tr>
             <th scope="col">Room No.</th>
             <th scope="col">From:</th>
@@ -159,8 +159,8 @@
             <th scope="col">Company:</th>
           </tr>
         </thead>
-        <tbody class="table-group-divider">
-          <?php while($rowUsers = $stmt->fetch()) { ?>
+        <tbody>
+          <?php while ($rowUsers = $stmt->fetch()) { ?>
           <tr>
             <td><?php echo $rowUsers->rsvn_no ?></td>
             <td><?php echo date("h:i A", strtotime($rowUsers->time_from)) ?></td>

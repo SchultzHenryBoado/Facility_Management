@@ -1,42 +1,43 @@
-<?php 
-  include_once '../database/connection.php';
-  include_once './php/session.php';
+<?php
+include_once '../database/connection.php';
+include_once './php/session.php';
 
-  function path($destination) {
-    echo "<script>window.location.href = './$destination.php'</script>";
-  }
+function path($destination)
+{
+  echo "<script>window.location.href = './$destination.php'</script>";
+}
 
-  // FACILITY ROOM MASTER DATABASE
-  $sqlFacilityRoomMaster = "SELECT * FROM facility_room_masters";
-  $stmtFacilityRoomMaster = $con->prepare($sqlFacilityRoomMaster);
-  $stmtFacilityRoomMaster->execute(); 
+// FACILITY ROOM MASTER DATABASE
+$sqlFacilityRoomMaster = "SELECT * FROM facility_room_masters";
+$stmtFacilityRoomMaster = $con->prepare($sqlFacilityRoomMaster);
+$stmtFacilityRoomMaster->execute();
 
-  // FACILITIES DATABASE
-  $sqlFacilities = "SELECT facility_name FROM facilities";
-  $stmtFacilities = $con->prepare($sqlFacilities);
-  $stmtFacilities->execute();
+// FACILITIES DATABASE
+$sqlFacilities = "SELECT facility_name FROM facilities";
+$stmtFacilities = $con->prepare($sqlFacilities);
+$stmtFacilities->execute();
 
-  // FLOORS DATABASE
-  $sqlFloors = "SELECT floor_number FROM floors";
-  $stmtFloors = $con->prepare($sqlFloors);
-  $stmtFloors->execute();
+// FLOORS DATABASE
+$sqlFloors = "SELECT floor_number FROM floors";
+$stmtFloors = $con->prepare($sqlFloors);
+$stmtFloors->execute();
 
-  // UPDATE FACILITY ROOM MASTER
-  if (isset($_POST['update_facility'])) {
-    $updateId = $_POST['update_id'];
-    $updateFacilityType = filter_input(INPUT_POST, 'update_facility_type', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $updateFacilityNumber = filter_input(INPUT_POST, 'update_facility_number', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $updateDescription = filter_input(INPUT_POST, 'update_description', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $updateFloorLocation = filter_input(INPUT_POST, 'update_floor_location', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $updateMaxCapacity = filter_input(INPUT_POST, 'update_max_capacity', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $updateStatus = filter_input(INPUT_POST, 'update_status', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+// UPDATE FACILITY ROOM MASTER
+if (isset($_POST['update_facility'])) {
+  $updateId = $_POST['update_id'];
+  $updateFacilityType = filter_input(INPUT_POST, 'update_facility_type', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+  $updateFacilityNumber = filter_input(INPUT_POST, 'update_facility_number', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+  $updateDescription = filter_input(INPUT_POST, 'update_description', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+  $updateFloorLocation = filter_input(INPUT_POST, 'update_floor_location', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+  $updateMaxCapacity = filter_input(INPUT_POST, 'update_max_capacity', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+  $updateStatus = filter_input(INPUT_POST, 'update_status', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    $sqlUpdate = "UPDATE facility_room_masters SET facility_type=?, facility_number=?, descriptions=?, floor_location=?, max_capacity=?, statuses=? WHERE id=?";
-    $stmtUpdate = $con->prepare($sqlUpdate);
-    $stmtUpdate->execute([$updateFacilityType, $updateFacilityNumber, $updateDescription, $updateFloorLocation, $updateMaxCapacity, $updateStatus, $updateId]);
+  $sqlUpdate = "UPDATE facility_room_masters SET facility_type=?, facility_number=?, descriptions=?, floor_location=?, max_capacity=?, statuses=? WHERE id=?";
+  $stmtUpdate = $con->prepare($sqlUpdate);
+  $stmtUpdate->execute([$updateFacilityType, $updateFacilityNumber, $updateDescription, $updateFloorLocation, $updateMaxCapacity, $updateStatus, $updateId]);
 
-    path('facility_room_master');
-  }
+  path('facility_room_master');
+}
 
 
 ?>
@@ -138,7 +139,7 @@
               <label for="facilityType" class="form-label">Facility Type:</label>
               <select name="facility_type" id="facilityType" class="form-select" required>
                 <option disabled selected value>-- Facility Type --</option>
-                <?php while($rowFacilities = $stmtFacilities->fetch()) { ?>
+                <?php while ($rowFacilities = $stmtFacilities->fetch()) { ?>
                 <option value="<?php echo $rowFacilities->facility_name ?>">
                   <?php echo $rowFacilities->facility_name ?></option>
                 <?php } ?>
@@ -174,7 +175,7 @@
               <label for="floorLocation" class="form-label">Floor Location:</label>
               <select name="floor_location" id="floorLocation" class="form-select" required>
                 <option disabled selected value>-- Floor Location --</option>
-                <?php while($rowFloorLocation = $stmtFloors->fetch()) { ?>
+                <?php while ($rowFloorLocation = $stmtFloors->fetch()) { ?>
                 <option value="<?php echo $rowFloorLocation->floor_number ?>">
                   <?php echo $rowFloorLocation->floor_number ?></option>
                 <?php } ?>
@@ -223,7 +224,7 @@
     <div class="container shadow p-3 mb-5 bg-body-rounded">
       <div class="table-responsive">
         <table class="table table-hover table-striped">
-          <thead>
+          <thead class="bg-primary text-white">
             <tr>
               <th scope="col">Facility Type:</th>
               <th scope="col">Facility Number:</th>
@@ -231,11 +232,11 @@
               <th scope="col">Floor Location:</th>
               <th scope="col">Max Capacity:</th>
               <th scope="col">Status:</th>
-              <th scope="col" col="2">Actions:</th>
+              <th scope="col" colspan="2">Actions:</th>
             </tr>
           </thead>
-          <tbody class="table-group-divider">
-            <?php while($rowFacilityRoomMaster = $stmtFacilityRoomMaster->fetch()) { ?>
+          <tbody>
+            <?php while ($rowFacilityRoomMaster = $stmtFacilityRoomMaster->fetch()) { ?>
             <tr>
               <td><?php echo $rowFacilityRoomMaster->facility_type ?></td>
               <td><?php echo $rowFacilityRoomMaster->facility_number ?></td>
@@ -252,7 +253,7 @@
 
                 <form action="facility_room_master.php" method="post" class="needs-validation" novalidate>
                   <input type="hidden" name="update_id" value="<?php echo $rowFacilityRoomMaster->id ?>">
-                  <?php 
+                  <?php
                     // FACILITIES DATABASE
                     $sqlFacilities = "SELECT facility_name FROM facilities";
                     $stmtFacilities = $con->prepare($sqlFacilities);
@@ -277,7 +278,7 @@
                                 <label for="facilityType" class="form-label">Facility Type</label>
                                 <select name="update_facility_type" id="facilityType" class="form-select" required>
                                   <option disabled selected value>-- Facility Type --</option>
-                                  <?php while($rowFacilities = $stmtFacilities->fetch()) { ?>
+                                  <?php while ($rowFacilities = $stmtFacilities->fetch()) { ?>
                                   <option value="<?php echo $rowFacilities->facility_name ?>">
                                     <?php echo $rowFacilities->facility_name ?></option>
                                   <?php } ?>
@@ -303,7 +304,7 @@
                                 <label for="floorLocation" class="form-label">Floor Location</label>
                                 <select name="update_floor_location" id="floorLocation" class="form-select" required>
                                   <option disabled selected value>-- Floor Location --</option>
-                                  <?php while($rowFloorLocation = $stmtFloors->fetch()) { ?>
+                                  <?php while ($rowFloorLocation = $stmtFloors->fetch()) { ?>
                                   <option value="<?php echo $rowFloorLocation->floor_number ?>">
                                     <?php echo $rowFloorLocation->floor_number ?></option>
                                   <?php } ?>

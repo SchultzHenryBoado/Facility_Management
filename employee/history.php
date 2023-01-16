@@ -1,26 +1,26 @@
 <?php
-  // DATABASE 
-  require_once "../database/connection.php";
-  // SESSION
-  require './php/session.php';
+// DATABASE 
+require_once "../database/connection.php";
+// SESSION
+require './php/session.php';
 
-  // USERS
-  // $queryUsers = "SELECT * FROM users_accounts";
-  // $sqlUsers = mysqli_query($con, $queryUsers);
-  // $results = mysqli_fetch_assoc($sqlUsers);
-  // $company = $_SESSION['company_name'] = $results['company'];
-  $sqlUsers = "SELECT * FROM users_accounts";
-  $stmtUsers = $con->prepare($sqlUsers);
-  $stmtUsers->execute();
-  $results = $stmtUsers->fetch();
-  $company = $_SESSION['company_name'] = $results->company;
+// USERS
+// $queryUsers = "SELECT * FROM users_accounts";
+// $sqlUsers = mysqli_query($con, $queryUsers);
+// $results = mysqli_fetch_assoc($sqlUsers);
+// $company = $_SESSION['company_name'] = $results['company'];
+$sqlUsers = "SELECT * FROM users_accounts";
+$stmtUsers = $con->prepare($sqlUsers);
+$stmtUsers->execute();
+$results = $stmtUsers->fetch();
+$company = $_SESSION['company_name'] = $results->company;
 
-  // RESERVATIONS
-  $usersId = $_SESSION['users_id'];
-  $sqlReservationHistory = "SELECT * FROM reservations WHERE users_id=? AND statuses='APPROVED' ORDER BY created_date DESC";
-  $stmtReservationHistory = $con->prepare($sqlReservationHistory);
-  $stmtReservationHistory->execute([$usersId]);
-  
+// RESERVATIONS
+$usersId = $_SESSION['users_id'];
+$sqlReservationHistory = "SELECT * FROM reservations WHERE users_id=? AND statuses='APPROVED' ORDER BY created_date DESC";
+$stmtReservationHistory = $con->prepare($sqlReservationHistory);
+$stmtReservationHistory->execute([$usersId]);
+
 ?>
 
 <!DOCTYPE html>
@@ -100,7 +100,7 @@
     <div class="container bg-primary shadow p-3 mb-5 bg-body rounded">
       <p class="h1 text-center mb-3">History Logs</p>
       <table class="table table-striped table-hover">
-        <thead>
+        <thead class="bg-primary text-white">
           <tr>
             <th scope="col">Created Date:</th>
             <th scope="col">Created By:</th>
@@ -112,16 +112,16 @@
             <th scope="col">Status:</th>
           </tr>
         </thead>
-        <tbody class="table-group-divider ">
-          <?php while($rowReservations = $stmtReservationHistory->fetch()) { ?>
+        <tbody>
+          <?php while ($rowReservations = $stmtReservationHistory->fetch()) { ?>
           <tr>
-            <td><?php echo date("F d, Y", strtotime($rowReservations->created_date))?></td>
+            <td><?php echo date("F d, Y", strtotime($rowReservations->created_date)) ?></td>
             <td><?php echo $rowReservations->created_by ?></td>
             <td><?php echo $rowReservations->room_type ?></td>
             <td><?php echo date("F d, Y", strtotime($rowReservations->date_from))  ?></td>
             <td><?php echo date("F d, Y", strtotime($rowReservations->date_to)) ?></td>
-            <td><?php echo date("h:i A", strtotime($rowReservations->time_from))?></td>
-            <td><?php echo date("h:i A", strtotime($rowReservations->time_to))?></td>
+            <td><?php echo date("h:i A", strtotime($rowReservations->time_from)) ?></td>
+            <td><?php echo date("h:i A", strtotime($rowReservations->time_to)) ?></td>
             <td><?php echo $rowReservations->statuses ?></td>
           </tr>
           <?php } ?>

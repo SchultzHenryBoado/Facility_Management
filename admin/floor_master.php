@@ -1,29 +1,30 @@
-<?php 
-  include_once '../database/connection.php';
-  include_once './php/session.php';
+<?php
+include_once '../database/connection.php';
+include_once './php/session.php';
 
-  function path($destination) {
-    echo "<script>window.location.href = './$destination.php'</script>";
-  }
+function path($destination)
+{
+  echo "<script>window.location.href = './$destination.php'</script>";
+}
 
-  // FLOOR DATABASE
-  $sqlFloor = "SELECT * FROM floors ORDER BY floor_number ASC";
-  $stmtFloor = $con->prepare($sqlFloor);
-  $stmtFloor->execute();
+// FLOOR DATABASE
+$sqlFloor = "SELECT * FROM floors ORDER BY floor_number ASC";
+$stmtFloor = $con->prepare($sqlFloor);
+$stmtFloor->execute();
 
-  // UPDATE FLOOR
-  if (isset($_POST['update_floor_master'])) {
-    $updateId = $_POST['update_id'];
-    $updateFloorCode = strtoupper(filter_input(INPUT_POST, 'update_floor_code', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
-    $updateFloorName = filter_input(INPUT_POST, 'update_floor_number', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+// UPDATE FLOOR
+if (isset($_POST['update_floor_master'])) {
+  $updateId = $_POST['update_id'];
+  $updateFloorCode = strtoupper(filter_input(INPUT_POST, 'update_floor_code', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+  $updateFloorName = filter_input(INPUT_POST, 'update_floor_number', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    $sqlUpdate = "UPDATE floors SET floor_code=? , floor_number=? WHERE id=? ";
-    $stmtUpdateFloorCode = $con->prepare($sqlUpdate);
-    $stmtUpdateFloorCode->execute([$updateFloorCode, $updateFloorName, $updateId]);
+  $sqlUpdate = "UPDATE floors SET floor_code=? , floor_number=? WHERE id=? ";
+  $stmtUpdateFloorCode = $con->prepare($sqlUpdate);
+  $stmtUpdateFloorCode->execute([$updateFloorCode, $updateFloorName, $updateId]);
 
-    path('floor_master');
-  }
-  
+  path('floor_master');
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -154,15 +155,15 @@
     <div class="container shadow p-3 mb-5 bg-body-rounded">
       <div class="table-responsive">
         <table class="table table-hover table-striped">
-          <thead>
+          <thead class="bg-primary text-white">
             <tr>
               <th scope="col">Code:</th>
               <th scope="col">Floor Number:</th>
-              <th col="2">Actions:</th>
+              <th colspan="2">Actions:</th>
             </tr>
           </thead>
           <tbody>
-            <?php while($rowFloors = $stmtFloor->fetch()) { ?>
+            <?php while ($rowFloors = $stmtFloor->fetch()) { ?>
             <tr>
               <td><?php echo $rowFloors->floor_code ?></td>
               <td><?php echo $rowFloors->floor_number ?></td>

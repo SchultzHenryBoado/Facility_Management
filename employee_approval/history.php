@@ -100,7 +100,7 @@ $stmtReservationHistory->execute([$usersId]);
     <div class="container bg-primary shadow p-3 mb-5 bg-body rounded">
       <p class="h1 text-center mb-3">History Logs</p>
       <table class="table table-striped table-hover">
-        <thead>
+        <thead class="bg-primary text-white">
           <tr>
             <th scope="col">Created Date:</th>
             <th scope="col">Created By:</th>
@@ -112,7 +112,7 @@ $stmtReservationHistory->execute([$usersId]);
             <th scope="col">Status:</th>
           </tr>
         </thead>
-        <tbody class="table-group-divider ">
+        <tbody>
           <?php while ($rowReservations = $stmtReservationHistory->fetch()) { ?>
           <tr>
             <td><?php echo date("F d, Y", strtotime($rowReservations->created_date)) ?></td>

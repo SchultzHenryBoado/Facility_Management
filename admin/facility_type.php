@@ -1,28 +1,29 @@
-<?php 
-  include_once '../database/connection.php';
-  include_once './php/session.php';
+<?php
+include_once '../database/connection.php';
+include_once './php/session.php';
 
-  function path($destination) {
-    echo "<script>window.location.href = './$destination.php'</script>";
-  }
+function path($destination)
+{
+  echo "<script>window.location.href = './$destination.php'</script>";
+}
 
-  // FACILITIES
-  $sqlFacilities = "SELECT * FROM facilities";
-  $stmtFacilities = $con->prepare($sqlFacilities);
-  $stmtFacilities->execute();
+// FACILITIES
+$sqlFacilities = "SELECT * FROM facilities";
+$stmtFacilities = $con->prepare($sqlFacilities);
+$stmtFacilities->execute();
 
-  // UPDATE FACILITIES
-  if (isset($_POST['update_facility'])) {
-    $updateId = $_POST['update_id'];
-    $updateFacilityCode = strtoupper(filter_input(INPUT_POST, 'update_facility_code', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
-    $updateFacilityName = filter_input(INPUT_POST, 'update_facility_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+// UPDATE FACILITIES
+if (isset($_POST['update_facility'])) {
+  $updateId = $_POST['update_id'];
+  $updateFacilityCode = strtoupper(filter_input(INPUT_POST, 'update_facility_code', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+  $updateFacilityName = filter_input(INPUT_POST, 'update_facility_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    $sqlUpdate = "UPDATE facilities SET facility_code=?, facility_name=? WHERE id=? ";
-    $stmtUpdateFacilities = $con->prepare($sqlUpdate);
-    $stmtUpdateFacilities->execute([$updateFacilityCode, $updateFacilityName, $updateId]);
+  $sqlUpdate = "UPDATE facilities SET facility_code=?, facility_name=? WHERE id=? ";
+  $stmtUpdateFacilities = $con->prepare($sqlUpdate);
+  $stmtUpdateFacilities->execute([$updateFacilityCode, $updateFacilityName, $updateId]);
 
-    path('facility_type');  
-  }
+  path('facility_type');
+}
 
 ?>
 
@@ -154,15 +155,15 @@
     <div class="container shadow p-3 mb-5 bg-body-rounded">
       <div class="table-responsive">
         <table class="table table-hover table-striped">
-          <thead>
+          <thead class="bg-primary text-white">
             <tr>
               <th scope="col">Code:</th>
               <th scope="col">Facility Name:</th>
-              <th col="2">Actions:</th>
+              <th colspan="2">Actions:</th>
             </tr>
           </thead>
           <tbody>
-            <?php while($rowFacility = $stmtFacilities->fetch()) { ?>
+            <?php while ($rowFacility = $stmtFacilities->fetch()) { ?>
             <tr>
               <td><?php echo $rowFacility->facility_code ?></td>
               <td><?php echo $rowFacility->facility_name ?></td>

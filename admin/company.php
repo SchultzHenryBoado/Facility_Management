@@ -155,11 +155,11 @@ if (isset($_POST['update_company'])) {
     <div class="container shadow p-3 mb-5 bg-body-rounded">
       <div class="table-responsive">
         <table class="table table-hover table-striped">
-          <thead>
+          <thead class="bg-primary text-white">
             <tr>
               <th scope="col">Code:</th>
               <th scope="col">Company Name:</th>
-              <th col="2">Actions:</th>
+              <th colspan="2" scope="col">Actions:</th>
             </tr>
           </thead>
           <tbody>
