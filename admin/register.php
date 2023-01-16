@@ -190,10 +190,11 @@ if (isset($_POST['update_users'])) {
           <!-- APPROVAL -->
           <div class="col-12">
             <div class="mb-3" id="passwordGroup" class="form-group">
-              <label for="usersRole" class="form-label">Approval:</label>
+              <label for="usersRole" class="form-label">Roles:</label>
               <select name="users_role" id="usersRole" class="form-select">
                 <option value="Users">Users</option>
                 <option value="Users Approval">Users Approval</option>
+                <option value="Admin">Admin</option>
               </select>
               <div class="invalid-feedback">
                 Please fill-up the password.
@@ -343,10 +344,11 @@ if (isset($_POST['update_users'])) {
                             <!-- APPROVAL -->
                             <div class="col-12">
                               <div class="mb-3" id="passwordGroup" class="form-group">
-                                <label for="role" class="form-label">Approval:</label>
+                                <label for="role" class="form-label">Roles:</label>
                                 <select name="update_users_role" id="role" class="form-select">
                                   <option value="Users">Users</option>
                                   <option value="Users Approval">Users Approval</option>
+                                  <option value="Admin">Admin</option>
                                 </select>
                                 <div class="invalid-feedback">
                                   Please fill-up the password.

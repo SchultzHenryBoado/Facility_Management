@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
+Source Server         : localhost_3306
 Source Server Version : 50505
 Source Host           : localhost:3306
 Source Database       : facility_management
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2023-01-06 11:13:23
+Date: 2023-01-12 23:27:08
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,7 +29,7 @@ CREATE TABLE `admin_accounts` (
 -- ----------------------------
 -- Records of admin_accounts
 -- ----------------------------
-INSERT INTO `admin_accounts` VALUES ('1', 'admin', '123');
+INSERT INTO `admin_accounts` VALUES ('1', 'admin', 'admin123');
 
 -- ----------------------------
 -- Table structure for `companies`
@@ -40,7 +40,7 @@ CREATE TABLE `companies` (
   `company_code` varchar(255) NOT NULL,
   `company_name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of companies
@@ -58,7 +58,7 @@ CREATE TABLE `facilities` (
   `facility_code` varchar(255) NOT NULL,
   `facility_name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of facilities
@@ -81,7 +81,7 @@ CREATE TABLE `facility_room_masters` (
   `max_capacity` varchar(255) NOT NULL,
   `statuses` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of facility_room_masters
@@ -97,7 +97,7 @@ CREATE TABLE `floors` (
   `floor_code` varchar(255) NOT NULL,
   `floor_number` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of floors
@@ -122,17 +122,15 @@ CREATE TABLE `reservations` (
   `time_from` time(6) NOT NULL,
   `time_to` time(6) NOT NULL,
   `statuses` varchar(255) NOT NULL,
-  `cancel_reasons` varchar(255) NOT NULL,
+  `cancel_reasons` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_users` (`users_id`),
   CONSTRAINT `fk_users` FOREIGN KEY (`users_id`) REFERENCES `users_accounts` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of reservations
 -- ----------------------------
-INSERT INTO `reservations` VALUES ('1', '1', '2023-01-06', '1231231313131231321', 'Boado, Schultz Henry', 'Meeting Room', '2023-01-06', '2023-01-06', '10:38:00.000000', '11:38:00.000000', 'REJECT', 'asdasdasd\r\n');
-INSERT INTO `reservations` VALUES ('3', '1', '2023-01-06', '12345', 'Boado, Schultz Henry', 'Meeting Room', '2023-01-06', '2023-01-06', '10:37:00.000000', '11:37:00.000000', 'APPROVED', '');
 
 -- ----------------------------
 -- Table structure for `users_accounts`
@@ -145,14 +143,14 @@ CREATE TABLE `users_accounts` (
   `company` varchar(255) NOT NULL,
   `emails` varchar(255) NOT NULL,
   `passwords` varchar(255) NOT NULL,
+  `roles` varchar(255) NOT NULL,
   `statuses` varchar(255) NOT NULL,
+  `users_type` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of users_accounts
 -- ----------------------------
-INSERT INTO `users_accounts` VALUES ('1', 'Boado', 'Schultz Henry', 'Obanana Corp.', 'schultzhenry.boado@obanana.com', '202cb962ac59075b964b07152d234b70', 'ACTIVE');
-INSERT INTO `users_accounts` VALUES ('2', 'Gloda', 'John Bryan', 'Premium Megastructures Inc.', 'bryan.gloda@obanana.com', '202cb962ac59075b964b07152d234b70', 'ACTIVE');
-INSERT INTO `users_accounts` VALUES ('3', 'Mangalo', 'Ryan Christian', 'Obanana Corp.', 'ryan.mangalo@obanana.com', '202cb962ac59075b964b07152d234b70', 'ACTIVE');
-INSERT INTO `users_accounts` VALUES ('8', 'Matias', 'Ryan', 'Obanana Corp.', 'ryan.matias@obanana.com', '10f9033ee9d4fe20f8f7257f4307c1df', 'INACTIVE');
+INSERT INTO `users_accounts` VALUES ('1', 'Boado', 'Schultz Henry', 'Obanana Corp.', 'schultzhenry.boado@obanana.com', '123', 'Users Approval', 'ACTIVE', '');
+INSERT INTO `users_accounts` VALUES ('19', 'Gloda', 'Bryan', 'Obanana Corp.', 'bryan.gloda@obanana.com', '123', 'Users', 'ACTIVE', '');
