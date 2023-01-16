@@ -10,10 +10,9 @@
     $_SESSION['admin_status'] = 'invalid';
 
     /* Unset user data */
-    unset($_SESSION['admin_username']);
+    unset($_SESSION['admin_id']);
 
     /* Redirect to login page */
     pathTo('index');
     
   }
-?>
