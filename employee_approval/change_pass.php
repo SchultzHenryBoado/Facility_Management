@@ -2,6 +2,8 @@
 require_once "../database/connection.php";
 require './php/session.php';
 
+$users_id = $_SESSION['users_approval_id'];
+
 if (isset($_POST['change_password'])) {
 
   $oldPassword = filter_input(INPUT_POST, 'old_password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
