@@ -72,7 +72,11 @@ if (isset($_POST['login'])) {
       header("Location: ./admin/dashboard_admin.php");
     }
   } else {
-    echo "invalid credentials";
+    echo '
+    <div class="container mt-5 d-flex justify-content-center">
+       <div class="alert alert-danger text-center w-25 mt-2">Invalid Credentials</div>
+     </div
+   ';
   }
 }
 
