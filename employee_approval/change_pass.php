@@ -24,7 +24,7 @@ if (isset($_POST['change_password'])) {
       $stmt->execute([$confirmPassword, $users_id]);
 
       $_SESSION['users_approval_status'] = 'invalid';
-      header("Location: ../employee/index.php");
+      header("Location: ../index.php");
     } else {
       echo '
         <div class="container mt-5 d-flex justify-content-center">

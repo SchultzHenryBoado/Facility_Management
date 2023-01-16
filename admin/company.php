@@ -1,27 +1,28 @@
-<?php 
-  include_once '../database/connection.php';
-  include_once './php/session.php';
+<?php
+include_once '../database/connection.php';
+include_once './php/session.php';
 
-  $sqlCompany = "SELECT * FROM companies";
-  $stmt = $con->prepare($sqlCompany);
-  $stmt->execute();
+$sqlCompany = "SELECT * FROM companies";
+$stmt = $con->prepare($sqlCompany);
+$stmt->execute();
 
-  function path($destination) {
-    echo "<script>window.location.href = './$destination.php'</script>";
-  }
+function path($destination)
+{
+  echo "<script>window.location.href = './$destination.php'</script>";
+}
 
-  // UPDATE
-  if (isset($_POST['update_company'])) {
-    $updateId = $_POST['update_id'];
-    $updateCode = strtoupper(filter_input(INPUT_POST, 'update_company_code', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
-    $updateCompany = filter_input(INPUT_POST, 'update_company_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+// UPDATE
+if (isset($_POST['update_company'])) {
+  $updateId = $_POST['update_id'];
+  $updateCode = strtoupper(filter_input(INPUT_POST, 'update_company_code', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+  $updateCompany = filter_input(INPUT_POST, 'update_company_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    $sqlUpdateCompany = "UPDATE companies SET company_code=?, company_name=? WHERE id=?";
-    $stmt = $con->prepare($sqlUpdateCompany);
-    $stmt->execute([$updateCode, $updateCompany, $updateId]);
+  $sqlUpdateCompany = "UPDATE companies SET company_code=?, company_name=? WHERE id=?";
+  $stmt = $con->prepare($sqlUpdateCompany);
+  $stmt->execute([$updateCode, $updateCompany, $updateId]);
 
-    path('company');
-  }
+  path('company');
+}
 ?>
 
 <!DOCTYPE html>
@@ -39,10 +40,13 @@
   <link rel="stylesheet" href="./styles/company.css" />
 
   <!-- JS -->
+  <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+    crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
   </script>
   <script src="./js/validation.js" defer></script>
+  <script src="./js/ajax_company.js" defer></script>
   <!-- FONT AWESOME -->
   <script src="https://kit.fontawesome.com/8cbc2e0f0e.js" crossorigin="anonymous"></script>
 
@@ -109,7 +113,7 @@
   <!-- COMPANY -->
   <div class="container-fluid mt-5">
     <div class="container w-50 shadow p-3 mb-5 bg-body rounded">
-      <form action="./php/company_create.php" method="post" class="needs-validation" novalidate>
+      <form action="./php/company_create.php" method="post" class="needs-validation formData" novalidate>
         <p class="h1 mb-3">Company </p>
 
         <div class="row">
@@ -117,8 +121,8 @@
           <!-- CODE -->
           <div class="col-12 ">
             <div class="mb-3" class="form-group">
-              <label for="code" class="form-label">Code:</label>
-              <input type="text" name="company_code" id="code" class="form-control" required />
+              <label for="companyCode" class="form-label">Code:</label>
+              <input type="text" name="company_code" id="companyCode" class="form-control" required />
               <div class="invalid-feedback">
                 Please fill-up the company code.
               </div>
@@ -137,7 +141,8 @@
           <!-- BUTTON -->
           <div class="col-12">
             <div class="mb-3">
-              <input type="submit" name="create_company" value="OK" class="btn btn-success fw-bold float-end" />
+              <input type="submit" name="create_company" value="OK" class="btn btn-success fw-bold float-end"
+                id="btnCreate" />
             </div>
           </div>
         </div>
@@ -158,10 +163,10 @@
             </tr>
           </thead>
           <tbody>
-            <?php while($results = $stmt->fetch()) { ?>
+            <?php while ($results = $stmt->fetch()) { ?>
             <tr>
-              <td><?php echo $results->company_code?></td>
-              <td><?php echo $results->company_name?></td>
+              <td><?php echo $results->company_code ?></td>
+              <td><?php echo $results->company_name ?></td>
               <td>
                 <!-- UPDATE COMPANY -->
                 <button class="btn btn-warning" data-bs-toggle="modal"

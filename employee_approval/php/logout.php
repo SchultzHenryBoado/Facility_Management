@@ -4,7 +4,7 @@ session_start();
 // path
 function path($destination)
 {
-  echo "<script>window.location.href = '../../employee/$destination.php'</script>";
+  echo "<script>window.location.href = '../../$destination.php'</script>";
 }
 
 // default status
