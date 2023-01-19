@@ -1,23 +1,23 @@
 <?php
-  // DATABASE 
-  require_once '../database/connection.php';
-  // SESSION
-  require './php/session.php';
+// DATABASE 
+require_once '../database/connection.php';
+// SESSION
+require './php/session.php';
 
-  $date = date('m/d/Y');
+$date = date('m/d/Y');
 
-  // USERS
-  $sqlUsers = "SELECT * FROM users_accounts";
-  $stmtUsers = $con->prepare($sqlUsers);
-  $stmtUsers->execute();
-  $results = $stmtUsers->fetch();
-  $company = $_SESSION['company_name'] = $results->company;
+// USERS
+$sqlUsers = "SELECT * FROM users_accounts";
+$stmtUsers = $con->prepare($sqlUsers);
+$stmtUsers->execute();
+$results = $stmtUsers->fetch();
+$company = $_SESSION['company_name'] = $results->company;
 
-  // RESERVATIONS
-  $sqlReservation = "SELECT * FROM reservations WHERE statuses = 'APPROVED' AND date_from = CURRENT_DATE() ORDER BY time_from ASC";
-  $stmtReservation = $con->prepare($sqlReservation);
-  $stmtReservation->execute();
-  
+// RESERVATIONS
+$sqlReservation = "SELECT * FROM reservations WHERE statuses = 'APPROVED' AND date_from = CURRENT_DATE() ORDER BY time_from ASC";
+$stmtReservation = $con->prepare($sqlReservation);
+$stmtReservation->execute();
+
 ?>
 
 <!DOCTYPE html>
@@ -30,14 +30,12 @@
   <title>SCHEDULES</title>
 
   <!-- CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
 
   <link rel="stylesheet" href="./styles/dashboard.css" />
 
   <!-- JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
   </script>
 
   <!-- FONT AWESOME -->
@@ -108,15 +106,15 @@
           </tr>
         </thead>
         <tbody class="table-group-divider ">
-          <?php while($rowReservations = $stmtReservation->fetch()) { ?>
-          <tr>
-            <td><?php echo $rowReservations->rsvn_no ?></td>
-            <td><?php echo $rowReservations->room_type ?></td>
-            <td><?php echo date("h:i A", strtotime($rowReservations->time_from))?></td>
-            <td><?php echo date("h:i A", strtotime($rowReservations->time_to))?></td>
-            <td><?php echo $rowReservations->created_by ?></td>
-            <td><?php echo $company ?></td>
-          </tr>
+          <?php while ($rowReservations = $stmtReservation->fetch()) { ?>
+            <tr>
+              <td><?php echo $rowReservations->rsvn_no ?></td>
+              <td><?php echo $rowReservations->room_type ?></td>
+              <td><?php echo date("h:i A", strtotime($rowReservations->time_from)) ?></td>
+              <td><?php echo date("h:i A", strtotime($rowReservations->time_to)) ?></td>
+              <td><?php echo $rowReservations->created_by ?></td>
+              <td><?php echo $company ?></td>
+            </tr>
           <?php } ?>
         </tbody>
       </table>
