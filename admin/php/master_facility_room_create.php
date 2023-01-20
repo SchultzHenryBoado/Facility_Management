@@ -16,7 +16,7 @@ if (isset($_POST['register_facility'])) {
   $maxCapacity = filter_input(INPUT_POST, 'max_capacity', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
   $status = filter_input(INPUT_POST, 'status', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-  $sqlFacilityRoomMaster = "INSERT INTO facility_room_masters (facility_type_id, facility_number, descriptions, floor_location, max_capacity, statuses) VALUES (?,?,?,?,?,?)";
+  $sqlFacilityRoomMaster = "INSERT INTO facility_room_masters (facility_type, facility_number, descriptions, floor_location, max_capacity, statuses) VALUES (?,?,?,?,?,?)";
   $stmtFacilityRoomMaster = $con->prepare($sqlFacilityRoomMaster);
   $stmtFacilityRoomMaster->execute([$facilityType, $facilityNumber, $description, $floorLocation, $maxCapacity, $status]);
 

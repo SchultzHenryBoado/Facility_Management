@@ -21,9 +21,12 @@ $stmtUsers->execute([$users_id]);
 $rowUsers = $stmtUsers->fetch();
 
 // FACILITIES
-$sqlReadFacilities = "SELECT facility_name FROM facilities";
-$stmtFacilities = $con->prepare($sqlReadFacilities);
+$stmtFacilities = $con->prepare("SELECT * FROM facilities");
 $stmtFacilities->execute();
+
+// FACILITY MASTER
+$stmtFacilityMaster = $con->prepare("SELECT * FROM facility_room_masters");
+$stmtFacilityMaster->execute();
 
 // RESERVATIONS
 $sqlReadReservations = "SELECT * FROM reservations WHERE users_id=? AND statuses='PENDING'";
@@ -34,6 +37,7 @@ if (isset($_POST['update_reservation'])) {
   $updateId = $_POST['update_id'];
   $updateRsvnNo = filter_input(INPUT_POST, 'update_rsvn_no', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
   $updateRoomType = filter_input(INPUT_POST, 'update_room_type', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+  $updateRoomNum = filter_input(INPUT_POST, 'update_room_number', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
   $updateDateFrom = filter_input(INPUT_POST, 'update_date_from', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
   $updateDateTo = filter_input(INPUT_POST, 'update_date_to', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
   $updateTimeFrom = filter_input(INPUT_POST, 'update_time_from', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -60,20 +64,17 @@ if (isset($_POST['update_reservation'])) {
   <title>RESERVATION</title>
 
   <!-- CSS -->
-  <link href="https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="Stylesheet" type="text/css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
   <link rel="stylesheet" href="./styles/reservation.css" />
   <link rel="stylesheet" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
 
   <!-- JS -->
   <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
-  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js" integrity="sha256-xLD7nhI62fcsEZK2/v8LsBcb4lG7dgULkuXoXB/j91c=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
   </script>
   <script src="./js/validation.js" defer></script>
   <script src="./js/date.js" defer></script>
-  <!-- <script src="./js/dataTables.js" defer></script> -->
-  <script src="./js/selectOption.js" defer></script>
+  <script src="./js/selectOpt.js" defer></script>
 
   <!-- FONT AWESOME -->
   <script src="https://kit.fontawesome.com/8cbc2e0f0e.js" crossorigin="anonymous"></script>
@@ -132,7 +133,6 @@ if (isset($_POST['update_reservation'])) {
     <div class="container mt-5 shadow-lg p-3 mb-5 bg-body rounded">
       <form action="./php/reservation_create.php" method="post" class="needs-validation" novalidate>
         <div class="row">
-
           <div class="col-12 col-md-6 col-lg-6">
             <div class="mb-3">
               <label for="createdDate" class="form-label">Created Date:</label>
@@ -162,15 +162,9 @@ if (isset($_POST['update_reservation'])) {
               <label for="roomType" class="form-label">Facility Type:</label>
               <select name="room_type" id="roomType" class="form-select" required>
                 <option disabled selected value>-- Facility Type --</option>
-                <?php
-                if ($stmtFacilities->rowCount() > 0) {
-                  while ($rowFacility = $stmtFacilities->fetch()) {
-                    echo '<option value="' . $rowFacility->id . '">' . $rowFacility->facility_name . '</option>';
-                  }
-                } else {
-                  echo '<option value="">Facilities Not Available</option>';
-                }
-                ?>
+                <?php while ($rowFacilityType = $stmtFacilities->fetch()) { ?>
+                  <option value="<?php echo $rowFacilityType->facility_name ?>"><?php echo $rowFacilityType->facility_name ?></option>
+                <?php } ?>
               </select>
               <div class="invalid-feedback">
                 Please choose in the room type.
@@ -183,6 +177,9 @@ if (isset($_POST['update_reservation'])) {
               <label for="roomNumber" class="form-label">Facility Number:</label>
               <select name="room_number" id="roomNumber" class="form-select">
                 <option disabled selected value>-- Facility Number --</option>
+                <?php while ($rowFacilityType = $stmtFacilityMaster->fetch()) { ?>
+                  <option value="<?php echo $rowFacilityType->facility_number ?>"><?php echo $rowFacilityType->facility_number ?></option>
+                <?php } ?>
               </select>
               <div class="invalid-feedback">
                 Please choose in the room number.
@@ -295,6 +292,9 @@ if (isset($_POST['update_reservation'])) {
                     $sql = "SELECT * FROM facilities";
                     $stmt = $con->prepare($sql);
                     $stmt->execute();
+
+                    $stmtFacNum = $con->prepare("SELECT * FROM facility_room_masters");
+                    $stmtFacNum->execute();
                     ?>
 
                     <div class="modal fade" id="modalEdit-<?php echo $rowReserve->id ?>" tabindex="-1">
@@ -317,12 +317,25 @@ if (isset($_POST['update_reservation'])) {
                               </div>
                               <div class="col-12">
                                 <div class="mb-3">
-                                  <label for="updateRoomType" class="form-label">Update Room Type:</label>
+                                  <label for="updateRoomType" class="form-label">Update Facility Type:</label>
                                   <select name="update_room_type" id="updateRoomType" class="form-select" required>
-                                    <option disabled selected value>-- Room Type --</option>
                                     <?php while ($row = $stmt->fetch()) { ?>
                                       <option value="<?php echo $row->facility_name ?>">
                                         <?php echo $row->facility_name ?></option>
+                                    <?php } ?>
+                                  </select>
+                                  <div class="invalid-feedback">
+                                    Please choose a facility.
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-12">
+                                <div class="mb-3">
+                                  <label for="updateRoomNumber" class="form-label">Update Facility Number:</label>
+                                  <select name="update_room_number" id="updateRoomNumber" class="form-select" required>
+                                    <?php while ($rowFacNum = $stmtFacNum->fetch()) { ?>
+                                      <option value="<?php echo $rowFacNum->facility_number ?>">
+                                        <?php echo $rowFacNum->facility_number ?></option>
                                     <?php } ?>
                                   </select>
                                   <div class="invalid-feedback">

@@ -22,4 +22,11 @@ if (isset($_POST['submit'])) {
   $timeFrom = filter_input(INPUT_POST, 'time_from', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
   $timeTo = filter_input(INPUT_POST, 'time_to', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
   $status = filter_input(INPUT_POST, 'pending_status', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+
+  $stmtCreateRes = $con->prepare("INSERT INTO reservations (users_id, created_date, rsvn_no, created_by, room_type, room_number, date_from, date_to, time_from, time_to, statuses) 
+  VALUES (?,curdate(),?,?,?,?,?,?,?,?,?) ");
+  $stmtCreateRes->execute([$users_id, $rsvnNo, $createdBy, $roomType, $roomNum, $dateFrom, $dateTo, $timeFrom, $timeTo, $status]);
+
+  header("Location: ../reservation.php");
 }

@@ -138,7 +138,7 @@ if (isset($_POST['update_facility'])) {
               <select name="facility_type" id="facilityType" class="form-select" required>
                 <option disabled selected value>-- Facility Type --</option>
                 <?php while ($rowFacilities = $stmtFacilities->fetch()) { ?>
-                  <option value="<?php echo $rowFacilities->id ?>">
+                  <option value="<?php echo $rowFacilities->facility_name ?>">
                     <?php echo $rowFacilities->facility_name ?></option>
                 <?php } ?>
               </select>
@@ -236,7 +236,7 @@ if (isset($_POST['update_facility'])) {
           <tbody class="table-group-divider">
             <?php while ($rowFacilityRoomMaster = $stmtFacilityRoomMaster->fetch()) { ?>
               <tr>
-                <td><?php echo $rowFacilityRoomMaster->facility_type_id ?></td>
+                <td><?php echo $rowFacilityRoomMaster->facility_type ?></td>
                 <td><?php echo $rowFacilityRoomMaster->facility_number ?></td>
                 <td><?php echo $rowFacilityRoomMaster->descriptions ?></td>
                 <td><?php echo $rowFacilityRoomMaster->floor_location ?></td>
