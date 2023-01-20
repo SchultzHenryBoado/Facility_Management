@@ -49,7 +49,7 @@ $stmtReservation->execute();
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
         <i class="fa-sharp fa-solid fa-bars-staggered __icon"></i>
       </button>
-      <a class="navbar-brand fw-bold text-white __navbar-brand" href="#">Facility Management System</a>
+      <a class="navbar-brand fw-bold text-white __navbar-brand" href="./schedules.php">Facility Management System</a>
 
       <div class="collapse navbar-collapse" id="nav">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-5">
@@ -95,7 +95,7 @@ $stmtReservation->execute();
     <div class="container bg-primary shadow p-3 mb-5 bg-body rounded">
       <p class="h1 text-center mb-3">Schedules Today</p>
       <table class="table table-striped table-hover">
-        <thead>
+        <thead class="bg-primary text-white">
           <tr>
             <th scope="col">Room No.</th>
             <th scope="col">Room Type</th>
@@ -105,7 +105,11 @@ $stmtReservation->execute();
             <th scope="col">Company</th>
           </tr>
         </thead>
+<<<<<<< HEAD
         <tbody class="table-group-divider ">
+=======
+        <tbody>
+>>>>>>> dc66a81946ee240b1a3e2f213b819db175a780ed
           <?php while ($rowReservations = $stmtReservation->fetch()) { ?>
             <tr>
               <td><?php echo $rowReservations->rsvn_no ?></td>

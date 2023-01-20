@@ -1,4 +1,4 @@
-  <?php 
+  <?php
   // DATABASE
   include_once '../database/connection.php';
   // SESSION
@@ -9,7 +9,7 @@
   $stmt = $con->prepare($sqlReadReservations);
   $stmt->execute();
 
-?>
+  ?>
 
   <!DOCTYPE html>
   <html lang="en">
@@ -98,7 +98,7 @@
       <div class="container shadow p-3 mb-5 bg-body-rounded">
         <div class="table-responsive">
           <table class="table table-striped table-hover">
-            <thead>
+            <thead class="bg-primary text-white">
               <tr>
                 <th scope="col">RSVN No.</th>
                 <th scope="col">Room Type:</th>
@@ -110,8 +110,8 @@
                 <th scope="col">Reasons:</th>
               </tr>
             </thead>
-            <tbody class="table-group-divider">
-              <?php while($rowReservations = $stmt->fetch()) { ?>
+            <tbody>
+              <?php while ($rowReservations = $stmt->fetch()) { ?>
               <tr>
                 <td><?php echo $rowReservations->rsvn_no ?></td>
                 <td><?php echo $rowReservations->room_type ?></td>

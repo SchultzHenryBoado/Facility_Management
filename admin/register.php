@@ -229,7 +229,7 @@ if (isset($_POST['update_users'])) {
     <div class="container shadow p-3 mb-5 bg-body-rounded">
       <div class="table-responsive">
         <table class="table table-hover table-striped">
-          <thead>
+          <thead class="bg-primary text-white">
             <tr>
               <th scope="col">Lastname:</th>
               <th scope="col">Firstname:</th>
@@ -241,7 +241,7 @@ if (isset($_POST['update_users'])) {
               <th scope="col">Actions:</th>
             </tr>
           </thead>
-          <tbody class="table-group-divider">
+          <tbody>
             <?php while ($rowUsers = $stmtUsers->fetch()) { ?>
             <tr>
               <td><?php echo $rowUsers->last_names ?></td>

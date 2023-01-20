@@ -64,12 +64,20 @@ if (isset($_POST['update_reservation'])) {
   <title>RESERVATION</title>
 
   <!-- CSS -->
+<<<<<<< HEAD
+=======
+  <link href="https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="Stylesheet" type="text/css" />
+>>>>>>> dc66a81946ee240b1a3e2f213b819db175a780ed
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
   <link rel="stylesheet" href="./styles/reservation.css" />
   <link rel="stylesheet" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
 
   <!-- JS -->
   <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+<<<<<<< HEAD
+=======
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js" integrity="sha256-xLD7nhI62fcsEZK2/v8LsBcb4lG7dgULkuXoXB/j91c=" crossorigin="anonymous"></script>
+>>>>>>> dc66a81946ee240b1a3e2f213b819db175a780ed
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
   </script>
   <script src="./js/validation.js" defer></script>
@@ -87,7 +95,7 @@ if (isset($_POST['update_reservation'])) {
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
         <i class="fa-sharp fa-solid fa-bars-staggered __icon"></i>
       </button>
-      <a class="navbar-brand fw-bold text-white __navbar-brand" href="#">Facility Management System</a>
+      <a class="navbar-brand fw-bold text-white __navbar-brand" href="./schedules.php">Facility Management System</a>
 
       <div class="collapse navbar-collapse" id="nav">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-5">
@@ -161,9 +169,16 @@ if (isset($_POST['update_reservation'])) {
             <div class="mb-3">
               <label for="roomType" class="form-label">Facility Type:</label>
               <select name="room_type" id="roomType" class="form-select" required>
+<<<<<<< HEAD
                 <option disabled selected value>-- Facility Type --</option>
                 <?php while ($rowFacilityType = $stmtFacilities->fetch()) { ?>
                   <option value="<?php echo $rowFacilityType->facility_name ?>"><?php echo $rowFacilityType->facility_name ?></option>
+=======
+                <option disabled selected value>-- Room Type --</option>
+                <?php while ($rowFacilities = $stmtFacilities->fetch()) { ?>
+                  <option value="<?php echo $rowFacilities->facility_name ?>">
+                    <?php echo $rowFacilities->facility_name ?></option>
+>>>>>>> dc66a81946ee240b1a3e2f213b819db175a780ed
                 <?php } ?>
               </select>
               <div class="invalid-feedback">
@@ -251,7 +266,7 @@ if (isset($_POST['update_reservation'])) {
     <div class="container shadow p-3 mb-5 bg-body-rounded">
       <div class="table-responsive">
         <table class="table table-striped table-hover">
-          <thead>
+          <thead class="bg-primary text-white">
             <tr>
               <th scope="col">Created Date:</th>
               <th scope="col">RSVN No.</th>
@@ -263,17 +278,20 @@ if (isset($_POST['update_reservation'])) {
               <th scope="col">Time From:</th>
               <th scope="col">Time To:</th>
               <th scope="col">Status:</th>
-              <th col="2">Actions:</th>
+              <th colspan="2" scope="col">Actions:</th>
             </tr>
           </thead>
-          <tbody class="table-group-divider">
+          <tbody>
             <?php while ($rowReserve = $stmtReservations->fetch()) { ?>
               <tr>
                 <td><?php echo $rowReserve->created_date ?></td>
                 <td><?php echo $rowReserve->rsvn_no ?></td>
                 <td><?php echo $rowReserve->created_by ?></td>
                 <td><?php echo $rowReserve->room_type ?></td>
+<<<<<<< HEAD
                 <td><?php echo $rowReserve->room_number ?></td>
+=======
+>>>>>>> dc66a81946ee240b1a3e2f213b819db175a780ed
                 <td><?php echo $rowReserve->date_from ?></td>
                 <td><?php echo $rowReserve->date_to ?></td>
                 <td><?php echo date("h:i A", strtotime($rowReserve->time_from)) ?></td>
@@ -317,8 +335,14 @@ if (isset($_POST['update_reservation'])) {
                               </div>
                               <div class="col-12">
                                 <div class="mb-3">
+<<<<<<< HEAD
                                   <label for="updateRoomType" class="form-label">Update Facility Type:</label>
                                   <select name="update_room_type" id="updateRoomType" class="form-select" required>
+=======
+                                  <label for="updateRoomType" class="form-label">Update Room Type:</label>
+                                  <select name="update_room_type" id="updateRoomType" class="form-select" required>
+                                    <option disabled selected value>-- Room Type --</option>
+>>>>>>> dc66a81946ee240b1a3e2f213b819db175a780ed
                                     <?php while ($row = $stmt->fetch()) { ?>
                                       <option value="<?php echo $row->facility_name ?>">
                                         <?php echo $row->facility_name ?></option>
@@ -331,6 +355,7 @@ if (isset($_POST['update_reservation'])) {
                               </div>
                               <div class="col-12">
                                 <div class="mb-3">
+<<<<<<< HEAD
                                   <label for="updateRoomNumber" class="form-label">Update Facility Number:</label>
                                   <select name="update_room_number" id="updateRoomNumber" class="form-select" required>
                                     <?php while ($rowFacNum = $stmtFacNum->fetch()) { ?>
@@ -340,38 +365,66 @@ if (isset($_POST['update_reservation'])) {
                                   </select>
                                   <div class="invalid-feedback">
                                     Please choose a facility.
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-12">
-                                <div class="mb-3">
+=======
                                   <label for="updateDateFrom" class="form-label">Update Date From:</label>
                                   <input class="form-control" type="date" name="update_date_from" id="updateDateFrom" value="<?php echo $rowReserve->date_from ?>" required>
                                   <div class="invalid-feedback">
                                     Please fill-up the date from.
+>>>>>>> dc66a81946ee240b1a3e2f213b819db175a780ed
                                   </div>
                                 </div>
                               </div>
                               <div class="col-12">
                                 <div class="mb-3">
+<<<<<<< HEAD
+                                  <label for="updateDateFrom" class="form-label">Update Date From:</label>
+                                  <input class="form-control" type="date" name="update_date_from" id="updateDateFrom" value="<?php echo $rowReserve->date_from ?>" required>
+                                  <div class="invalid-feedback">
+                                    Please fill-up the date from.
+=======
                                   <label for="updateDateTo" class="form-label">Update Date To:</label>
                                   <input class="form-control" type="date" name="update_date_to" id="updateDateTo" value="<?php echo $rowReserve->date_to ?>" required>
                                   <div class="invalid-feedback">
                                     Please fill-up the date to.
+>>>>>>> dc66a81946ee240b1a3e2f213b819db175a780ed
                                   </div>
                                 </div>
                               </div>
                               <div class="col-12">
                                 <div class="mb-3">
+<<<<<<< HEAD
+                                  <label for="updateDateTo" class="form-label">Update Date To:</label>
+                                  <input class="form-control" type="date" name="update_date_to" id="updateDateTo" value="<?php echo $rowReserve->date_to ?>" required>
+                                  <div class="invalid-feedback">
+                                    Please fill-up the date to.
+=======
                                   <label for="updateTimeFrom" class="form-label">Update Time From:</label>
                                   <input class="form-control" type="time" name="update_time_from" id="updateTimeFrom" value="<?php echo $rowReserve->time_from ?>" required>
                                   <div class="invalid-feedback">
                                     Please fill-up the time from.
+>>>>>>> dc66a81946ee240b1a3e2f213b819db175a780ed
                                   </div>
                                 </div>
                               </div>
                               <div class="col-12">
                                 <div class="mb-3">
+<<<<<<< HEAD
+                                  <label for="updateTimeFrom" class="form-label">Update Time From:</label>
+                                  <input class="form-control" type="time" name="update_time_from" id="updateTimeFrom" value="<?php echo $rowReserve->time_from ?>" required>
+                                  <div class="invalid-feedback">
+                                    Please fill-up the time from.
+=======
+                                  <label for="updateTimeTo" class="form-label">Update Time To:</label>
+                                  <input class="form-control" type="time" name="update_time_to" id="updateTimeTo" value="<?php echo $rowReserve->time_to ?>" required>
+                                  <div class="invalid-feedback">
+                                    Please fill-up the time to.
+>>>>>>> dc66a81946ee240b1a3e2f213b819db175a780ed
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-12">
+                                <div class="mb-3">
+<<<<<<< HEAD
                                   <label for="updateTimeTo" class="form-label">Update Time To:</label>
                                   <input class="form-control" type="time" name="update_time_to" id="updateTimeTo" value="<?php echo $rowReserve->time_to ?>" required>
                                   <div class="invalid-feedback">
@@ -381,6 +434,8 @@ if (isset($_POST['update_reservation'])) {
                               </div>
                               <div class="col-12">
                                 <div class="mb-3">
+=======
+>>>>>>> dc66a81946ee240b1a3e2f213b819db175a780ed
                                   <label for="status" class="form-label">Status:</label>
                                   <select name="update_status" id="status" class="form-select" value="<?php echo $rowReserve->statuses ?>" required>
                                     <option value="PENDING">PENDING</option>

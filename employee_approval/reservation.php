@@ -256,7 +256,7 @@ if (isset($_POST['update_reservation'])) {
     <div class="container shadow p-3 mb-5 bg-body-rounded">
       <div class="table-responsive">
         <table class="table table-striped table-hover">
-          <thead>
+          <thead class="bg-primary text-white">
             <tr>
               <th scope="col">Created Date:</th>
               <th scope="col">RSVN No.</th>
@@ -268,10 +268,10 @@ if (isset($_POST['update_reservation'])) {
               <th scope="col">Time From:</th>
               <th scope="col">Time To:</th>
               <th scope="col">Status:</th>
-              <th col="2">Actions:</th>
+              <th colspan="2" scope="col">Actions:</th>
             </tr>
           </thead>
-          <tbody class="table-group-divider">
+          <tbody>
             <?php while ($rowReserve = $stmtReservations->fetch()) { ?>
               <tr>
                 <td><?php echo $rowReserve->created_date ?></td>

@@ -95,7 +95,7 @@ $stmt->execute();
       <p class="h1 text-center mb-5">Pending Reservation</p>
       <div class="table-responsive">
         <table class="table table-striped table-hover">
-          <thead>
+          <thead class="bg-primary text-white">
             <tr>
               <th scope="col">Created Date:</th>
               <th scope="col">RSVN No.</th>
@@ -106,10 +106,10 @@ $stmt->execute();
               <th scope="col">Time From:</th>
               <th scope="col">Time To:</th>
               <th scope="col">Status:</th>
-              <th scope="col" col="2">Actions:</th>
+              <th scope="col" colspan="2">Actions:</th>
             </tr>
           </thead>
-          <tbody class="table-group-divider">
+          <tbody>
             <?php while ($rowReservations = $stmt->fetch()) { ?>
             <tr id="myTableRow">
               <td><?php echo $rowReservations->created_date ?></td>

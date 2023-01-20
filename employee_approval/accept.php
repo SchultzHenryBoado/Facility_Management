@@ -93,7 +93,7 @@ $stmtReservation->execute([$users_id]);
     <div class="container bg-primary shadow p-3 mb-5 bg-body rounded">
       <p class="h1 text-center mb-3">Reservation Accepted</p>
       <table class="table table-striped table-hover">
-        <thead>
+        <thead class="bg-primary text-white">
           <tr>
             <th scope="col">Room Type:</th>
             <th scope="col">Date:</th>
@@ -102,7 +102,7 @@ $stmtReservation->execute([$users_id]);
             <th scope="col">Status:</th>
           </tr>
         </thead>
-        <tbody class="table-group-divider">
+        <tbody>
           <?php while ($rowReserve = $stmtReservation->fetch()) { ?>
           <tr>
             <td><?php echo $rowReserve->room_type ?></td>

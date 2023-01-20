@@ -101,7 +101,7 @@ $stmtReservation->execute();
     <div class="container bg-primary shadow p-3 mb-5 bg-body rounded">
       <p class="h1 text-center mb-3">Schedules Today</p>
       <table class="table table-striped table-hover">
-        <thead>
+        <thead class="bg-primary text-white">
           <tr>
             <th scope="col">Room No.</th>
             <th scope="col">Room Type</th>
@@ -111,7 +111,7 @@ $stmtReservation->execute();
             <th scope="col">Company</th>
           </tr>
         </thead>
-        <tbody class="table-group-divider ">
+        <tbody>
           <?php while ($rowReservations = $stmtReservation->fetch()) { ?>
           <tr>
             <td><?php echo $rowReservations->rsvn_no ?></td>

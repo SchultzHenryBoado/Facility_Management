@@ -1,13 +1,13 @@
-<?php 
-  // DATABASE
-  include_once '../database/connection.php';
-  // SESSION
-  include_once './php/session.php';
+<?php
+// DATABASE
+include_once '../database/connection.php';
+// SESSION
+include_once './php/session.php';
 
-  // RESERVATIONS
-  $sqlReadReservations = "SELECT * FROM reservations WHERE statuses = 'PENDING'";
-  $stmt = $con->prepare($sqlReadReservations);
-  $stmt->execute();
+// RESERVATIONS
+$sqlReadReservations = "SELECT * FROM reservations WHERE statuses = 'PENDING'";
+$stmt = $con->prepare($sqlReadReservations);
+$stmt->execute();
 
 ?>
 
@@ -104,7 +104,7 @@
       <p class="h1 text-center mb-5">Pending Reservation</p>
       <div class="table-responsive">
         <table class="table table-striped table-hover">
-          <thead>
+          <thead class="bg-primary text-white">
             <tr>
               <th scope="col">Created Date:</th>
               <th scope="col">RSVN No.</th>
@@ -118,15 +118,15 @@
               <th scope="col" col="2">Actions:</th>
             </tr>
           </thead>
-          <tbody class="table-group-divider">
-            <?php while($rowReservations = $stmt->fetch()) { ?>
+          <tbody>
+            <?php while ($rowReservations = $stmt->fetch()) { ?>
             <tr id="myTableRow">
               <td><?php echo $rowReservations->created_date ?></td>
               <td><?php echo $rowReservations->rsvn_no ?></td>
               <td><?php echo $rowReservations->created_by ?></td>
               <td><?php echo $rowReservations->room_type ?></td>
               <td><?php echo $rowReservations->date_from ?></td>
-              <td><?php echo $rowReservations->date_to?></td>
+              <td><?php echo $rowReservations->date_to ?></td>
               <td><?php echo date("h:i A", strtotime($rowReservations->time_from)) ?></td>
               <td><?php echo date("h:i A", strtotime($rowReservations->time_to)) ?></td>
               <td><?php echo $rowReservations->statuses ?></td>
@@ -134,7 +134,7 @@
               <!-- ACCEPT -->
               <td>
                 <form action="./php/reservation_accept.php" method="post">
-                  <input type="hidden" name="accept_id" value="<?php echo $rowReservations->id?>">
+                  <input type="hidden" name="accept_id" value="<?php echo $rowReservations->id ?>">
                   <button type="button" class="btn btn-success fw-bold" data-bs-toggle="modal"
                     data-bs-target="#acceptModal-<?php echo $rowReservations->id ?>"
                     value="<?php echo $rowReservations->id ?>">

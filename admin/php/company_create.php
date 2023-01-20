@@ -1,20 +1,20 @@
-<?php 
-   include_once "../../database/connection.php";
+<?php
+include_once "../../database/connection.php";
 
-  // path
-  function pathTo($destination) {
-    echo "<script>window.location.href = '../$destination.php'</script>";
-  }
-  
-  if (isset($_POST['create_company'])) {
+// path
+function pathTo($destination)
+{
+  echo "<script>window.location.href = '../$destination.php'</script>";
+}
 
-    $companyCode = strtoupper(filter_input(INPUT_POST, 'company_code', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
-    $companyName = filter_input(INPUT_POST, 'company_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+if (isset($_POST['create_company'])) {
 
-    $sqlCompany = "INSERT INTO companies (company_code, company_name) VALUES (?,?)";
-    $stmt = $con->prepare($sqlCompany);
-    $stmt->execute([$companyCode, $companyName]);
+  $companyCode = strtoupper(filter_input(INPUT_POST, 'company_code', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+  $companyName = filter_input(INPUT_POST, 'company_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    pathTo('company');
-  }
-  
+  $sqlCompany = "INSERT INTO companies (company_code, company_name) VALUES (?,?)";
+  $stmt = $con->prepare($sqlCompany);
+  $stmt->execute([$companyCode, $companyName]);
+
+  pathTo('company');
+}

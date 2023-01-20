@@ -121,7 +121,7 @@ if (isset($_POST['update'])) {
     <div class="container bg-primary shadow p-3 mb-5 bg-body rounded">
       <p class="h1 text-center mb-3">Reservation Cancelled</p>
       <table class="table table-striped table-hover">
-        <thead>
+        <thead class="bg-primary text-white">
           <tr>
             <th scope="col">Room Type:</th>
             <th scope="col">Date:</th>
@@ -132,7 +132,7 @@ if (isset($_POST['update'])) {
             <th scope="col">Actions:</th>
           </tr>
         </thead>
-        <tbody class="table-group-divider">
+        <tbody>
           <?php while ($rowReserveCancel = $stmtCancel->fetch()) { ?>
           <tr>
             <td><?php echo $rowReserveCancel->room_type ?></td>

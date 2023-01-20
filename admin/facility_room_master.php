@@ -13,7 +13,11 @@ $stmtFacilityRoomMaster = $con->prepare($sqlFacilityRoomMaster);
 $stmtFacilityRoomMaster->execute();
 
 // FACILITIES DATABASE
+<<<<<<< HEAD
 $sqlFacilities = "SELECT * FROM facilities";
+=======
+$sqlFacilities = "SELECT facility_name FROM facilities";
+>>>>>>> dc66a81946ee240b1a3e2f213b819db175a780ed
 $stmtFacilities = $con->prepare($sqlFacilities);
 $stmtFacilities->execute();
 
@@ -138,8 +142,13 @@ if (isset($_POST['update_facility'])) {
               <select name="facility_type" id="facilityType" class="form-select" required>
                 <option disabled selected value>-- Facility Type --</option>
                 <?php while ($rowFacilities = $stmtFacilities->fetch()) { ?>
+<<<<<<< HEAD
                   <option value="<?php echo $rowFacilities->facility_name ?>">
                     <?php echo $rowFacilities->facility_name ?></option>
+=======
+                <option value="<?php echo $rowFacilities->facility_name ?>">
+                  <?php echo $rowFacilities->facility_name ?></option>
+>>>>>>> dc66a81946ee240b1a3e2f213b819db175a780ed
                 <?php } ?>
               </select>
               <div class="invalid-feedback">
@@ -174,8 +183,13 @@ if (isset($_POST['update_facility'])) {
               <select name="floor_location" id="floorLocation" class="form-select" required>
                 <option disabled selected value>-- Floor Location --</option>
                 <?php while ($rowFloorLocation = $stmtFloors->fetch()) { ?>
+<<<<<<< HEAD
                   <option value="<?php echo $rowFloorLocation->floor_number ?>">
                     <?php echo $rowFloorLocation->floor_number ?></option>
+=======
+                <option value="<?php echo $rowFloorLocation->floor_number ?>">
+                  <?php echo $rowFloorLocation->floor_number ?></option>
+>>>>>>> dc66a81946ee240b1a3e2f213b819db175a780ed
                 <?php } ?>
               </select>
               <div class="invalid-feedback">
@@ -222,7 +236,11 @@ if (isset($_POST['update_facility'])) {
     <div class="container shadow p-3 mb-5 bg-body-rounded">
       <div class="table-responsive">
         <table class="table table-hover table-striped">
+<<<<<<< HEAD
           <thea>
+=======
+          <thead class="bg-primary text-white">
+>>>>>>> dc66a81946ee240b1a3e2f213b819db175a780ed
             <tr>
               <th scope="col">Facility Type:</th>
               <th scope="col">Facility Number:</th>
@@ -230,8 +248,9 @@ if (isset($_POST['update_facility'])) {
               <th scope="col">Floor Location:</th>
               <th scope="col">Max Capacity:</th>
               <th scope="col">Status:</th>
-              <th scope="col" col="2">Actions:</th>
+              <th scope="col" colspan="2">Actions:</th>
             </tr>
+<<<<<<< HEAD
           </thea d>
           <tbody class="table-group-divider">
             <?php while ($rowFacilityRoomMaster = $stmtFacilityRoomMaster->fetch()) { ?>
@@ -251,6 +270,28 @@ if (isset($_POST['update_facility'])) {
                   <form action="facility_room_master.php" method="post" class="needs-validation" novalidate>
                     <input type="hidden" name="update_id" value="<?php echo $rowFacilityRoomMaster->id ?>">
                     <?php
+=======
+          </thead>
+          <tbody>
+            <?php while ($rowFacilityRoomMaster = $stmtFacilityRoomMaster->fetch()) { ?>
+            <tr>
+              <td><?php echo $rowFacilityRoomMaster->facility_type ?></td>
+              <td><?php echo $rowFacilityRoomMaster->facility_number ?></td>
+              <td><?php echo $rowFacilityRoomMaster->descriptions ?></td>
+              <td><?php echo $rowFacilityRoomMaster->floor_location ?></td>
+              <td><?php echo $rowFacilityRoomMaster->max_capacity ?></td>
+              <td><?php echo $rowFacilityRoomMaster->statuses ?></td>
+              <td>
+                <!-- UPDATE -->
+                <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                  data-bs-target="#updateModal-<?php echo $rowFacilityRoomMaster->id ?>">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+
+                <form action="facility_room_master.php" method="post" class="needs-validation" novalidate>
+                  <input type="hidden" name="update_id" value="<?php echo $rowFacilityRoomMaster->id ?>">
+                  <?php
+>>>>>>> dc66a81946ee240b1a3e2f213b819db175a780ed
                     // FACILITIES DATABASE
                     $sqlFacilities = "SELECT facility_name FROM facilities";
                     $stmtFacilities = $con->prepare($sqlFacilities);
@@ -261,6 +302,7 @@ if (isset($_POST['update_facility'])) {
                     $stmtFloors = $con->prepare($sqlFloors);
                     $stmtFloors->execute();
                     ?>
+<<<<<<< HEAD
                     <!-- Modal -->
                     <div class="modal fade" id="updateModal-<?php echo $rowFacilityRoomMaster->id ?>" tabindex="-1">
                       <div class="modal-dialog modal-dialog-centered">
@@ -280,6 +322,27 @@ if (isset($_POST['update_facility'])) {
                                     <?php } ?>
                                   </select>
                                 </div>
+=======
+                  <!-- Modal -->
+                  <div class="modal fade" id="updateModal-<?php echo $rowFacilityRoomMaster->id ?>" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5">Update Facility Room Master</h1>
+                        </div>
+                        <div class="modal-body">
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="mb-3">
+                                <label for="facilityType" class="form-label">Facility Type</label>
+                                <select name="update_facility_type" id="facilityType" class="form-select" required>
+                                  <option disabled selected value>-- Facility Type --</option>
+                                  <?php while ($rowFacilities = $stmtFacilities->fetch()) { ?>
+                                  <option value="<?php echo $rowFacilities->facility_name ?>">
+                                    <?php echo $rowFacilities->facility_name ?></option>
+                                  <?php } ?>
+                                </select>
+>>>>>>> dc66a81946ee240b1a3e2f213b819db175a780ed
                               </div>
                               <div class="col-12">
                                 <div class="mb-3">
@@ -293,6 +356,7 @@ if (isset($_POST['update_facility'])) {
                                   <input type="text" name="update_description" id="description" class="form-control" value="<?php echo $rowFacilityRoomMaster->descriptions ?>">
                                 </div>
                               </div>
+<<<<<<< HEAD
                               <div class="col-12">
                                 <div class="mb-3">
                                   <label for="floorLocation" class="form-label">Floor Location</label>
@@ -304,6 +368,19 @@ if (isset($_POST['update_facility'])) {
                                     <?php } ?>
                                   </select>
                                 </div>
+=======
+                            </div>
+                            <div class="col-12">
+                              <div class="mb-3">
+                                <label for="floorLocation" class="form-label">Floor Location</label>
+                                <select name="update_floor_location" id="floorLocation" class="form-select" required>
+                                  <option disabled selected value>-- Floor Location --</option>
+                                  <?php while ($rowFloorLocation = $stmtFloors->fetch()) { ?>
+                                  <option value="<?php echo $rowFloorLocation->floor_number ?>">
+                                    <?php echo $rowFloorLocation->floor_number ?></option>
+                                  <?php } ?>
+                                </select>
+>>>>>>> dc66a81946ee240b1a3e2f213b819db175a780ed
                               </div>
                               <div class="col-12">
                                 <div class="mb-3">
