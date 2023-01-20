@@ -23,13 +23,14 @@ $stmt->execute();
   <!-- CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
   <link rel="stylesheet" href="./styles/reserve.css" />
-
+  <link rel="stylesheet" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
 
   <!-- JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
   </script>
   <script src="./js/validation.js" defer></script>
+  <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js" defer></script>
   <!-- FONT AWESOME -->
   <script src="https://kit.fontawesome.com/8cbc2e0f0e.js" crossorigin="anonymous"></script>
 
@@ -99,8 +100,8 @@ $stmt->execute();
     <div class="container shadow p-3 mb-5 bg-body-rounded">
       <p class="h1 text-center mb-5">Pending Reservation</p>
       <div class="table-responsive">
-        <table class="table table-striped table-hover">
-          <thead class="bg-primary text-white">
+        <table class="table table-striped table-hover" id="myTable">
+          <thead>
             <tr>
               <th>Created Date:</th>
               <th>RSVN No.</th>
@@ -116,7 +117,7 @@ $stmt->execute();
           </thead>
           <tbody>
             <?php while ($rowReservations = $stmt->fetch()) { ?>
-              <tr id="myTableRow">
+              <tr>
                 <td><?php echo $rowReservations->created_date ?></td>
                 <td><?php echo $rowReservations->rsvn_no ?></td>
                 <td><?php echo $rowReservations->created_by ?></td>
