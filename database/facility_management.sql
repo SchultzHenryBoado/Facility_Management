@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2023-01-12 23:27:08
+Date: 2023-01-20 00:45:47
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -40,7 +40,7 @@ CREATE TABLE `companies` (
   `company_code` varchar(255) NOT NULL,
   `company_name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of companies
@@ -58,15 +58,16 @@ CREATE TABLE `facilities` (
   `facility_code` varchar(255) NOT NULL,
   `facility_name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of facilities
 -- ----------------------------
 INSERT INTO `facilities` VALUES ('8', 'MTNGRM', 'Meeting Room');
 INSERT INTO `facilities` VALUES ('9', 'BRDRM', 'Board Room');
-INSERT INTO `facilities` VALUES ('11', 'BSKTBLLRM', 'Basketball Room');
-INSERT INTO `facilities` VALUES ('12', 'VLLYBLLRM', 'Volleyball Room');
+INSERT INTO `facilities` VALUES ('11', 'BSKTBLLRM', 'Basketball Court');
+INSERT INTO `facilities` VALUES ('12', 'VLLYBLLRM', 'Volleyball Court');
+INSERT INTO `facilities` VALUES ('16', 'BDMNT', 'Badminton Court');
 
 -- ----------------------------
 -- Table structure for `facility_room_masters`
@@ -80,13 +81,20 @@ CREATE TABLE `facility_room_masters` (
   `floor_location` varchar(255) NOT NULL,
   `max_capacity` varchar(255) NOT NULL,
   `statuses` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  PRIMARY KEY (`id`),
+  KEY `fk_facilities` (`facility_type`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of facility_room_masters
 -- ----------------------------
-INSERT INTO `facility_room_masters` VALUES ('5', 'Meeting Room', 'MTGRM - 1', 'MEETING ROOM 1', '15th floor', '20', 'ACTIVE');
+INSERT INTO `facility_room_masters` VALUES ('1', 'Meeting Room', 'MTNGRM-1', 'Meeting Room 1', '15th floor', '2', 'ACTIVE');
+INSERT INTO `facility_room_masters` VALUES ('2', 'Meeting Room', 'MTGRM-2', 'Meeting Room 2', '15th floor', '2', 'ACTIVE');
+INSERT INTO `facility_room_masters` VALUES ('3', 'Board Room', 'BRDRM-1', 'Board Room 1', '16th floor', '2', 'ACTIVE');
+INSERT INTO `facility_room_masters` VALUES ('4', 'Board Room', 'BRDRM-2', 'Board Room 2', '16th floor', '2', 'ACTIVE');
+INSERT INTO `facility_room_masters` VALUES ('5', 'Basketball Court', 'BSKTBLLRM-1', 'Badminton Court 1', '17th floor', '1', 'ACTIVE');
+INSERT INTO `facility_room_masters` VALUES ('6', 'Volleyball Court', 'VLLYBLC-1', 'Volleyball Court 1', '17th floor', '1', 'ACTIVE');
+INSERT INTO `facility_room_masters` VALUES ('7', 'Badminton Court', 'BDMNTNCRT-1', 'Badminton Court 1', '17th floor', '1', 'ACTIVE');
 
 -- ----------------------------
 -- Table structure for `floors`
@@ -117,6 +125,7 @@ CREATE TABLE `reservations` (
   `rsvn_no` varchar(255) NOT NULL,
   `created_by` varchar(255) NOT NULL,
   `room_type` varchar(255) NOT NULL,
+  `room_number` varchar(255) NOT NULL DEFAULT '',
   `date_from` date NOT NULL,
   `date_to` date NOT NULL,
   `time_from` time(6) NOT NULL,
@@ -126,11 +135,15 @@ CREATE TABLE `reservations` (
   PRIMARY KEY (`id`),
   KEY `fk_users` (`users_id`),
   CONSTRAINT `fk_users` FOREIGN KEY (`users_id`) REFERENCES `users_accounts` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of reservations
 -- ----------------------------
+INSERT INTO `reservations` VALUES ('6', '1', '2023-01-19', '1', 'Boado, Schultz Henry', 'Meeting Room', 'MTNGRM-1', '2023-01-19', '2023-01-19', '22:01:00.000000', '23:01:00.000000', 'PENDING', null);
+INSERT INTO `reservations` VALUES ('8', '2', '2023-01-19', '2', 'Gloda, Bryan', 'Meeting Room', 'MTNGRM-1', '2023-01-19', '2023-01-19', '22:38:00.000000', '23:38:00.000000', 'PENDING', null);
+INSERT INTO `reservations` VALUES ('10', '2', '2023-01-19', '2', 'Gloda, Bryan', 'Meeting Room', 'MTNGRM-1', '2023-01-19', '2023-01-19', '23:41:00.000000', '23:41:00.000000', 'PENDING', null);
+INSERT INTO `reservations` VALUES ('14', '2', '2023-01-19', '2', 'Gloda, Bryan', 'Meeting Room', 'MTNGRM-1', '2023-01-19', '2023-01-19', '22:58:00.000000', '23:58:00.000000', 'PENDING', null);
 
 -- ----------------------------
 -- Table structure for `users_accounts`
@@ -145,12 +158,12 @@ CREATE TABLE `users_accounts` (
   `passwords` varchar(255) NOT NULL,
   `roles` varchar(255) NOT NULL,
   `statuses` varchar(255) NOT NULL,
-  `users_type` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of users_accounts
 -- ----------------------------
-INSERT INTO `users_accounts` VALUES ('1', 'Boado', 'Schultz Henry', 'Obanana Corp.', 'schultzhenry.boado@obanana.com', '123', 'Users Approval', 'ACTIVE', '');
-INSERT INTO `users_accounts` VALUES ('19', 'Gloda', 'Bryan', 'Obanana Corp.', 'bryan.gloda@obanana.com', '123', 'Users', 'ACTIVE', '');
+INSERT INTO `users_accounts` VALUES ('1', 'Boado', 'Schultz Henry', 'Obanana Corp.', 'schultzhenry.boado@obanana.com', '123', 'Users Approval', 'ACTIVE');
+INSERT INTO `users_accounts` VALUES ('2', 'Gloda', 'Bryan', 'Obanana Corp.', 'bryan.gloda@obanana.com', '123', 'Users', 'ACTIVE');
+INSERT INTO `users_accounts` VALUES ('4', 'Admin', 'Admin', 'Obanana Corp.', 'admin@gmail.com', 'admin123', 'Admin', 'ACTIVE');
