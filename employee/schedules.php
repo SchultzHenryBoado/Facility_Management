@@ -105,7 +105,11 @@ $stmtReservation->execute();
             <th scope="col">Company</th>
           </tr>
         </thead>
+<<<<<<< HEAD
+        <tbody class="table-group-divider ">
+=======
         <tbody>
+>>>>>>> dc66a81946ee240b1a3e2f213b819db175a780ed
           <?php while ($rowReservations = $stmtReservation->fetch()) { ?>
             <tr>
               <td><?php echo $rowReservations->rsvn_no ?></td>

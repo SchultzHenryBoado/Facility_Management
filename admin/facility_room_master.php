@@ -13,7 +13,11 @@ $stmtFacilityRoomMaster = $con->prepare($sqlFacilityRoomMaster);
 $stmtFacilityRoomMaster->execute();
 
 // FACILITIES DATABASE
+<<<<<<< HEAD
+$sqlFacilities = "SELECT * FROM facilities";
+=======
 $sqlFacilities = "SELECT facility_name FROM facilities";
+>>>>>>> dc66a81946ee240b1a3e2f213b819db175a780ed
 $stmtFacilities = $con->prepare($sqlFacilities);
 $stmtFacilities->execute();
 
@@ -52,13 +56,11 @@ if (isset($_POST['update_facility'])) {
   <title>FACILITY ROOM MASTER</title>
 
   <!-- CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
   <link rel="stylesheet" href="./styles/company.css" />
 
   <!-- JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
   </script>
   <script src="./js/validation.js" defer></script>
   <!-- FONT AWESOME -->
@@ -140,8 +142,13 @@ if (isset($_POST['update_facility'])) {
               <select name="facility_type" id="facilityType" class="form-select" required>
                 <option disabled selected value>-- Facility Type --</option>
                 <?php while ($rowFacilities = $stmtFacilities->fetch()) { ?>
+<<<<<<< HEAD
+                  <option value="<?php echo $rowFacilities->facility_name ?>">
+                    <?php echo $rowFacilities->facility_name ?></option>
+=======
                 <option value="<?php echo $rowFacilities->facility_name ?>">
                   <?php echo $rowFacilities->facility_name ?></option>
+>>>>>>> dc66a81946ee240b1a3e2f213b819db175a780ed
                 <?php } ?>
               </select>
               <div class="invalid-feedback">
@@ -176,8 +183,13 @@ if (isset($_POST['update_facility'])) {
               <select name="floor_location" id="floorLocation" class="form-select" required>
                 <option disabled selected value>-- Floor Location --</option>
                 <?php while ($rowFloorLocation = $stmtFloors->fetch()) { ?>
+<<<<<<< HEAD
+                  <option value="<?php echo $rowFloorLocation->floor_number ?>">
+                    <?php echo $rowFloorLocation->floor_number ?></option>
+=======
                 <option value="<?php echo $rowFloorLocation->floor_number ?>">
                   <?php echo $rowFloorLocation->floor_number ?></option>
+>>>>>>> dc66a81946ee240b1a3e2f213b819db175a780ed
                 <?php } ?>
               </select>
               <div class="invalid-feedback">
@@ -224,7 +236,11 @@ if (isset($_POST['update_facility'])) {
     <div class="container shadow p-3 mb-5 bg-body-rounded">
       <div class="table-responsive">
         <table class="table table-hover table-striped">
+<<<<<<< HEAD
+          <thea>
+=======
           <thead class="bg-primary text-white">
+>>>>>>> dc66a81946ee240b1a3e2f213b819db175a780ed
             <tr>
               <th scope="col">Facility Type:</th>
               <th scope="col">Facility Number:</th>
@@ -234,6 +250,27 @@ if (isset($_POST['update_facility'])) {
               <th scope="col">Status:</th>
               <th scope="col" colspan="2">Actions:</th>
             </tr>
+<<<<<<< HEAD
+          </thea d>
+          <tbody class="table-group-divider">
+            <?php while ($rowFacilityRoomMaster = $stmtFacilityRoomMaster->fetch()) { ?>
+              <tr>
+                <td><?php echo $rowFacilityRoomMaster->facility_type ?></td>
+                <td><?php echo $rowFacilityRoomMaster->facility_number ?></td>
+                <td><?php echo $rowFacilityRoomMaster->descriptions ?></td>
+                <td><?php echo $rowFacilityRoomMaster->floor_location ?></td>
+                <td><?php echo $rowFacilityRoomMaster->max_capacity ?></td>
+                <td><?php echo $rowFacilityRoomMaster->statuses ?></td>
+                <td>
+                  <!-- UPDATE -->
+                  <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateModal-<?php echo $rowFacilityRoomMaster->id ?>">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                  </button>
+
+                  <form action="facility_room_master.php" method="post" class="needs-validation" novalidate>
+                    <input type="hidden" name="update_id" value="<?php echo $rowFacilityRoomMaster->id ?>">
+                    <?php
+=======
           </thead>
           <tbody>
             <?php while ($rowFacilityRoomMaster = $stmtFacilityRoomMaster->fetch()) { ?>
@@ -254,6 +291,7 @@ if (isset($_POST['update_facility'])) {
                 <form action="facility_room_master.php" method="post" class="needs-validation" novalidate>
                   <input type="hidden" name="update_id" value="<?php echo $rowFacilityRoomMaster->id ?>">
                   <?php
+>>>>>>> dc66a81946ee240b1a3e2f213b819db175a780ed
                     // FACILITIES DATABASE
                     $sqlFacilities = "SELECT facility_name FROM facilities";
                     $stmtFacilities = $con->prepare($sqlFacilities);
@@ -264,6 +302,27 @@ if (isset($_POST['update_facility'])) {
                     $stmtFloors = $con->prepare($sqlFloors);
                     $stmtFloors->execute();
                     ?>
+<<<<<<< HEAD
+                    <!-- Modal -->
+                    <div class="modal fade" id="updateModal-<?php echo $rowFacilityRoomMaster->id ?>" tabindex="-1">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5">Update Facility Room Master</h1>
+                          </div>
+                          <div class="modal-body">
+                            <div class="row">
+                              <div class="col-12">
+                                <div class="mb-3">
+                                  <label for="facilityType" class="form-label">Facility Type</label>
+                                  <select name="update_facility_type" id="facilityType" class="form-select" required>
+                                    <?php while ($rowFacilities = $stmtFacilities->fetch()) { ?>
+                                      <option value="<?php echo $rowFacilities->facility_name ?>">
+                                        <?php echo $rowFacilities->facility_name ?></option>
+                                    <?php } ?>
+                                  </select>
+                                </div>
+=======
                   <!-- Modal -->
                   <div class="modal fade" id="updateModal-<?php echo $rowFacilityRoomMaster->id ?>" tabindex="-1">
                     <div class="modal-dialog modal-dialog-centered">
@@ -283,21 +342,33 @@ if (isset($_POST['update_facility'])) {
                                     <?php echo $rowFacilities->facility_name ?></option>
                                   <?php } ?>
                                 </select>
+>>>>>>> dc66a81946ee240b1a3e2f213b819db175a780ed
                               </div>
-                            </div>
-                            <div class="col-12">
-                              <div class="mb-3">
-                                <label for="facilityNumber" class="form-label">Facility Number</label>
-                                <input type="text" name="update_facility_number" id="facilityNumber"
-                                  class="form-control" value="<?php echo $rowFacilityRoomMaster->facility_number ?>">
+                              <div class="col-12">
+                                <div class="mb-3">
+                                  <label for="facilityNumber" class="form-label">Facility Number</label>
+                                  <input type="text" name="update_facility_number" id="facilityNumber" class="form-control" value="<?php echo $rowFacilityRoomMaster->facility_number ?>">
+                                </div>
                               </div>
-                            </div>
-                            <div class="col-12">
-                              <div class="mb-3">
-                                <label for="description" class="form-label">Description</label>
-                                <input type="text" name="update_description" id="description" class="form-control"
-                                  value="<?php echo $rowFacilityRoomMaster->descriptions ?>">
+                              <div class="col-12">
+                                <div class="mb-3">
+                                  <label for="description" class="form-label">Description</label>
+                                  <input type="text" name="update_description" id="description" class="form-control" value="<?php echo $rowFacilityRoomMaster->descriptions ?>">
+                                </div>
                               </div>
+<<<<<<< HEAD
+                              <div class="col-12">
+                                <div class="mb-3">
+                                  <label for="floorLocation" class="form-label">Floor Location</label>
+                                  <select name="update_floor_location" id="floorLocation" class="form-select" required>
+                                    <option disabled selected value>-- Floor Location --</option>
+                                    <?php while ($rowFloorLocation = $stmtFloors->fetch()) { ?>
+                                      <option value="<?php echo $rowFloorLocation->floor_number ?>">
+                                        <?php echo $rowFloorLocation->floor_number ?></option>
+                                    <?php } ?>
+                                  </select>
+                                </div>
+=======
                             </div>
                             <div class="col-12">
                               <div class="mb-3">
@@ -309,62 +380,60 @@ if (isset($_POST['update_facility'])) {
                                     <?php echo $rowFloorLocation->floor_number ?></option>
                                   <?php } ?>
                                 </select>
+>>>>>>> dc66a81946ee240b1a3e2f213b819db175a780ed
                               </div>
-                            </div>
-                            <div class="col-12">
-                              <div class="mb-3">
-                                <label for="maxCapacity" class="form-label">Max Capacity</label>
-                                <input type="text" name="update_max_capacity" id="maxCapacity" class="form-control"
-                                  value="<?php echo $rowFacilityRoomMaster->max_capacity ?>">
+                              <div class="col-12">
+                                <div class="mb-3">
+                                  <label for="maxCapacity" class="form-label">Max Capacity</label>
+                                  <input type="text" name="update_max_capacity" id="maxCapacity" class="form-control" value="<?php echo $rowFacilityRoomMaster->max_capacity ?>">
+                                </div>
                               </div>
-                            </div>
-                            <div class="col-12">
-                              <div class="mb-3">
-                                <label for="status" class="form-label">Status</label>
-                                <select name="update_status" id="status" class="form-select" required>
-                                  <option value="ACTIVE">ACTIVE</option>
-                                  <option value="INACTIVE">INACTIVE</option>
-                                </select>
+                              <div class="col-12">
+                                <div class="mb-3">
+                                  <label for="status" class="form-label">Status</label>
+                                  <select name="update_status" id="status" class="form-select" required>
+                                    <option value="ACTIVE">ACTIVE</option>
+                                    <option value="INACTIVE">INACTIVE</option>
+                                  </select>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                          <button type="submit" name="update_facility" class="btn btn-success">Update</button>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" name="update_facility" class="btn btn-success">Update</button>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </form>
-              </td>
-              <td>
-                <!-- DELETE -->
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                  data-bs-target="#deleteModal-<?php echo $rowFacilityRoomMaster->id ?>">
-                  <i class="fa-solid fa-trash"></i>
-                </button>
+                  </form>
+                </td>
+                <td>
+                  <!-- DELETE -->
+                  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-<?php echo $rowFacilityRoomMaster->id ?>">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
 
-                <form action="./php/master_facility_room_delete.php" method="post">
-                  <input type="hidden" name="delete_id" value="<?php echo $rowFacilityRoomMaster->id ?>">
-                  <!-- Modal -->
-                  <div class="modal fade" id="deleteModal-<?php echo $rowFacilityRoomMaster->id ?>" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure you want to Delete?</h1>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                          <button type="submit" class="btn btn-danger" name="delete">Delete</button>
+                  <form action="./php/master_facility_room_delete.php" method="post">
+                    <input type="hidden" name="delete_id" value="<?php echo $rowFacilityRoomMaster->id ?>">
+                    <!-- Modal -->
+                    <div class="modal fade" id="deleteModal-<?php echo $rowFacilityRoomMaster->id ?>" tabindex="-1">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure you want to Delete?</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-danger" name="delete">Delete</button>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </form>
-              </td>
-            </tr>
+                  </form>
+                </td>
+              </tr>
             <?php } ?>
           </tbody>
         </table>
