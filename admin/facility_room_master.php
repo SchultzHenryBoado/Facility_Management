@@ -26,7 +26,7 @@ $stmtFloors->execute();
 if (isset($_POST['update_facility'])) {
   $updateId = $_POST['update_id'];
   $updateFacilityType = filter_input(INPUT_POST, 'update_facility_type', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-  $updateFacilityNumber = filter_input(INPUT_POST, 'update_facility_number', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+  $updateFacilityNumber = strtoupper(filter_input(INPUT_POST, 'update_facility_number', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
   $updateDescription = filter_input(INPUT_POST, 'update_description', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
   $updateFloorLocation = filter_input(INPUT_POST, 'update_floor_location', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
   $updateMaxCapacity = filter_input(INPUT_POST, 'update_max_capacity', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
