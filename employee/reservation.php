@@ -311,7 +311,7 @@ if (isset($_POST['update_reservation'])) {
                               <div class="col-12">
                                 <div class="mb-3">
                                   <label for="updateRsvn" class="form-label">Update RSVN No.</label>
-                                  <input class="form-control" type="text" name="update_rsvn_no" id="updateRsvn" value="<?php echo $rowReserve->rsvn_no ?>" required>
+                                  <input class="form-control" type="text" name="update_rsvn_no" id="updateRsvn" value="<?php echo $rowReserve->rsvn_no ?>" readonly required>
                                   <div class="invalid-feedback">
                                     Please fill-up the rsvn.
                                   </div>

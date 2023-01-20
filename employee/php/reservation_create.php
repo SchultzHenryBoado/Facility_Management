@@ -19,8 +19,9 @@ if (isset($_POST['submit'])) {
 
 
   $stmtCreateRes = $con->prepare("INSERT INTO reservations (users_id, created_date, rsvn_no, created_by, room_type, room_number, date_from, date_to, time_from, time_to, statuses) 
-  VALUES (?,curdate(),?,?,?,?,?,?,?,?,?) ");
+  VALUES (?,curdate(),?,?,?,?,?,?,?,?,?)");
   $stmtCreateRes->execute([$users_id, $rsvnNo, $createdBy, $roomType, $roomNum, $dateFrom, $dateTo, $timeFrom, $timeTo, $status]);
 
+  var_dump($_POST);
   header("Location: ../reservation.php");
 }
