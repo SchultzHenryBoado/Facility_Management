@@ -1,14 +1,8 @@
 <?php
 // DATABASE 
-require_once '../../database/connection.php';
+include '../../database/connection.php';
 // SESSION
 require './session.php';
-
-// PATH
-function pathTo($destination)
-{
-  echo "<script>window.location.href = '../$destination.php'</script>";
-}
 
 if (isset($_POST['submit'])) {
   $users_id = $_SESSION['users_approval_id'];
@@ -27,5 +21,5 @@ if (isset($_POST['submit'])) {
   $stmtReservationCreate = $con->prepare($sqlReservationCreate);
   $stmtReservationCreate->execute([$users_id, $rsvnNo, $createdBy, $roomType, $roomNum, $dateFrom, $dateTo, $timeFrom, $timeTo, $status]);
 
-  pathTo('reservation');
+  header("Location: ../reservation.php");
 }

@@ -7,12 +7,6 @@ require './php/session.php';
 // CURRENT DATE
 $date = date('m/d/Y');
 
-// path
-function pathTo($destination)
-{
-  echo "<script>window.location.href = './$destination.php'</script>";
-}
-
 // USERS SESSION
 $users_id = $_SESSION['users_approval_id'];
 $sqlReadUsers = "SELECT * FROM users_accounts WHERE id=?";
@@ -48,7 +42,7 @@ if (isset($_POST['update_reservation'])) {
   $stmtUpdate = $con->prepare($sqlUpdate);
   $stmtUpdate->execute([$updateRsvnNo, $updateRoomType, $updateRoomNum, $updateDateFrom, $updateDateTo, $updateTimeFrom, $updateTimeTo, $updateStatus, $updateId]);
 
-  pathTo('reservation');
+  header("Location: ./reservation.php");
 }
 
 
