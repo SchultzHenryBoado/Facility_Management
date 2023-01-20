@@ -1,8 +1,8 @@
 <?php
 // DATABASE 
-require_once '../../database/connection.php';
+include '../../database/connection.php';
 // SESSION
-require './session.php';
+include './session.php';
 
 if (isset($_POST['submit'])) {
 
