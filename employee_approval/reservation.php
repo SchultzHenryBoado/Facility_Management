@@ -68,7 +68,8 @@ if (isset($_POST['update_reservation'])) {
   </script>
   <script src="./js/validation.js" defer></script>
   <script src="./js/date.js" defer></script>
-  <script src="./js/selectOpt.js" defer></script>
+  <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js" defer></script>
+  <script src="./js/dataTable.js" defer></script>
 
   <!-- FONT AWESOME -->
   <script src="https://kit.fontawesome.com/8cbc2e0f0e.js" crossorigin="anonymous"></script>
@@ -240,7 +241,6 @@ if (isset($_POST['update_reservation'])) {
               <input type="submit" name="submit" id="submit" class="btn btn-success fw-bold float-end" value="RESERVE" />
             </div>
           </div>
-
       </form>
     </div>
   </div>
@@ -249,20 +249,20 @@ if (isset($_POST['update_reservation'])) {
   <div class="container-fluid">
     <div class="container shadow p-3 mb-5 bg-body-rounded">
       <div class="table-responsive">
-        <table class="table table-striped table-hover">
-          <thead class="bg-primary text-white">
+        <table class="table table-striped table-hover" id="myTable">
+          <thead>
             <tr>
-              <th scope="col">Created Date:</th>
-              <th scope="col">RSVN No.</th>
-              <th scope="col">Created By:</th>
-              <th scope="col">Facility Type:</th>
-              <th scope="col">Facility Number:</th>
-              <th scope="col">Date From:</th>
-              <th scope="col">Date To:</th>
-              <th scope="col">Time From:</th>
-              <th scope="col">Time To:</th>
-              <th scope="col">Status:</th>
-              <th colspan="2" scope="col">Actions:</th>
+              <th>Created Date:</th>
+              <th>RSVN No.</th>
+              <th>Created By:</th>
+              <th>Facility Type:</th>
+              <th>Facility Number:</th>
+              <th>Date From:</th>
+              <th>Date To:</th>
+              <th>Time From:</th>
+              <th>Time To:</th>
+              <th>Status:</th>
+              <th>Actions:</th>
             </tr>
           </thead>
           <tbody>
@@ -279,148 +279,151 @@ if (isset($_POST['update_reservation'])) {
                 <td><?php echo date("h:i A", strtotime($rowReserve->time_to))  ?></td>
                 <td><?php echo $rowReserve->statuses ?></td>
 
-                <!-- EDIT -->
                 <td>
-                  <button class="btn btn-warning fw-bold" data-bs-toggle="modal" data-bs-target="#modalEdit-<?php echo $rowReserve->id ?>">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                  </button>
+                  <div class="d-inline-block">
+                    <!-- EDIT -->
+                    <button class="btn btn-warning fw-bold" data-bs-toggle="modal" data-bs-target="#modalEdit-<?php echo $rowReserve->id ?>">
+                      <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
 
-                  <form action="reservation.php" method="post" class="needs-validation" novalidate>
+                    <form action="reservation.php" method="post" class="needs-validation" novalidate>
 
-                    <?php
-                    $sql = "SELECT * FROM facilities";
-                    $stmt = $con->prepare($sql);
-                    $stmt->execute();
+                      <?php
+                      $sql = "SELECT * FROM facilities";
+                      $stmt = $con->prepare($sql);
+                      $stmt->execute();
 
-                    $stmtFacNum = $con->prepare("SELECT * FROM facility_room_masters");
-                    $stmtFacNum->execute();
-                    ?>
+                      $stmtFacNum = $con->prepare("SELECT * FROM facility_room_masters");
+                      $stmtFacNum->execute();
+                      ?>
 
-                    <div class="modal fade" id="modalEdit-<?php echo $rowReserve->id ?>" tabindex="-1">
-                      <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <p class="modal-title fs-5 fw-bold">Edit Reservations</p>
-                          </div>
-                          <div class="modal-body">
-                            <input type="hidden" name="update_id" value="<?php echo $rowReserve->id ?>">
-                            <div class="row">
-                              <div class="col-12">
-                                <div class="mb-3">
-                                  <label for="updateRsvn" class="form-label">Update RSVN No.</label>
-                                  <input class="form-control" type="text" name="update_rsvn_no" id="updateRsvn" value="<?php echo $rowReserve->rsvn_no ?>" required>
-                                  <div class="invalid-feedback">
-                                    Please fill-up the rsvn.
+                      <div class="modal fade" id="modalEdit-<?php echo $rowReserve->id ?>" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <p class="modal-title fs-5 fw-bold">Edit Reservations</p>
+                            </div>
+                            <div class="modal-body">
+                              <input type="hidden" name="update_id" value="<?php echo $rowReserve->id ?>">
+                              <div class="row">
+                                <div class="col-12">
+                                  <div class="mb-3">
+                                    <label for="updateRsvn" class="form-label">Update RSVN No.</label>
+                                    <input class="form-control" type="text" name="update_rsvn_no" id="updateRsvn" value="<?php echo $rowReserve->rsvn_no ?>" required>
+                                    <div class="invalid-feedback">
+                                      Please fill-up the rsvn.
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                              <div class="col-12">
-                                <div class="mb-3">
-                                  <label for="updateRoomType" class="form-label">Update Facility Type:</label>
-                                  <select name="update_room_type" id="updateRoomType" class="form-select" required>
-                                    <?php while ($row = $stmt->fetch()) { ?>
-                                      <option value="<?php echo $row->facility_name ?>">
-                                        <?php echo $row->facility_name ?></option>
-                                    <?php } ?>
-                                  </select>
-                                  <div class="invalid-feedback">
-                                    Please choose a facility.
+                                <div class="col-12">
+                                  <div class="mb-3">
+                                    <label for="updateRoomType" class="form-label">Update Facility Type:</label>
+                                    <select name="update_room_type" id="updateRoomType" class="form-select" required>
+                                      <?php while ($row = $stmt->fetch()) { ?>
+                                        <option value="<?php echo $row->facility_name ?>">
+                                          <?php echo $row->facility_name ?></option>
+                                      <?php } ?>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                      Please choose a facility.
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                              <div class="col-12">
-                                <div class="mb-3">
-                                  <label for="updateRoomNumber" class="form-label">Update Facility Number:</label>
-                                  <select name="update_room_number" id="updateRoomNumber" class="form-select" required>
-                                    <?php while ($rowFacNum = $stmtFacNum->fetch()) { ?>
-                                      <option value="<?php echo $rowFacNum->facility_number ?>">
-                                        <?php echo $rowFacNum->facility_number ?></option>
-                                    <?php } ?>
-                                  </select>
-                                  <div class="invalid-feedback">
-                                    Please choose a facility.
+                                <div class="col-12">
+                                  <div class="mb-3">
+                                    <label for="updateRoomNumber" class="form-label">Update Facility Number:</label>
+                                    <select name="update_room_number" id="updateRoomNumber" class="form-select" required>
+                                      <?php while ($rowFacNum = $stmtFacNum->fetch()) { ?>
+                                        <option value="<?php echo $rowFacNum->facility_number ?>">
+                                          <?php echo $rowFacNum->facility_number ?></option>
+                                      <?php } ?>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                      Please choose a facility.
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                              <div class="col-12">
-                                <div class="mb-3">
-                                  <label for="updateDateFrom" class="form-label">Update Date From:</label>
-                                  <input class="form-control" type="date" name="update_date_from" id="updateDateFrom" value="<?php echo $rowReserve->date_from ?>" required>
-                                  <div class="invalid-feedback">
-                                    Please fill-up the date from.
+                                <div class="col-12">
+                                  <div class="mb-3">
+                                    <label for="updateDateFrom" class="form-label">Update Date From:</label>
+                                    <input class="form-control" type="date" name="update_date_from" id="updateDateFrom" value="<?php echo $rowReserve->date_from ?>" required>
+                                    <div class="invalid-feedback">
+                                      Please fill-up the date from.
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                              <div class="col-12">
-                                <div class="mb-3">
-                                  <label for="updateDateTo" class="form-label">Update Date To:</label>
-                                  <input class="form-control" type="date" name="update_date_to" id="updateDateTo" value="<?php echo $rowReserve->date_to ?>" required>
-                                  <div class="invalid-feedback">
-                                    Please fill-up the date to.
+                                <div class="col-12">
+                                  <div class="mb-3">
+                                    <label for="updateDateTo" class="form-label">Update Date To:</label>
+                                    <input class="form-control" type="date" name="update_date_to" id="updateDateTo" value="<?php echo $rowReserve->date_to ?>" required>
+                                    <div class="invalid-feedback">
+                                      Please fill-up the date to.
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                              <div class="col-12">
-                                <div class="mb-3">
-                                  <label for="updateTimeFrom" class="form-label">Update Time From:</label>
-                                  <input class="form-control" type="time" name="update_time_from" id="updateTimeFrom" value="<?php echo $rowReserve->time_from ?>" required>
-                                  <div class="invalid-feedback">
-                                    Please fill-up the time from.
+                                <div class="col-12">
+                                  <div class="mb-3">
+                                    <label for="updateTimeFrom" class="form-label">Update Time From:</label>
+                                    <input class="form-control" type="time" name="update_time_from" id="updateTimeFrom" value="<?php echo $rowReserve->time_from ?>" required>
+                                    <div class="invalid-feedback">
+                                      Please fill-up the time from.
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                              <div class="col-12">
-                                <div class="mb-3">
-                                  <label for="updateTimeTo" class="form-label">Update Time To:</label>
-                                  <input class="form-control" type="time" name="update_time_to" id="updateTimeTo" value="<?php echo $rowReserve->time_to ?>" required>
-                                  <div class="invalid-feedback">
-                                    Please fill-up the time to.
+                                <div class="col-12">
+                                  <div class="mb-3">
+                                    <label for="updateTimeTo" class="form-label">Update Time To:</label>
+                                    <input class="form-control" type="time" name="update_time_to" id="updateTimeTo" value="<?php echo $rowReserve->time_to ?>" required>
+                                    <div class="invalid-feedback">
+                                      Please fill-up the time to.
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                              <div class="col-12">
-                                <div class="mb-3">
-                                  <label for="status" class="form-label">Status:</label>
-                                  <select name="update_status" id="status" class="form-select" value="<?php echo $rowReserve->statuses ?>" required>
-                                    <option value="PENDING">PENDING</option>
-                                  </select>
+                                <div class="col-12">
+                                  <div class="mb-3">
+                                    <label for="status" class="form-label">Status:</label>
+                                    <select name="update_status" id="status" class="form-select" value="<?php echo $rowReserve->statuses ?>" required>
+                                      <option value="PENDING">PENDING</option>
+                                    </select>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="submit" class="btn btn-success fw-bold" name="update_reservation">SUBMIT
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                </td>
-
-                <!-- DELETE -->
-                <td>
-                  <button class="btn btn-danger fw-bold" data-bs-toggle="modal" data-bs-target="#modalDelete-<?php echo $rowReserve->id ?>">
-                    <i class="fa-solid fa-trash"></i>
-                  </button>
-
-                  <form action="./php/reservation_delete.php" method="post" id="deleteForm">
-                    <input type="hidden" name="delete_id" value="<?php echo $rowReserve->id ?>">
-                    <div class="modal fade" tabindex="-1" id="modalDelete-<?php echo $rowReserve->id ?>">
-                      <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <p class="modal-title fw-bold fs-5">Are you sure you want to delete?</p>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-danger" name="delete" id="deleteBtn">Delete</button>
+                            <div class="modal-footer">
+                              <button type="submit" class="btn btn-success fw-bold" name="update_reservation">SUBMIT
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </form>
+                    </form>
+                  </div>
+
+                  <div class="d-inline-block">
+                    <!-- DELETE -->
+                    <button class="btn btn-danger fw-bold" data-bs-toggle="modal" data-bs-target="#modalDelete-<?php echo $rowReserve->id ?>">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+
+                    <form action="./php/reservation_delete.php" method="post" id="deleteForm">
+                      <input type="hidden" name="delete_id" value="<?php echo $rowReserve->id ?>">
+                      <div class="modal fade" tabindex="-1" id="modalDelete-<?php echo $rowReserve->id ?>">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <p class="modal-title fw-bold fs-5">Are you sure you want to delete?</p>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                              <button type="submit" class="btn btn-danger" name="delete" id="deleteBtn">Delete</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
                 </td>
+
               </tr>
             <?php } ?>
           </tbody>
