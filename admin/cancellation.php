@@ -21,15 +21,16 @@
     <title>CANCELLATION</title>
 
     <!-- CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="./styles/cancellation.css" />
 
     <!-- JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
     </script>
+    <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js" defer></script>
+    <script src="./js/dataTable.js" defer></script>
 
     <!-- FONT AWESOME -->
     <script src="https://kit.fontawesome.com/8cbc2e0f0e.js" crossorigin="anonymous"></script>
@@ -97,49 +98,48 @@
     <div class="container-fluid mt-5">
       <div class="container shadow p-3 mb-5 bg-body-rounded">
         <div class="table-responsive">
-          <table class="table table-striped table-hover">
-            <thead class="bg-primary text-white">
+          <table class="table table-striped table-hover" style="width: 100%" id="myTable">
+            <thead>
               <tr>
-                <th scope="col">RSVN No.</th>
-                <th scope="col">Room Type:</th>
-                <th scope="col">Date From:</th>
-                <th scope="col">Time From:</th>
-                <th scope="col">Time To:</th>
-                <th scope="col">Reserved By:</th>
-                <th scope="col">Status:</th>
-                <th scope="col">Reasons:</th>
+                <th>RSVN No.</th>
+                <th>Room Type:</th>
+                <th>Date From:</th>
+                <th>Time From:</th>
+                <th>Time To:</th>
+                <th>Reserved By:</th>
+                <th>Status:</th>
+                <th>Reasons:</th>
               </tr>
             </thead>
             <tbody>
               <?php while ($rowReservations = $stmt->fetch()) { ?>
-              <tr>
-                <td><?php echo $rowReservations->rsvn_no ?></td>
-                <td><?php echo $rowReservations->room_type ?></td>
-                <td><?php echo $rowReservations->date_from ?></td>
-                <td><?php echo date("h:i A", strtotime($rowReservations->time_from)) ?></td>
-                <td><?php echo date("h:i A", strtotime($rowReservations->time_to)) ?></td>
-                <td><?php echo $rowReservations->created_by ?></td>
-                <td><?php echo $rowReservations->statuses ?></td>
-                <td>
-                  <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                    data-bs-target="#rejectModal-<?php echo $rowReservations->id ?>">
-                    <i class="fa-solid fa-eye"></i>
-                  </button>
+                <tr>
+                  <td><?php echo $rowReservations->rsvn_no ?></td>
+                  <td><?php echo $rowReservations->room_type ?></td>
+                  <td><?php echo $rowReservations->date_from ?></td>
+                  <td><?php echo date("h:i A", strtotime($rowReservations->time_from)) ?></td>
+                  <td><?php echo date("h:i A", strtotime($rowReservations->time_to)) ?></td>
+                  <td><?php echo $rowReservations->created_by ?></td>
+                  <td><?php echo $rowReservations->statuses ?></td>
+                  <td>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#rejectModal-<?php echo $rowReservations->id ?>">
+                      <i class="fa-solid fa-eye"></i>
+                    </button>
 
-                  <div class="modal fade" id="rejectModal-<?php echo $rowReservations->id ?>" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <p class="modal-title fs-5 fw-bold">Reasons for Rejection</p>
-                        </div>
-                        <div class="modal-body">
-                          <p class="fs-5"><?php echo $rowReservations->cancel_reasons ?></p>
+                    <div class="modal fade" id="rejectModal-<?php echo $rowReservations->id ?>" tabindex="-1">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <p class="modal-title fs-5 fw-bold">Reasons for Rejection</p>
+                          </div>
+                          <div class="modal-body">
+                            <p class="fs-5"><?php echo $rowReservations->cancel_reasons ?></p>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </td>
-              </tr>
+                  </td>
+                </tr>
               <?php } ?>
             </tbody>
           </table>

@@ -37,15 +37,17 @@ if (isset($_POST['update_floor_master'])) {
   <title>FLOOR MASTER</title>
 
   <!-- CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+  <link rel="stylesheet" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
   <link rel="stylesheet" href="./styles/company.css" />
 
 
   <!-- JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
   </script>
+  <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js" defer></script>
+  <script src="./js/dataTable.js" defer></script>
   <script src="./js/validation.js" defer></script>
   <!-- FONT AWESOME -->
   <script src="https://kit.fontawesome.com/8cbc2e0f0e.js" crossorigin="anonymous"></script>
@@ -154,96 +156,96 @@ if (isset($_POST['update_floor_master'])) {
   <div class="container-fluid">
     <div class="container shadow p-3 mb-5 bg-body-rounded">
       <div class="table-responsive">
-        <table class="table table-hover table-striped">
-          <thead class="bg-primary text-white">
+        <table class="table table-hover table-striped" id="myTable" style="width: 100%">
+          <thead>
             <tr>
-              <th scope="col">Code:</th>
-              <th scope="col">Floor Number:</th>
-              <th colspan="2">Actions:</th>
+              <th>Code:</th>
+              <th>Floor Number:</th>
+              <th>Actions:</th>
             </tr>
           </thead>
           <tbody>
             <?php while ($rowFloors = $stmtFloor->fetch()) { ?>
-            <tr>
-              <td><?php echo $rowFloors->floor_code ?></td>
-              <td><?php echo $rowFloors->floor_number ?></td>
-              <td>
-                <!-- UPDATE -->
-                <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                  data-bs-target="#updateModal-<?php echo $rowFloors->id ?>">
-                  <i class="fa-solid fa-pen-to-square"></i>
-                </button>
+              <tr>
+                <td><?php echo $rowFloors->floor_code ?></td>
+                <td><?php echo $rowFloors->floor_number ?></td>
+                <td>
+                  <div class="d-inline-block p-1">
+                    <!-- UPDATE -->
+                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateModal-<?php echo $rowFloors->id ?>">
+                      <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
 
-                <form action="floor_master.php" method="post" class="needs-validation" novalidate>
-                  <!-- Modal -->
-                  <div class="modal fade" id="updateModal-<?php echo $rowFloors->id ?>" tabindex="-1">
-                    <input type="hidden" name="update_id" value="<?php echo $rowFloors->id ?>">
+                    <form action="floor_master.php" method="post" class="needs-validation" novalidate>
+                      <!-- Modal -->
+                      <div class="modal fade" id="updateModal-<?php echo $rowFloors->id ?>" tabindex="-1">
+                        <input type="hidden" name="update_id" value="<?php echo $rowFloors->id ?>">
 
-                    <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h1 class="modal-title fs-5" id="updateModal">Update Floor Master</h1>
-                        </div>
-                        <div class="modal-body">
-                          <div class="row">
-                            <div class="col-12">
-                              <div class="mb-3">
-                                <label for="floorCode" class="form-label">Floor Code</label>
-                                <input type="text" name="update_floor_code" id="floorCode" class="form-control"
-                                  value="<?php echo $rowFloors->floor_code ?>" required>
-                                <div class="invalid-feedback">
-                                  Please fill-up the floor code.
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h1 class="modal-title fs-5" id="updateModal">Update Floor Master</h1>
+                            </div>
+                            <div class="modal-body">
+                              <div class="row">
+                                <div class="col-12">
+                                  <div class="mb-3">
+                                    <label for="floorCode" class="form-label">Floor Code</label>
+                                    <input type="text" name="update_floor_code" id="floorCode" class="form-control" value="<?php echo $rowFloors->floor_code ?>" required>
+                                    <div class="invalid-feedback">
+                                      Please fill-up the floor code.
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-12">
+                                  <div class="mb-3">
+                                    <label for="floorNumber" class="form-label">Floor Number</label>
+                                    <input type="text" name="update_floor_number" id="floorNumber" class="form-control" value="<?php echo $rowFloors->floor_number ?>" required>
+                                    <div class="invalid-feedback">
+                                      Please fill-up the floor number.
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                            <div class="col-12">
-                              <div class="mb-3">
-                                <label for="floorNumber" class="form-label">Floor Number</label>
-                                <input type="text" name="update_floor_number" id="floorNumber" class="form-control"
-                                  value="<?php echo $rowFloors->floor_number ?>" required>
-                                <div class="invalid-feedback">
-                                  Please fill-up the floor number.
-                                </div>
-                              </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <button type="submit" name="update_floor_master" class="btn btn-success">Update</button>
                             </div>
                           </div>
                         </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                          <button type="submit" name="update_floor_master" class="btn btn-success">Update</button>
+                      </div>
+                    </form>
+                  </div>
+
+                  <div class="inline-block p-1">
+                    <!-- DELETE -->
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-<?php echo $rowFloors->id ?>">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+
+                    <form action="./php/floormaster_delete.php" method="post">
+                      <!-- Modal -->
+                      <div class="modal fade" id="deleteModal-<?php echo $rowFloors->id ?>" tabindex="-1">
+                        <input type="hidden" name="delete_id" value="<?php echo $rowFloors->id ?>">
+
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h1 class="modal-title fs-5" id="deleteModal">Are you sure you want to Delete?</h1>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <button type="submit" name="delete" class="btn btn-danger">Delete</button>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </form>
                   </div>
-                </form>
-              </td>
-              <td>
-                <!-- DELETE -->
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                  data-bs-target="#deleteModal-<?php echo $rowFloors->id ?>">
-                  <i class="fa-solid fa-trash"></i>
-                </button>
 
-                <form action="./php/floormaster_delete.php" method="post">
-                  <!-- Modal -->
-                  <div class="modal fade" id="deleteModal-<?php echo $rowFloors->id ?>" tabindex="-1">
-                    <input type="hidden" name="delete_id" value="<?php echo $rowFloors->id ?>">
-
-                    <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h1 class="modal-title fs-5" id="deleteModal">Are you sure you want to Delete?</h1>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                          <button type="submit" name="delete" class="btn btn-danger">Delete</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </td>
-            </tr>
+                </td>
+              </tr>
             <?php } ?>
           </tbody>
         </table>

@@ -21,17 +21,13 @@ $stmt->execute();
   <title>PENDING RESERVATION</title>
 
   <!-- CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
   <link rel="stylesheet" href="./styles/reserve.css" />
   <link rel="stylesheet" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
 
   <!-- JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
-    integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
   </script>
   <script src="./js/validation.js" defer></script>
   <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js" defer></script>
@@ -105,7 +101,7 @@ $stmt->execute();
     <div class="container shadow p-3 mb-5 bg-body-rounded">
       <p class="h1 text-center mb-5">Pending Reservation</p>
       <div class="table-responsive">
-        <table class="table table-striped table-hover" id="myTable">
+        <table class="table table-striped table-hover display" id="myTable" style="width: 100%;">
           <thead>
             <tr>
               <th>Created Date:</th>
@@ -122,74 +118,69 @@ $stmt->execute();
           </thead>
           <tbody>
             <?php while ($rowReservations = $stmt->fetch()) { ?>
-            <tr>
-              <td><?php echo $rowReservations->created_date ?></td>
-              <td><?php echo $rowReservations->rsvn_no ?></td>
-              <td><?php echo $rowReservations->created_by ?></td>
-              <td><?php echo $rowReservations->room_type ?></td>
-              <td><?php echo $rowReservations->date_from ?></td>
-              <td><?php echo $rowReservations->date_to ?></td>
-              <td><?php echo date("h:i A", strtotime($rowReservations->time_from)) ?></td>
-              <td><?php echo date("h:i A", strtotime($rowReservations->time_to)) ?></td>
-              <td><?php echo $rowReservations->statuses ?></td>
+              <tr>
+                <td><?php echo $rowReservations->created_date ?></td>
+                <td><?php echo $rowReservations->rsvn_no ?></td>
+                <td><?php echo $rowReservations->created_by ?></td>
+                <td><?php echo $rowReservations->room_type ?></td>
+                <td><?php echo $rowReservations->date_from ?></td>
+                <td><?php echo $rowReservations->date_to ?></td>
+                <td><?php echo date("h:i A", strtotime($rowReservations->time_from)) ?></td>
+                <td><?php echo date("h:i A", strtotime($rowReservations->time_to)) ?></td>
+                <td><?php echo $rowReservations->statuses ?></td>
 
-              <td>
-                <div class="d-inline-block">
-                  <!-- ACCEPT -->
-                  <form action="./php/reservation_accept.php" method="post">
-                    <input type="hidden" name="accept_id" value="<?php echo $rowReservations->id ?>">
-                    <button type="button" class="btn btn-success fw-bold" data-bs-toggle="modal"
-                      data-bs-target="#acceptModal-<?php echo $rowReservations->id ?>"
-                      value="<?php echo $rowReservations->id ?>">
-                      <i class="fa-solid fa-thumbs-up"></i>
-                    </button>
+                <td>
+                  <div class="d-inline-block">
+                    <!-- ACCEPT -->
+                    <form action="./php/reservation_accept.php" method="post">
+                      <input type="hidden" name="accept_id" value="<?php echo $rowReservations->id ?>">
+                      <button type="button" class="btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#acceptModal-<?php echo $rowReservations->id ?>" value="<?php echo $rowReservations->id ?>">
+                        <i class="fa-solid fa-thumbs-up"></i>
+                      </button>
 
-                    <div class="modal fade" id="acceptModal-<?php echo $rowReservations->id ?>" tabindex="-1">
-                      <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <p class="modal-title fs-3 fw-bold">Are you sure?</p>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
-                            <input type="submit" class="btn btn-success" name="accept_reservation" value="Yes"
-                              id="acceptBtn">
+                      <div class="modal fade" id="acceptModal-<?php echo $rowReservations->id ?>" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <p class="modal-title fs-3 fw-bold">Are you sure?</p>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
+                              <input type="submit" class="btn btn-success" name="accept_reservation" value="Yes" id="acceptBtn">
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </form>
-                </div>
+                    </form>
+                  </div>
 
-                <div class="d-inline-block">
-                  <!-- REJECT -->
-                  <form action="./php/reservation_reject.php" method="post">
-                    <input type="hidden" name="reject_id" id="" value="<?php echo $rowReservations->id ?>">
-                    <button type="button" class="btn btn-danger fw-bold" data-bs-toggle="modal"
-                      data-bs-target="#rejectModal-<?php echo $rowReservations->id ?>"
-                      value="<?php echo $rowReservations->id ?>">
-                      <i class="fa-solid fa-thumbs-down"></i>
-                    </button>
-                    <div class="modal fade" id="rejectModal-<?php echo $rowReservations->id ?>" tabindex="-1">
-                      <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <p class="modal-title fs-5 fw-bold">Reason for rejection</p>
-                          </div>
-                          <div class="modal-body">
-                            <textarea name="reject_reasons" class="form-control w-100" placeholder="Write a reasons..."
-                              style="height: 300px" required></textarea>
-                          </div>
-                          <div class="modal-footer">
-                            <input type="submit" name="reject_reservation" value="SUBMIT" class="btn btn-success">
+                  <div class="d-inline-block">
+                    <!-- REJECT -->
+                    <form action="./php/reservation_reject.php" method="post">
+                      <input type="hidden" name="reject_id" id="" value="<?php echo $rowReservations->id ?>">
+                      <button type="button" class="btn btn-danger fw-bold" data-bs-toggle="modal" data-bs-target="#rejectModal-<?php echo $rowReservations->id ?>" value="<?php echo $rowReservations->id ?>">
+                        <i class="fa-solid fa-thumbs-down"></i>
+                      </button>
+                      <div class="modal fade" id="rejectModal-<?php echo $rowReservations->id ?>" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <p class="modal-title fs-5 fw-bold">Reason for rejection</p>
+                            </div>
+                            <div class="modal-body">
+                              <textarea name="reject_reasons" class="form-control w-100" placeholder="Write a reasons..." style="height: 300px" required></textarea>
+                            </div>
+                            <div class="modal-footer">
+                              <input type="submit" name="reject_reservation" value="SUBMIT" class="btn btn-success">
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </form>
-                </div>
-              </td>
-            </tr>
+                    </form>
+                  </div>
+
+                </td>
+              </tr>
             <?php } ?>
           </tbody>
         </table>
